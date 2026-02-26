@@ -1,43 +1,35 @@
 'use client';
 
-import type { AuthState } from '../../types';
+import type { PropsWithChildren } from 'react';
+import type { AuthState } from '../types';
 
 import { useSetState } from 'minimal-shared/hooks';
 import { useMemo, useEffect, useCallback } from 'react';
 
-import axios, { endpoints } from 'src/lib/axios';
+import { useMockedUser } from 'src/auth/hooks';
 
-import { JWT_STORAGE_KEY } from './constant';
-import { AuthContext } from '../auth-context';
-import { setSession, isValidToken } from './utils';
+import { setSession } from './utils';
+import { AuthContext } from './auth-context';
+import { ACCESS_TOKEN_STORAGE_KEY } from './constant';
 
 // ----------------------------------------------------------------------
 
-/**
- * NOTE:
- * We only build demo at basic level.
- * Customer will need to do some extra handling yourself if you want to extend the logic and other features...
- */
-
-type Props = {
-  children: React.ReactNode;
-};
-
-export function AuthProvider({ children }: Props) {
+export function AuthProvider({ children }: PropsWithChildren) {
   const { state, setState } = useSetState<AuthState>({ user: null, loading: true });
+  const { user } = useMockedUser();
 
   const checkUserSession = useCallback(async () => {
     try {
-      const accessToken = sessionStorage.getItem(JWT_STORAGE_KEY);
+      const accessToken = sessionStorage.getItem(ACCESS_TOKEN_STORAGE_KEY);
 
-      if (accessToken && isValidToken(accessToken)) {
+      if (accessToken) {
         setSession(accessToken);
+        console.log('pasando por authProvider');
 
-        const res = await axios.get(endpoints.auth.me);
 
-        const { user } = res.data;
 
-        setState({ user: { ...user, accessToken }, loading: false });
+
+        setState({ user: { ...user }, loading: false });
       } else {
         setState({ user: null, loading: false });
       }
@@ -45,7 +37,7 @@ export function AuthProvider({ children }: Props) {
       console.error(error);
       setState({ user: null, loading: false });
     }
-  }, [setState]);
+  }, [setState, user]);
 
   useEffect(() => {
     checkUserSession();

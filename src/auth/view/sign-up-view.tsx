@@ -20,16 +20,19 @@ import { RouterLink } from 'src/routes/components';
 import { Iconify } from 'src/components/iconify';
 import { Form, Field, schemaUtils } from 'src/components/hook-form';
 
-import { useAuthContext } from '../../hooks';
-import { getErrorMessage } from '../../utils';
-import { FormHead } from '../../components/form-head';
-import { signInWithPassword } from '../../context/jwt';
+import { signUp } from '../context';
+import { useAuthContext } from '../hooks';
+import { getErrorMessage } from '../utils';
+import { FormHead } from '../components/form-head';
+import { SignUpTerms } from '../components/sign-up-terms';
 
 // ----------------------------------------------------------------------
 
-export type SignInSchemaType = z.infer<typeof SignInSchema>;
+export type SignUpSchemaType = z.infer<typeof SignUpSchema>;
 
-export const SignInSchema = z.object({
+export const SignUpSchema = z.object({
+  firstName: z.string().min(1, { message: 'First name is required!' }),
+  lastName: z.string().min(1, { message: 'Last name is required!' }),
   email: schemaUtils.email(),
   password: z
     .string()
@@ -39,7 +42,7 @@ export const SignInSchema = z.object({
 
 // ----------------------------------------------------------------------
 
-export function JwtSignInView() {
+export function JwtSignUpView() {
   const router = useRouter();
 
   const showPassword = useBoolean();
@@ -48,13 +51,15 @@ export function JwtSignInView() {
 
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const defaultValues: SignInSchemaType = {
-    email: 'demo@minimals.cc',
+  const defaultValues: SignUpSchemaType = {
+    firstName: 'Hello',
+    lastName: 'Friend',
+    email: 'hello@gmail.com',
     password: '@2Minimal',
   };
 
   const methods = useForm({
-    resolver: zodResolver(SignInSchema),
+    resolver: zodResolver(SignUpSchema),
     defaultValues,
   });
 
@@ -65,7 +70,12 @@ export function JwtSignInView() {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      await signInWithPassword({ email: data.email, password: data.password });
+      await signUp({
+        email: data.email,
+        password: data.password,
+        firstName: data.firstName,
+        lastName: data.lastName,
+      });
       await checkUserSession?.();
 
       router.refresh();
@@ -78,40 +88,41 @@ export function JwtSignInView() {
 
   const renderForm = () => (
     <Box sx={{ gap: 3, display: 'flex', flexDirection: 'column' }}>
-      <Field.Text name="email" label="Email address" slotProps={{ inputLabel: { shrink: true } }} />
-
-      <Box sx={{ gap: 1.5, display: 'flex', flexDirection: 'column' }}>
-        <Link
-          component={RouterLink}
-          href="#"
-          variant="body2"
-          color="inherit"
-          sx={{ alignSelf: 'flex-end' }}
-        >
-          Forgot password?
-        </Link>
-
+      <Box
+        sx={{ display: 'flex', gap: { xs: 3, sm: 2 }, flexDirection: { xs: 'column', sm: 'row' } }}
+      >
         <Field.Text
-          name="password"
-          label="Password"
-          placeholder="6+ characters"
-          type={showPassword.value ? 'text' : 'password'}
-          slotProps={{
-            inputLabel: { shrink: true },
-            input: {
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton onClick={showPassword.onToggle} edge="end">
-                    <Iconify
-                      icon={showPassword.value ? 'solar:eye-bold' : 'solar:eye-closed-bold'}
-                    />
-                  </IconButton>
-                </InputAdornment>
-              ),
-            },
-          }}
+          name="firstName"
+          label="First name"
+          slotProps={{ inputLabel: { shrink: true } }}
+        />
+        <Field.Text
+          name="lastName"
+          label="Last name"
+          slotProps={{ inputLabel: { shrink: true } }}
         />
       </Box>
+
+      <Field.Text name="email" label="Email address" slotProps={{ inputLabel: { shrink: true } }} />
+
+      <Field.Text
+        name="password"
+        label="Password"
+        placeholder="6+ characters"
+        type={showPassword.value ? 'text' : 'password'}
+        slotProps={{
+          inputLabel: { shrink: true },
+          input: {
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton onClick={showPassword.onToggle} edge="end">
+                  <Iconify icon={showPassword.value ? 'solar:eye-bold' : 'solar:eye-closed-bold'} />
+                </IconButton>
+              </InputAdornment>
+            ),
+          },
+        }}
+      />
 
       <Button
         fullWidth
@@ -120,9 +131,9 @@ export function JwtSignInView() {
         type="submit"
         variant="contained"
         loading={isSubmitting}
-        loadingIndicator="Sign in..."
+        loadingIndicator="Create account..."
       >
-        Sign in
+        Create account
       </Button>
     </Box>
   );
@@ -130,23 +141,17 @@ export function JwtSignInView() {
   return (
     <>
       <FormHead
-        title="Sign in to your account"
+        title="Get started absolutely free"
         description={
           <>
-            {`Don’t have an account? `}
-            <Link component={RouterLink} href={paths.auth.jwt.signUp} variant="subtitle2">
+            {`Already have an account? `}
+            <Link component={RouterLink} href={paths.auth.jwt.signIn} variant="subtitle2">
               Get started
             </Link>
           </>
         }
         sx={{ textAlign: { xs: 'center', md: 'left' } }}
       />
-
-      <Alert severity="info" sx={{ mb: 3 }}>
-        Use <strong>{defaultValues.email}</strong>
-        {' with password '}
-        <strong>{defaultValues.password}</strong>
-      </Alert>
 
       {!!errorMessage && (
         <Alert severity="error" sx={{ mb: 3 }}>
@@ -157,6 +162,8 @@ export function JwtSignInView() {
       <Form methods={methods} onSubmit={onSubmit}>
         {renderForm()}
       </Form>
+
+      <SignUpTerms />
     </>
   );
 }

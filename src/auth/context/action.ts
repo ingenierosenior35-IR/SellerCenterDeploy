@@ -1,9 +1,10 @@
 'use client';
 
 import axios, { endpoints } from 'src/lib/axios';
+import { loginService } from 'src/api/auth/login';
 
 import { setSession } from './utils';
-import { JWT_STORAGE_KEY } from './constant';
+import { ACCESS_TOKEN_STORAGE_KEY } from './constant';
 
 // ----------------------------------------------------------------------
 
@@ -20,16 +21,11 @@ export type SignUpParams = {
 };
 
 /** **************************************
- * Sign in
+ * Sign in with graphql
  *************************************** */
 export const signInWithPassword = async ({ email, password }: SignInParams): Promise<void> => {
   try {
-    const params = { email, password };
-
-    const res = await axios.post(endpoints.auth.signIn, params);
-
-    const { accessToken } = res.data;
-
+    const { accessToken } = await loginService(email, password);
     if (!accessToken) {
       throw new Error('Access token not found in response');
     }
@@ -66,7 +62,7 @@ export const signUp = async ({
       throw new Error('Access token not found in response');
     }
 
-    sessionStorage.setItem(JWT_STORAGE_KEY, accessToken);
+    sessionStorage.setItem(ACCESS_TOKEN_STORAGE_KEY, accessToken);
   } catch (error) {
     console.error('Error during sign up:', error);
     throw error;
