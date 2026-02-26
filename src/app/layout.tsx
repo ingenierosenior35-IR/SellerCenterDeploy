@@ -15,6 +15,8 @@ import { SettingsDrawer, defaultSettings, SettingsProvider } from 'src/component
 
 import { AuthProvider } from 'src/auth/context';
 
+import { Providers } from './providers';
+
 // ----------------------------------------------------------------------
 
 export const viewport: Viewport = {
@@ -54,7 +56,9 @@ async function getAppConfig() {
   }
 }
 
-export default async function RootLayout({ children }: RootLayoutProps) {
+export default async function RootLayout({
+  children,
+}: Readonly<RootLayoutProps>) {
   const appConfig = await getAppConfig();
 
   return (
@@ -79,7 +83,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
                 <MotionLazy>
                   <ProgressBar />
                   <SettingsDrawer defaultSettings={defaultSettings} />
-                  {children}
+                  <Providers>{children}</Providers>
                 </MotionLazy>
               </ThemeProvider>
             </AppRouterCacheProvider>

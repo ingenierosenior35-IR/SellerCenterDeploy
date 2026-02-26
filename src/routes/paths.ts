@@ -10,7 +10,6 @@ const ROOTS = {
 export const paths = {
   faqs: '/faqs',
   minimalStore: 'https://mui.com/store/items/minimal-dashboard/',
-  // AUTH
   auth: {
     amplify: {
       signIn: `${ROOTS.AUTH}/amplify/sign-in`,
@@ -29,9 +28,7 @@ export const paths = {
       signUp: `${ROOTS.AUTH}/firebase/sign-up`,
       resetPassword: `${ROOTS.AUTH}/firebase/reset-password`,
     },
-    auth0: {
-      signIn: `${ROOTS.AUTH}/auth0/sign-in`,
-    },
+    auth0: { signIn: `${ROOTS.AUTH}/auth0/sign-in` },
     supabase: {
       signIn: `${ROOTS.AUTH}/supabase/sign-in`,
       verify: `${ROOTS.AUTH}/supabase/verify`,
@@ -50,5 +47,8 @@ export const paths = {
       five: `${ROOTS.DASHBOARD}/group/five`,
       six: `${ROOTS.DASHBOARD}/group/six`,
     },
+  },
+  product: {
+    root: `/product`,
   },
 };

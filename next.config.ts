@@ -1,5 +1,7 @@
 import type { NextConfig } from 'next';
 
+import { ENV } from 'src/environments';
+
 // ----------------------------------------------------------------------
 
 /**
@@ -42,5 +44,15 @@ const nextConfig: NextConfig = {
     },
   },
 };
+
+// --- Configuración de Proxy para CORS ---
+if (ENV.environment === 'local' && ENV.urlBackend) {
+  nextConfig.rewrites = async () => [
+    {
+      source: '/api/magento/:path*',
+      destination: `${ENV.urlBackend}/:path*`,
+    },
+  ];
+}
 
 export default nextConfig;
