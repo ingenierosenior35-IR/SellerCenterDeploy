@@ -11,10 +11,13 @@ import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
 import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
+import Divider from '@mui/material/Divider';
+import Checkbox from '@mui/material/Checkbox';
 import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
 import InputAdornment from '@mui/material/InputAdornment';
+import FormControlLabel from '@mui/material/FormControlLabel';
 
-import { paths } from 'src/routes/paths';
 import { useRouter } from 'src/routes/hooks';
 import { RouterLink } from 'src/routes/components';
 
@@ -55,8 +58,8 @@ export function JwtSignInView() {
 
 
   const defaultValues: SignInSchemaType = {
-    email: 'demo@minimals.cc',
-    password: '@2Minimal',
+    email: '',
+    password: '',
   };
 
   const methods = useForm({
@@ -102,16 +105,6 @@ export function JwtSignInView() {
       <Field.Text name="email" label="Email address" slotProps={{ inputLabel: { shrink: true } }} />
 
       <Box sx={{ gap: 1.5, display: 'flex', flexDirection: 'column' }}>
-        <Link
-          component={RouterLink}
-          href="#"
-          variant="body2"
-          color="inherit"
-          sx={{ alignSelf: 'flex-end' }}
-        >
-          Forgot password?
-        </Link>
-
         <Field.Text
           name="password"
           label="Password"
@@ -132,6 +125,15 @@ export function JwtSignInView() {
             },
           }}
         />
+        <Link
+          component={RouterLink}
+          href="#"
+          variant="body2"
+          color="inherit"
+          sx={{ alignSelf: 'flex-start' }}
+        >
+          Forgot password?
+        </Link>
       </Box>
 
       {!!errorMessage && (
@@ -148,9 +150,32 @@ export function JwtSignInView() {
         variant="contained"
         loading={isSubmitting}
         loadingIndicator="Sign in..."
+        startIcon={<Iconify icon='mdi:login' />}
       >
         Sign in
       </Button>
+
+      <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+        <FormControlLabel control={<Checkbox defaultChecked />} label="Keep the session open" />
+      </Box>
+
+      <Box>
+        <Divider><Typography variant="caption" sx={{ color: 'text.secondary' }}>o</Typography></Divider>
+      </Box>
+
+      <Box sx={{ display: 'flex', justifyContent: 'center', gap: 1 }}>
+        <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+          {`Don’t have an account? `}
+          <Link
+            component={RouterLink}
+            // href={paths.auth.jwt.signUp}
+            href=""
+            variant="subtitle2"
+          >
+            Get started
+          </Link>
+        </Typography>
+      </Box>
     </Box>
   );
 
@@ -158,22 +183,8 @@ export function JwtSignInView() {
     <>
       <FormHead
         title="Sign in to your account"
-        description={
-          <>
-            {`Don’t have an account? `}
-            <Link component={RouterLink} href={paths.auth.jwt.signUp} variant="subtitle2">
-              Get started
-            </Link>
-          </>
-        }
         sx={{ textAlign: { xs: 'center', md: 'left' } }}
       />
-
-      <Alert severity="info" sx={{ mb: 3 }}>
-        Use <strong>{defaultValues.email}</strong>
-        {' with password '}
-        <strong>{defaultValues.password}</strong>
-      </Alert>
 
       <Form methods={methods} onSubmit={onSubmit}>
         {renderForm()}

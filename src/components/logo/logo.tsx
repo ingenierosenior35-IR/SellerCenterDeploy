@@ -10,6 +10,8 @@ import { styled, useTheme } from '@mui/material/styles';
 
 import { RouterLink } from 'src/routes/components';
 
+import { CONFIG } from 'src/global-config';
+
 import { logoClasses } from './classes';
 
 // ----------------------------------------------------------------------
@@ -36,88 +38,12 @@ export function Logo({
   const PRIMARY_MAIN = theme.vars.palette.primary.main;
   const PRIMARY_DARKER = theme.vars.palette.primary.dark;
 
-  /*
-    * OR using local (public folder)
-    *
-    const singleLogo = (
-      <img
-        alt="Single logo"
-        src={`${CONFIG.assetsDir}/logo/logo-single.svg`}
-        width="100%"
-        height="100%"
-      />
-    );
-
-    const fullLogo = (
-      <img
-        alt="Full logo"
-        src={`${CONFIG.assetsDir}/logo/logo-full.svg`}
-        width="100%"
-        height="100%"
-      />
-    );
-    *
-    */
-
   const singleLogo = (
-    <svg
-      width="100%"
-      height="100%"
-      viewBox="0 0 512 512"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <defs>
-        <linearGradient
-          id={`${uniqueId}-1`}
-          x1="152"
-          y1="167.79"
-          x2="65.523"
-          y2="259.624"
-          gradientUnits="userSpaceOnUse"
-        >
-          <stop stopColor={PRIMARY_DARKER} />
-          <stop offset="1" stopColor={PRIMARY_MAIN} />
-        </linearGradient>
-        <linearGradient
-          id={`${uniqueId}-2`}
-          x1="86"
-          y1="128"
-          x2="86"
-          y2="384"
-          gradientUnits="userSpaceOnUse"
-        >
-          <stop stopColor={PRIMARY_LIGHT} />
-          <stop offset="1" stopColor={PRIMARY_MAIN} />
-        </linearGradient>
-        <linearGradient
-          id={`${uniqueId}-3`}
-          x1="402"
-          y1="288"
-          x2="402"
-          y2="384"
-          gradientUnits="userSpaceOnUse"
-        >
-          <stop stopColor={PRIMARY_LIGHT} />
-          <stop offset="1" stopColor={PRIMARY_MAIN} />
-        </linearGradient>
-      </defs>
-      <path
-        fill={`url(#${`${uniqueId}-1`})`}
-        d="M86.352 246.358C137.511 214.183 161.836 245.017 183.168 285.573C165.515 317.716 153.837 337.331 148.132 344.418C137.373 357.788 125.636 367.911 111.202 373.752C80.856 388.014 43.132 388.681 14 371.048L86.352 246.358Z"
-      />
-      <path
-        fill={`url(#${`${uniqueId}-2`})`}
-        fillRule="evenodd"
-        clipRule="evenodd"
-        d="M444.31 229.726C398.04 148.77 350.21 72.498 295.267 184.382C287.751 198.766 282.272 226.719 270 226.719V226.577C257.728 226.577 252.251 198.624 244.735 184.24C189.79 72.356 141.96 148.628 95.689 229.584C92.207 235.69 88.862 241.516 86 246.58C192.038 179.453 183.11 382.247 270 383.858V384C356.891 382.389 347.962 179.595 454 246.72C451.139 241.658 447.794 235.832 444.31 229.726Z"
-      />
-      <path
-        fill={`url(#${`${uniqueId}-3`})`}
-        fillRule="evenodd"
-        clipRule="evenodd"
-        d="M450 384C476.509 384 498 362.509 498 336C498 309.491 476.509 288 450 288C423.491 288 402 309.491 402 336C402 362.509 423.491 384 450 384Z"
-      />
+    // logo de miti
+    <svg width="80" height="40" viewBox="0 0 80 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M17.7482 25.0199C15.6781 27.1034 15.6781 30.4814 17.7482 32.5649C19.8182 34.6484 23.1745 34.6484 25.2445 32.5649L42.7155 14.9806C44.7855 12.8971 44.7855 9.51906 42.7155 7.43557C40.6454 5.35207 37.2892 5.35207 35.2191 7.43557L17.7482 25.0199Z" fill="#424242"/>
+      <path d="M53.4913 28.7906C53.4913 31.7371 55.8646 34.1257 58.7921 34.1257C61.7196 34.1257 64.0928 31.7371 64.0928 28.7906V11.361C64.0928 8.41447 61.7196 6.02586 58.7921 6.02586C55.8646 6.02586 53.4913 8.41447 53.4913 11.361V28.7906Z" fill="#424242"/>
+      <path d="M37.2845 25.0194C35.2145 27.1029 35.2145 30.4809 37.2845 32.5644C39.3546 34.6479 42.7108 34.6479 44.7809 32.5644L62.2518 14.9801C64.3219 12.8966 64.3219 9.51857 62.2518 7.43508C60.1818 5.35159 56.8256 5.35158 54.7555 7.43508L37.2845 25.0194Z" fill="#424242"/>
     </svg>
   );
 
