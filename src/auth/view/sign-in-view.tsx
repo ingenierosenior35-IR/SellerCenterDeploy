@@ -125,15 +125,6 @@ export function JwtSignInView() {
             },
           }}
         />
-        <Link
-          component={RouterLink}
-          href="#"
-          variant="body2"
-          color="inherit"
-          sx={{ alignSelf: 'flex-start' }}
-        >
-          Forgot password?
-        </Link>
       </Box>
 
       {!!errorMessage && (
@@ -154,6 +145,16 @@ export function JwtSignInView() {
       >
         Sign in
       </Button>
+
+      <Link
+        component={RouterLink}
+        href="#"
+        variant="body2"
+        color="inherit"
+        sx={{ alignSelf: 'flex-start' }}
+      >
+        Forgot password?
+      </Link>
 
       <Box sx={{ display: 'flex', justifyContent: 'center' }}>
         <FormControlLabel control={<Checkbox defaultChecked />} label="Keep the session open" />
