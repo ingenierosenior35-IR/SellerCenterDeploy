@@ -47,4 +47,8 @@ export const paths = {
   product: {
     root: `/product`,
   },
+  return: {
+    root: '/return',
+    details: (id: number) => `/return/${id}`,
+  },
 };

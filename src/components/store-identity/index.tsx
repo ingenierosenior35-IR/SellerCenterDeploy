@@ -7,9 +7,11 @@ import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 
 import { getInitials } from 'src/utils';
+import { CONFIG } from 'src/global-config';
 
-import { Iconify } from 'src/components/iconify';
 import { AnimateBorder } from 'src/components/animate';
+
+import { SvgColor } from '../svg-color';
 
 interface Props {
   user: IUserProfile;
@@ -24,7 +26,6 @@ export const StoreIdentity = ({
   const renderAvatar = () => (
     <AnimateBorder
       sx={{
-        // mb: 2,
         p: '6px',
         width: 50,
         height: 50,
@@ -65,7 +66,6 @@ export const StoreIdentity = ({
           variant="subtitle2"
           fontWeight={600}
           noWrap
-          // sx={{ color: 'common.white' }}
         >
           {user.displayName}
         </Typography>
@@ -89,11 +89,7 @@ export const StoreIdentity = ({
           },
         }}
       >
-        <Iconify
-          icon="mdi:settings-outline"
-          width={20}
-          height={20}
-        />
+        <SvgColor src={`${CONFIG.assetsDir}/assets/icons/navbar/ic-settings.svg`} />
       </IconButton>
     </Box>
   );

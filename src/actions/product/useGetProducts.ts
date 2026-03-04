@@ -1,7 +1,6 @@
 'use client';
 
-import type { SellerProductsResponseInterface } from 'src/interfaces';
-import type { ProductListInterface } from 'src/interfaces/product/product-list-interface';
+import type { ProductListInterface, SellerProductsResponseInterface } from 'src/interfaces';
 
 import { useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';

@@ -1,6 +1,3 @@
-
-
-
 export interface SellerProductsResponseInterface {
   sellerProducts: {
     items: ItemsProducsInterface[];
@@ -53,4 +50,19 @@ export interface PageInfoInterface {
   current_page: number;
   page_size: number;
   total_pages: number;
+};
+
+
+export interface ProductListInterface {
+  id: number;
+  sku: string;
+  productName: string;
+  thumbnailUrl: string;
+  category: string;
+  finalPrice: number;
+  discount: number;
+  discountPercent: number;
+  stock: number;
+  inStock: boolean;
+  rating: number;
 };

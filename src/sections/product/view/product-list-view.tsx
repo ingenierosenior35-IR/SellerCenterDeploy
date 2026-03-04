@@ -1,7 +1,7 @@
 'use client';
 
 import type { GridColDef } from '@mui/x-data-grid';
-import type { ProductListInterface } from 'src/interfaces/product/product-list-interface';
+import type { ProductListInterface } from 'src/interfaces';
 
 import { useMemo, useState, useEffect, useCallback } from 'react';
 
