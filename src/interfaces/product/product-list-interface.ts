@@ -1,13 +1,13 @@
 
 export interface ProductListInterface {
-  id: string;
+  id: number;
   sku: string;
   productName: string;
-  thumbnail: string;
+  thumbnailUrl: string;
   category: string;
   finalPrice: number;
   discount: number;
-  discountPercent: number;  
+  discountPercent: number;
   stock: number;
   inStock: boolean;
   rating: number;

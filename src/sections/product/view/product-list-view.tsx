@@ -43,7 +43,7 @@ export function ProductListView() {
     setTableData(products);
   }, [products]);
 
-  const handleDeleteRow = useCallback((id: string) => {
+  const handleDeleteRow = useCallback((id: number) => {
     setTableData((prev) => prev.filter((row) => row.id !== id));
     toast.success('Delete success!');
   }, []);
@@ -82,8 +82,8 @@ export function ProductListView() {
         }}
       >
         {isError ? (
-          <ErrorContent 
-            title="Products not available" 
+          <ErrorContent
+            title="Products not available"
             description="We're sorry, we were unable to load the products at this time. Please try again later."
           />
           ) : (
@@ -116,7 +116,7 @@ export function ProductListView() {
 // ----------------------------------------------------------------------
 
 type UseGetColumnsProps = {
-  onDeleteRow: (id: string) => void;
+  onDeleteRow: (id: number) => void;
 };
 
 const useGetColumns = ({ onDeleteRow }: UseGetColumnsProps) => {

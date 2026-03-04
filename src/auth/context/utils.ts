@@ -46,3 +46,18 @@ export async function setSession(accessToken: string | null) {
     throw error;
   }
 }
+
+export function getSession() {
+  try {
+    const accessToken = sessionStorage.getItem(ACCESS_TOKEN_STORAGE_KEY);
+
+    if (!accessToken) {
+      return null;
+    }
+
+    return accessToken;
+  } catch (error) {
+    console.error('Error during get session');
+    throw error;
+  }
+}

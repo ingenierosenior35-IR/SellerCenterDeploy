@@ -1,19 +1,23 @@
 'use client';
 
+import type { SellerProductsResponseInterface } from 'src/interfaces';
 import type { ProductListInterface } from 'src/interfaces/product/product-list-interface';
 
 import { useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
 
-import { graphqlRequest } from 'src/lib/graphql-client';
+import { GraphQLService } from 'src/lib/graphql-client';
 
-import { GET_PRODUCTS_QUERY } from './graphql/queries';
+import { SELLER_PRODUCTS_QUERY } from './graphql/queries';
 import { productListAdapter } from './adapters/product-list-adapter';
 
 export function useGetProducts() {
+
+  const graphql = GraphQLService.getInstance();
+
   const { data, isLoading, isError } = useQuery({
     queryKey: ['getProducts'],
-    queryFn: () => graphqlRequest<any, {}>(GET_PRODUCTS_QUERY),
+    queryFn: () => graphql.request<SellerProductsResponseInterface, {}>(SELLER_PRODUCTS_QUERY),
     // staleTime: 1000 * 60 * 5, // Mantiene los datos actualizados por 5 minutos
   });
 

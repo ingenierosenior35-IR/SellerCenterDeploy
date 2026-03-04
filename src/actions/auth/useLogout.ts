@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 
-import { client, graphqlRequest } from 'src/lib/graphql-client';
+import { GraphQLService } from 'src/lib/graphql-client';
 
 import { setSession } from 'src/auth/context/utils';
 
@@ -14,15 +14,18 @@ interface LogoutResponse {
 }
 
 export function useLogout() {
+  const graphql = GraphQLService.getInstance();
   return useMutation({
-    mutationFn: (variables: any) => graphqlRequest<LogoutResponse>(LOGOUT_MUTATION, variables),
+    mutationFn: () => graphql.request<LogoutResponse>(LOGOUT_MUTATION),
     onSuccess: (data) => {
       const response = data?.revokeCustomerToken?.result;
       if (!response)
         console.warn('Logout failed');
 
+      graphql.setHeader('Authorization', '');
+    },
+    onSettled: () => {
       setSession(null);
-      client.setHeader('Authorization', '');
     },
   });
 }

@@ -22,7 +22,7 @@ export function SignOutButton({ onClose, sx, ...other }: Props) {
   const { mutateAsync } = useLogout();
 
   const handleLogout = async() => {
-      await mutateAsync(null);
+      await mutateAsync();
 
     // onClose?.();
     router.refresh();

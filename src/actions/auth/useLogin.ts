@@ -1,8 +1,8 @@
 import { useMutation } from '@tanstack/react-query';
 
-import { client, graphqlRequest } from 'src/lib/graphql-client';
+import { GraphQLService } from 'src/lib/graphql-client';
 
-import { setSession } from 'src/auth/context/utils';
+import { getSession, setSession } from 'src/auth/context/utils';
 
 import { LOGIN_MUTATION } from "./graphql";
 
@@ -14,12 +14,14 @@ interface LoginResponse {
 }
 
 export function useLogin() {
+  const graphql = GraphQLService.getInstance();
   return useMutation({
-    mutationFn: (variables: any) => graphqlRequest<LoginResponse>(LOGIN_MUTATION, variables),
+    mutationFn: (variables: any) => graphql.request<LoginResponse>(LOGIN_MUTATION, variables),
     onSuccess: async (data) => {
       const token = await data.generateCustomerToken.token;
       setSession(token);
-      client.setHeader('Authorization', `Bearer ${token}`);
+
+      graphql.setHeader('Authorization', `Bearer ${getSession()}`);
     },
   });
 }
