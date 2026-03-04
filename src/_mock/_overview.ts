@@ -42,16 +42,60 @@ export const _appAuthors = Array.from({ length: 3 }, (_, index) => ({
   totalFavorites: _mock.number.nativeL(index),
 }));
 
-export const _appInvoices = Array.from({ length: 5 }, (_, index) => {
-  const category = ['Android', 'Mac', 'Windows', 'Android', 'Mac'][index];
+export const _appProducts = Array.from({ length: 3 }, (_, index) => ({
+  id: _mock.id(index),
+  name: _mock.productName(index),
+  totalFavorites: _mock.number.nativeL(index),
+  image: `/assets/images/mock/product/prod_miti${index + 1}.jpg`,
+  sales: _mock.number.nativeL(index + 5),
+}));
 
-  const status = ['paid', 'out of date', 'progress', 'paid', 'paid'][index];
+export const _appCustomers = Array.from({ length: 4 }, (_, index) => ({
+  id: _mock.id(index),
+  name: _mock.fullName(index),
+  email: _mock.email(index),
+}));
+
+export const _appInvoices = Array.from({ length: 5 }, (_, index) => {
+  const customer = [
+    'Juan Valdes', 
+    'Faustino Asprilla', 
+    'Katerine Ibarguen', 
+    'Andres Escobar', 
+    'Maria Gomez',  
+    'Radamel Falcao',
+    'Egan Bernal',
+    'Yuberjén Martinez'
+  ][index];
+
+  const status = [
+    'Cancelado', 
+    'Entregado', 
+    'Orden Confirmada', 
+    'Orden en Proceso', 
+    'Entregado', 
+    'Entregado', 
+    'Pago por confirmar',
+    'Orden en Proceso'
+  ][index];
+
+  const date = [
+    '13/01/2025', 
+    '20/01/2025', 
+    '06/02/2025', 
+    '18/02/2025', 
+    '23/03/2025', 
+    '30/03/2025', 
+    '10/04/2025', 
+    '23/05/2025',
+  ][index];
 
   return {
     id: _mock.id(index),
-    invoiceNumber: `INV-199${index}`,
+    invoiceNumber: `0000064${index}`,
     price: _mock.number.price(index),
-    category,
+    customer,
+    date,
     status,
   };
 });
