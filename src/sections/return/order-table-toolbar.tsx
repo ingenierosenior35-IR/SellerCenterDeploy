@@ -85,7 +85,7 @@ export function OrderTableToolbar({ filters, onResetPage }: Props) {
             fullWidth
             value={currentFilters.name}
             onChange={handleFilterName}
-            placeholder="Search customer or order reference..."
+            placeholder="Search customer or Id..."
             slotProps={{
               input: {
                 startAdornment: (

@@ -1,5 +1,6 @@
 
-import type { ReturnListInterface } from 'src/interfaces';
+import type { LabelColor } from 'src/components/label';
+import type { ItemsReturnListInterface } from 'src/interfaces';
 
 import { useBoolean } from 'minimal-shared/hooks';
 
@@ -15,17 +16,18 @@ import ListItemText from '@mui/material/ListItemText';
 
 import { RouterLink } from 'src/routes/components';
 
-import { fCurrency } from 'src/utils/format-number';
 import { fDate, fTime } from 'src/utils/format-time';
 
 import { Label } from 'src/components/label';
 import { Iconify } from 'src/components/iconify';
 
+import { RETURN_STATUS } from './constants/return/status';
+
 
 // ----------------------------------------------------------------------
 
 type Props = {
-  row: ReturnListInterface;
+  row: ItemsReturnListInterface;
   selected: boolean;
   detailsHref: string;
   onSelectRow: () => void;
@@ -37,18 +39,17 @@ export function OrderTableRow({ row, selected, onSelectRow, detailsHref }: Props
   const renderPrimaryRow = () => (
     <TableRow hover selected={selected}>
       <TableCell>
-          {row.id}
+          {row.number}
       </TableCell>
 
       <TableCell>
         <Link component={RouterLink} href={detailsHref} color="inherit" underline="always">
-          {row.orderReference}
+          {row.order.orderNumber}
         </Link>
       </TableCell>
 
       <TableCell>
         <Box sx={{ gap: 2, display: 'flex', alignItems: 'center' }}>
-          <Avatar alt={row.customer.name} src={row.customer.avatarUrl} />
           <ListItemText
             primary={row.customer.name}
             secondary={row.customer.email}
@@ -68,13 +69,11 @@ export function OrderTableRow({ row, selected, onSelectRow, detailsHref }: Props
         <Label
           variant="soft"
           color={
-            (row.status === 'completed' && 'success') ||
-            (row.status === 'pending' && 'warning') ||
-            (row.status === 'cancelled' && 'error') ||
+            (RETURN_STATUS.find((status) => status.value === row.status)?.color) as LabelColor ||
             'default'
           }
         >
-          {row.status}
+          {RETURN_STATUS.find((status) => status.value === row.status)?.label}
         </Label>
       </TableCell>
 
@@ -116,9 +115,9 @@ export function OrderTableRow({ row, selected, onSelectRow, detailsHref }: Props
           sx={{ bgcolor: 'background.neutral' }}
         >
           <Paper sx={{ m: 1.5 }}>
-            {row.productsOrder.map((item) => (
+            {row.items.map((item) => (
               <Box
-                key={item.id}
+                key={item.uid}
                 sx={(theme) => ({
                   display: 'flex',
                   alignItems: 'center',
@@ -129,14 +128,13 @@ export function OrderTableRow({ row, selected, onSelectRow, detailsHref }: Props
                 })}
               >
                 <Avatar
-                  src={item.thumbnail}
+                  src={item.orderItem.productImage}
                   variant="rounded"
                   sx={{ width: 48, height: 48, mr: 2 }}
                 />
 
                 <ListItemText
-                  primary={item.name}
-                  // secondary={item.sku}
+                  primary={item.orderItem.productName}
                   slotProps={{
                     primary: { sx: { typography: 'body2' } },
                     secondary: { sx: { color: 'text.disabled' } },
@@ -145,7 +143,7 @@ export function OrderTableRow({ row, selected, onSelectRow, detailsHref }: Props
 
                 <div>x{item.quantity} </div>
 
-                <Box sx={{ width: 110, textAlign: 'right' }}>{fCurrency(item.price)}</Box>
+                {/* <Box sx={{ width: 110, textAlign: 'right' }}>{fCurrency(item.orderItem.price)}</Box> */}
               </Box>
             ))}
           </Paper>
