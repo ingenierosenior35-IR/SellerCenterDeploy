@@ -15,7 +15,7 @@ import { ENV } from 'src/environments';
  *
  * NOTE: Remove all "generateStaticParams()" functions if not using static exports.
  */
-const isStaticExport = false;
+const isStaticExport = true;
 
 // ----------------------------------------------------------------------
 
