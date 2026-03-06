@@ -2,11 +2,9 @@
 
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import Badge from '@mui/material/Badge';
-import Typography from '@mui/material/Typography';
 
 import { DashboardContent } from 'src/layouts/dashboard';
-import { _appCustomers, _appInvoices, _appProducts } from 'src/_mock';
+import { _appInvoices, _appProducts, _appCustomers } from 'src/_mock';
 
 import { AppKpiCard } from './app-kpi-card';
 import { AppTopProducts } from '../app-top-products';
@@ -20,18 +18,18 @@ export function OverviewAppView() {
   return (
     <DashboardContent maxWidth="xl">
 
-      <Grid container spacing={3} 
+      <Grid container spacing={3}
         sx={{
           backgroundColor: 'common.black',
           borderRadius: 2,
           display: 'grid',
-          gap: 2,          
+          gap: 2,
           gridTemplateColumns: { xs: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)', md: 'repeat(3, 1fr)' },
           mb: 2,
           p: 2,
-        }}     
+        }}
       >
-        <Grid item>
+        <Grid>
           <AppKpiCard
             title="Net Profit"
             total={2657.93}
@@ -41,7 +39,7 @@ export function OverviewAppView() {
             transparentCard
           />
         </Grid>
-        <Grid item>
+        <Grid>
           <AppKpiCard
             title="Total Sales"
             total={2657.93}
@@ -49,7 +47,7 @@ export function OverviewAppView() {
             series={[8, 6, 9, 11, 10, 12, 15]}
           />
         </Grid>
-        <Grid item>
+        <Grid>
           <AppKpiCard
             title="Net Profit"
             total={2657.93}
@@ -58,7 +56,7 @@ export function OverviewAppView() {
           />
         </Grid>
       </Grid>
-      
+
       <Box
         display="grid"
         gap={2}
@@ -81,25 +79,14 @@ export function OverviewAppView() {
         </Box>
         <Box sx={{ gridColumn: { md: 'span 1' } }}>
           <Box display="flex" flexDirection="column" gap={3}>
-            <AppTopProducts 
+            <AppTopProducts
               title="Top Products"
-              list={_appProducts} 
+              list={_appProducts}
             />
-            <AppTopCustomers 
-              title={
-                <>
-                  <Typography variant="h6" sx={{  }}>
-                    Top Clients
-                  </Typography>
-                  <Badge 
-                    component="div"
-                    color="success"
-                    badgeContent="2.5%"
-                    sx={{ left: 16, mr: 5 }}
-                  />
-                </>
-              } 
-              list={_appCustomers} />
+            <AppTopCustomers
+              title="Top Clients"
+              list={_appCustomers}
+            />
           </Box>
         </Box>
       </Box>

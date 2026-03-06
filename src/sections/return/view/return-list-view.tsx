@@ -60,7 +60,7 @@ export function ReturnListView() {
 
   const confirmDialog = useBoolean();
 
-  const { returns, isLoading, isError } = useGetReturns();
+  const { returns, isLoading } = useGetReturns();
 
   const [tableData, setTableData] = useState<ItemsReturnListInterface[]>(returns?.returns?.items || []);
 

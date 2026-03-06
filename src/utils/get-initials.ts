@@ -1,4 +1,4 @@
-import { IUserProfile } from "src/interfaces";
+import type { IUserProfile } from "src/interfaces";
 
 
 export const getInitials = (user: Readonly<IUserProfile>) => {

@@ -6,9 +6,10 @@ import Button, { type ButtonProps } from '@mui/material/Button';
 
 import { useRouter } from 'src/routes/hooks';
 
+import { CONFIG } from 'src/global-config';
 import { useLogout } from 'src/actions/auth/useLogout';
 
-import { Iconify } from 'src/components/iconify';
+import { SvgColor } from 'src/components/svg-color';
 
 // ----------------------------------------------------------------------
 
@@ -50,7 +51,9 @@ export function SignOutButton({ onClose, sx, ...other }: Props) {
           },
           ':hover': { backgroundColor: 'var(--nav-item-hover-bg)' },
         }}
-        startIcon={<Iconify icon="mdi:logout" sx={{ color: 'error.main' }} />}
+        startIcon={
+          <SvgColor src={`${CONFIG.assetsDir}/assets/icons/navbar/ic-log-out.svg`} />
+        }
         {...other}
       >
         Logout

@@ -141,7 +141,6 @@ export function JwtSignInView() {
         variant="contained"
         loading={isSubmitting}
         loadingIndicator="Sign in..."
-        startIcon={<Iconify icon='mdi:login' />}
       >
         Sign in
       </Button>

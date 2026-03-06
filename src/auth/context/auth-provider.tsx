@@ -28,7 +28,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
       } else {
         setState({ user: null, loading: false });
       }
-    } catch (error) {
+    } catch {
       setState({ user: null, loading: false });
     }
   }, [setState, user]);

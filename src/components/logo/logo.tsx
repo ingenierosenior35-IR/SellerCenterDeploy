@@ -15,7 +15,7 @@ import { SingleLogo } from './single-logo';
 
 // ----------------------------------------------------------------------
 
-interface Props {
+export interface LogoProps {
   sx?: SxProps<Theme>;
   disabled?: boolean;
   className?: string;
@@ -30,7 +30,7 @@ export function Logo({
   href = '/',
   isNavMini = true,
   ...other
-}: Props) {
+}: LogoProps) {
 
   return (
     <LogoRoot

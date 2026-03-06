@@ -58,9 +58,8 @@ const UniqueIcon = ({ mode, clicked }: {mode: string | undefined; clicked: boole
       height: 16,
     }}
   >
-    {/* ☀️ SOL */}
     <Iconify
-      icon="mdi:white-balance-sunny"
+      icon="custom:sun"
       width={16}
       height={16}
       sx={{
@@ -79,7 +78,6 @@ const UniqueIcon = ({ mode, clicked }: {mode: string | undefined; clicked: boole
       }}
     />
 
-    {/* 🌙 LUNA */}
     <MoonIcon
       sx={{
         position: 'absolute',

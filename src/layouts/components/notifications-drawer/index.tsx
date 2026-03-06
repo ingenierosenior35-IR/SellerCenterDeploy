@@ -10,7 +10,6 @@ import { useBoolean } from 'minimal-shared/hooks';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import Tabs from '@mui/material/Tabs';
-import Badge from '@mui/material/Badge';
 import Drawer from '@mui/material/Drawer';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
@@ -20,10 +19,10 @@ import IconButton from '@mui/material/IconButton';
 import { Label } from 'src/components/label';
 import { Iconify } from 'src/components/iconify';
 import { Scrollbar } from 'src/components/scrollbar';
+import { NotificationBellIcon } from 'src/components/icons';
 import { varTap, varHover, transitionTap } from 'src/components/animate';
 
 import { NotificationItem } from './notification-item';
-import { NotificationBellIcon } from 'src/components/icons';
 
 // ----------------------------------------------------------------------
 
