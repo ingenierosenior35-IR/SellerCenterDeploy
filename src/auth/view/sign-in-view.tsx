@@ -45,7 +45,7 @@ export const SignInSchema = z.object({
 
 // ----------------------------------------------------------------------
 
-export function JwtSignInView() {
+export function SignInView() {
   const router = useRouter();
 
   const showPassword = useBoolean();

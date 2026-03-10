@@ -16,11 +16,11 @@ export async function validateSession() {
       if (currentTime - parseFloat(expirationTime) > 3600) {
         sessionStorage.removeItem(ACCESS_TOKEN_STORAGE_KEY);
         sessionStorage.removeItem(EXPIRATION_TIME);
-        window.location.href = paths.auth.jwt.signIn;
+        window.location.href = paths.auth.signIn;
       }
     } else {
       // Si no hay token, redirigir al usuario a la página de inicio de sesión
-      window.location.href = paths.auth.jwt.signIn;
+      window.location.href = paths.auth.signIn;
     }
   } catch (error) {
     console.error('Error during session validation:', error);
@@ -39,7 +39,7 @@ export async function setSession(accessToken: string | null) {
     } else {
       sessionStorage.removeItem(ACCESS_TOKEN_STORAGE_KEY);
       sessionStorage.removeItem(EXPIRATION_TIME);
-      window.location.href = paths.auth.jwt.signIn;
+      window.location.href = paths.auth.signIn;
     }
   } catch (error) {
     console.error('Error during set session:', error);

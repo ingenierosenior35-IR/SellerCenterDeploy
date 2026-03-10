@@ -39,7 +39,7 @@ export const SignUpSchema = z.object({
 
 // ----------------------------------------------------------------------
 
-export function JwtSignUpView() {
+export function SignUpView() {
   const router = useRouter();
 
   const showPassword = useBoolean();
