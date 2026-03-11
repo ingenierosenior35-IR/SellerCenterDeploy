@@ -1,0 +1,22 @@
+import Papa from 'papaparse';
+
+type CsvValue = string | number | boolean | null | undefined;
+type CsvRow = Record<string, CsvValue>;
+
+interface CsvParseResult {
+  data: CsvRow[];
+  meta: {
+    fields?: string[];
+  };
+}
+const AVAILABLE_FORMAT_TYPES = ['text/csv', 'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'];
+
+export function validateCsvFile(file: File): Promise<string[]> {
+  return new Promise<string[]>((resolve) => {
+    if(file.size > 1000000) { // 1 MB
+      resolve(['El archivo CSV es demasiado grande. El tamaño máximo permitido es de 1 MB.']);
+      return;
+    }
+  });
+}
+
