@@ -23,17 +23,19 @@ import { SearchNotFound } from 'src/components/search-not-found';
 
 import { ResultItem } from './result-item';
 import { applyFilter, flattenNavSections } from './utils';
+import { useTranslate } from 'src/locales/langs/i18n';
 
 // ----------------------------------------------------------------------
 
 const breakpoint = 'sm';
 
 interface Props {
-    data?: Array<any>;
-    sx?: object | object[];
+  data?: Array<any>;
+  sx?: object | object[];
 }
 
 export function Searchbar({ data: navItems = [], sx, ...other }: Props) {
+  const { translate } = useTranslate();
   const theme = useTheme();
 
   const smUp = useMediaQuery(theme.breakpoints.up(breakpoint));
@@ -138,7 +140,7 @@ export function Searchbar({ data: navItems = [], sx, ...other }: Props) {
           },
         }}
       >
-        Search
+        {translate("search")}
       </Label>
     </Box>
   );
@@ -196,7 +198,7 @@ export function Searchbar({ data: navItems = [], sx, ...other }: Props) {
         <InputBase
           fullWidth
           autoFocus={open}
-          placeholder="Search..."
+          placeholder={translate("search")}
           value={searchQuery}
           onChange={handleSearch}
           startAdornment={

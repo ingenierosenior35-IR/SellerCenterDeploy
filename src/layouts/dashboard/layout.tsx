@@ -26,7 +26,7 @@ import { NavHorizontal } from './nav-horizontal';
 import { navData as dashboardNavData } from '../nav-config-dashboard';
 import { dashboardLayoutVars, dashboardNavColorVars } from './css-vars';
 import { MainSection, layoutClasses, HeaderSection, LayoutSection } from '../core';
-import { Searchbar, MenuButton, StoreButton, ThemeToggleButton, NotificationsDrawer } from '../components';
+import { Searchbar, MenuButton, StoreButton, ThemeToggleButton, NotificationsDrawer, LanguagePopover} from '../components';
 
 // ----------------------------------------------------------------------
 
@@ -133,6 +133,8 @@ export function DashboardLayout({
       rightArea: (
         <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: 0.75 } }}>
           <Searchbar data={navData} />
+
+          <LanguagePopover sx={{ border: 1, borderColor: 'divider' }} />
 
           <ThemeToggleButton sx={{ border: 1, borderColor: 'divider' }} />
 
