@@ -12,6 +12,7 @@ import { RouterLink } from 'src/routes/components';
 import { usePathname, useSearchParams } from 'src/routes/hooks';
 import { useAuthContext } from "src/auth/hooks";
 import { paths } from "src/routes/paths";
+import { ProfileHome } from "../components/profile-home";
 
 const TAB_PARAM = 'tab';
 //---- Define the navigation items for the user profile tabs
@@ -100,7 +101,7 @@ export function UserProfileView() {
                 </Box>
             </Card>
 
-            
+            {selectedTab === '' && <ProfileHome sx={{ mt: 3 }} />}
 
         </HomeContent>
     );
