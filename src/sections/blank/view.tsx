@@ -7,7 +7,7 @@ import { varAlpha } from 'minimal-shared/utils';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
-import { DashboardContent } from 'src/layouts/dashboard';
+import { HomeContent } from 'src/layouts/home';
 
 // ----------------------------------------------------------------------
 
@@ -35,11 +35,11 @@ export function BlankView({ title = 'Blank', description, sx }: Props) {
   );
 
   return (
-    <DashboardContent maxWidth="xl">
+    <HomeContent maxWidth="xl">
       <Typography variant="h4"> {title} </Typography>
       {description && <Typography sx={{ mt: 1 }}> {description} </Typography>}
 
       {renderContent()}
-    </DashboardContent>
+    </HomeContent>
   );
 }

@@ -1,5 +1,5 @@
 import { CONFIG } from 'src/global-config';
-import { DashboardLayout } from 'src/layouts/dashboard';
+import { HomeLayout } from 'src/layouts/home';
 
 import { AuthGuard } from 'src/auth/guard';
 
@@ -11,12 +11,12 @@ type Props = {
 
 export default function Layout({ children }: Props) {
   if (CONFIG.auth.skip) {
-    return <DashboardLayout>{children}</DashboardLayout>;
+    return <HomeLayout>{children}</HomeLayout>;
   }
 
   return (
     <AuthGuard>
-      <DashboardLayout>{children}</DashboardLayout>
+      <HomeLayout>{children}</HomeLayout>
     </AuthGuard>
   );
 }

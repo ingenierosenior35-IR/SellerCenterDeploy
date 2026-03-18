@@ -4,7 +4,7 @@ import Card from '@mui/material/Card';
 import { paths } from 'src/routes/paths';
 import Button from '@mui/material/Button';
 import { RouterLink } from 'src/routes/components';
-import { DashboardContent } from 'src/layouts/dashboard';
+import { HomeContent } from 'src/layouts/home';
 import { CustomBreadcrumbs } from 'src/components/custom-breadcrumbs';
 import List from '@mui/material/List';
 import { Fragment } from 'react/jsx-runtime';
@@ -42,7 +42,7 @@ export function ProductLoadView() {
     </List>
   );
   return (
-    <DashboardContent sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
+    <HomeContent sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
       <CustomBreadcrumbs
         heading="Load products"
         links={[
@@ -81,6 +81,6 @@ export function ProductLoadView() {
           </Stack>
         </Card>
       </Box>
-    </DashboardContent>
+    </HomeContent>
   );
 }

@@ -32,7 +32,7 @@ import { Searchbar, MenuButton, StoreButton, ThemeToggleButton, NotificationsDra
 
 type LayoutBaseProps = Pick<LayoutSectionProps, 'sx' | 'children' | 'cssVars'>;
 
-export type DashboardLayoutProps = LayoutBaseProps & {
+export type HomeLayoutProps = LayoutBaseProps & {
   layoutQuery?: Breakpoint;
   slotProps?: {
     header?: HeaderSectionProps;
@@ -43,13 +43,13 @@ export type DashboardLayoutProps = LayoutBaseProps & {
   };
 };
 
-export function DashboardLayout({
+export function HomeLayout({
   sx,
   cssVars,
   children,
   slotProps,
   layoutQuery = 'lg',
-}: DashboardLayoutProps) {
+}: HomeLayoutProps) {
   const theme = useTheme();
 
   const { user } = useMockedUser();

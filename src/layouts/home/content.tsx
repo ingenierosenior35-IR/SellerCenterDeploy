@@ -19,7 +19,7 @@ export type DashboardContentProps = ContainerProps & {
   disablePadding?: boolean;
 };
 
-export function DashboardContent({
+export function HomeContent({
   sx,
   children,
   className,

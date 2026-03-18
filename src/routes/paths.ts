@@ -54,4 +54,13 @@ export const paths = {
     root: '/return',
     details: (id: number) => `/return/${id}`,
   },
+  account: {
+    root: '/account',
+    subaccount: {
+      root: '/account/subaccount',
+      details: (id: number) => `/account/subaccount/${id}`,
+      edit: (id: number) => `/account/subaccount/${id}/edit`,
+      new: '/account/subaccount/new',
+    },
+  },
 };
