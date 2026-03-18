@@ -1,15 +1,9 @@
 'use client';
 
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 
-// Import language resources
-import enTranslations from './en/translation.json';
-import esTranslations from './es/translation.json';
-
-// Types
 export type LangCode = 'en' | 'es';
 
-// Language Option Type
 export interface LanguageOption {
   value: LangCode;
   label: string;
@@ -17,136 +11,133 @@ export interface LanguageOption {
   icon: string;
 }
 
-// Language Configuration
-export const LANGUAGE_RESOURCE: Record<LangCode, Record<string, any>> = {
-  es: esTranslations,
-  en: enTranslations,
-};
-
-// Language Options
 export const LANGUAGE_OPTIONS: LanguageOption[] = [
-  { value: 'es', label: LANGUAGE_RESOURCE.es?.languages?.es || 'Español', countryCode: 'es', icon: 'co'},
-  { value: 'en', label: LANGUAGE_RESOURCE.en?.languages?.en || 'English', countryCode: 'en', icon: 'us' },
+  { value: 'es', label: 'Español', countryCode: 'es', icon: 'co' },
+  { value: 'en', label: 'English', countryCode: 'en', icon: 'us' },
 ];
 
-// Default language
-let globalLang: LangCode = 'es'; 
-const listeners = new Set<(lang: LangCode) => void>();
+// Cache en memoria: los idiomas ya cargados no vuelven a la red.
+// Se exporta como LANGUAGE_RESOURCE para compatibilidad con código existente.
+export const LANGUAGE_RESOURCE: Partial<Record<LangCode, Record<string, any>>> = {};
 
-const detectBrowserLanguage = (): LangCode => {
+// ----------------------------------------------------------------------
+
+interface TranslateContextValue {
+  translate: (namespaceOrKey: string, keyOrDefault?: string, defaultValue?: string) => string;
+  currentLang: LangCode;
+  onChangeLang: (lang: LangCode) => void;
+  currentLangOption: LanguageOption | undefined;
+  allLanguages: LanguageOption[];
+  mounted: boolean;
+}
+
+const TranslateContext = createContext<TranslateContextValue | null>(null);
+
+// ----------------------------------------------------------------------
+
+const detectLang = (): LangCode => {
   if (typeof window === 'undefined') return 'es';
-  
-  const browserLang = navigator.language?.toLowerCase() || 'es';
-  
-  // Extract language code (e.g., 'en-US' -> 'en')
-  const langCode = browserLang.split('-')[0] as LangCode;
-  
-  // Return detected language if supported, else default to Spanish
-  return LANGUAGE_OPTIONS.some(opt => opt.value === langCode) ? langCode : 'es';
-};
-
-const setGlobalLang = (lang: LangCode) => {
-  globalLang = lang;
-  // Persist to localStorage
-  if (typeof window !== 'undefined') {
-    localStorage.setItem('i18n_lang', lang);
-  }
-  listeners.forEach((listener) => listener(lang));
-};
-
-const getStoredLang = (): LangCode | null => {
-  if (typeof window === 'undefined') return null;
-  return (localStorage.getItem('i18n_lang') as LangCode) || null;
-};
-
-// useTranslate Hook
-const getInitialLang = (): LangCode => {
-  if (typeof window === 'undefined') return 'es';
-  
-  // Try to get from localStorage first
   const stored = localStorage.getItem('i18n_lang') as LangCode | null;
-  if (stored && ['es', 'en'].includes(stored)) {
-    return stored;
-  }
-  
-  // Fallback to browser language
-  return detectBrowserLanguage();
+  if (stored && ['es', 'en'].includes(stored)) return stored;
+  const browser = navigator.language?.split('-')[0] as LangCode;
+  return LANGUAGE_OPTIONS.some((o) => o.value === browser) ? browser : 'es';
 };
 
-export const useTranslate = () => {
-  const [currentLang, setCurrentLang] = useState<LangCode>(globalLang);
+export function TranslateProvider({ children }: { children: React.ReactNode }) {
+  const [currentLang, setCurrentLang] = useState<LangCode>('es');
+  const [translations, setTranslations] = useState<Record<string, any>>({});
   const [mounted, setMounted] = useState(false);
 
+  // Detecta idioma correcto al montar en cliente
   useEffect(() => {
-    const handleLangChange = (lang: LangCode) => {
-      setCurrentLang(lang);
+    setCurrentLang(detectLang());
+    setMounted(true);
+  }, []);
+
+  // Carga el JSON solo del idioma activo.
+  // Si ya se cargó antes, lo toma del cache LANGUAGE_RESOURCE.
+  useEffect(() => {
+    if (LANGUAGE_RESOURCE[currentLang]) {
+      setTranslations(LANGUAGE_RESOURCE[currentLang]!);
+      return;
+    }
+
+    let cancelled = false;
+
+    const loadLang = (lang: LangCode): Promise<Record<string, any>> => {
+      switch (lang) {
+        case 'en':
+          return import('./en/translation.json').then((m) => m.default);
+        case 'es':
+        default:
+          return import('./es/translation.json').then((m) => m.default);
+      }
     };
 
-    listeners.add(handleLangChange);
-
-    // Get the language on client side and sync global state
-    const lang = getInitialLang();
-    setGlobalLang(lang);
-    setMounted(true);
+    loadLang(currentLang).then((translations) => {
+      if (!cancelled) {
+        LANGUAGE_RESOURCE[currentLang] = translations;
+        setTranslations(translations);
+      }
+    });
 
     return () => {
-      listeners.delete(handleLangChange);
+      cancelled = true;
     };
-  }, []);
+  }, [currentLang]);
 
   const onChangeLang = useCallback((lang: LangCode) => {
-    // Validate the language
     if (!['es', 'en'].includes(lang)) return;
-
-    // Update global store and notify all subscribers
-    setGlobalLang(lang);
+    localStorage.setItem('i18n_lang', lang);
+    setCurrentLang(lang);
   }, []);
 
-  const getByPath = useCallback((source: Record<string, any>, path: string) => {
-    return path.split('.').reduce<any>((acc, part) => acc?.[part], source);
-  }, []);
-
+  // Compatible con ambos patrones de uso existentes:
   const translate = useCallback(
     (namespaceOrKey: string, keyOrDefault?: string, defaultValue = '') => {
-      const resource = LANGUAGE_RESOURCE[currentLang] || {};
+      const getByPath = (source: Record<string, any>, path: string) =>
+        path.split('.').reduce<any>((acc, part) => acc?.[part], source);
 
       if (typeof keyOrDefault === 'undefined') {
-        const value = getByPath(resource, namespaceOrKey);
-        return value ?? defaultValue ?? namespaceOrKey;
+        return getByPath(translations, namespaceOrKey) ?? defaultValue ?? namespaceOrKey;
       }
 
-      const namespaceValue = resource?.[namespaceOrKey];
-      if (namespaceValue && typeof namespaceValue === 'object') {
-        const nestedValue = getByPath(namespaceValue, keyOrDefault);
-        return nestedValue ?? defaultValue ?? keyOrDefault;
+      const ns = translations?.[namespaceOrKey];
+      if (ns && typeof ns === 'object') {
+        return getByPath(ns, keyOrDefault) ?? defaultValue ?? keyOrDefault;
       }
 
-      const flatValue = getByPath(resource, namespaceOrKey);
-      return flatValue ?? keyOrDefault ?? defaultValue ?? namespaceOrKey;
+      return getByPath(translations, namespaceOrKey) ?? keyOrDefault ?? defaultValue ?? namespaceOrKey;
     },
-    [currentLang, getByPath]
+    [translations]
   );
 
   const currentLangOption = useMemo(
-    () => LANGUAGE_OPTIONS.find(opt => opt.value === currentLang),
+    () => LANGUAGE_OPTIONS.find((o) => o.value === currentLang),
     [currentLang]
   );
 
-  const allLanguagesWithTranslatedLabels = useMemo(
-    () => 
-      LANGUAGE_OPTIONS.map(opt => ({
+  const allLanguages = useMemo(
+    () =>
+      LANGUAGE_OPTIONS.map((opt) => ({
         ...opt,
-        label: LANGUAGE_RESOURCE[currentLang]?.languages?.[opt.value] || opt.label,
+        label: translations?.languages?.[opt.value] || opt.label,
       })),
-    [currentLang]
+    [translations]
   );
 
-  return {
-    currentLang,
-    onChangeLang,
-    translate,
-    currentLangOption,
-    allLanguages: allLanguagesWithTranslatedLabels,
-    mounted, // true when hydrated on client
-  };
+  const value = useMemo(
+    () => ({ translate, currentLang, onChangeLang, currentLangOption, allLanguages, mounted }),
+    [translate, currentLang, onChangeLang, currentLangOption, allLanguages, mounted]
+  );
+
+  return <TranslateContext.Provider value={value}>{children}</TranslateContext.Provider>;
+}
+
+// ----------------------------------------------------------------------
+
+export const useTranslate = (): TranslateContextValue => {
+  const ctx = useContext(TranslateContext);
+  if (!ctx) throw new Error('useTranslate must be inside <TranslateProvider>');
+  return ctx;
 };
