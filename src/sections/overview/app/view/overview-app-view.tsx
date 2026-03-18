@@ -5,6 +5,7 @@ import Grid from '@mui/material/Grid';
 
 import { HomeContent } from 'src/layouts/home';
 import { _appInvoices, _appProducts, _appCustomers } from 'src/_mock';
+import { useTranslate } from 'src/locales';
 
 import { AppKpiCard } from './app-kpi-card';
 import { AppTopProducts } from '../app-top-products';
@@ -14,6 +15,7 @@ import { AppTopCustomers } from '../app-top-customers';
 // ----------------------------------------------------------------------
 
 export function OverviewAppView() {
+  const { translate } = useTranslate();
 
   return (
     <HomeContent maxWidth="xl">
@@ -65,14 +67,14 @@ export function OverviewAppView() {
       >
         <Box sx={{ gridColumn: { md: 'span 2' } }}>
           <AppNewInvoices
-            title="Latest Orders"
+            title={translate('tableLatestOrders', 'title')}
             tableData={_appInvoices}
             headCells={[
-              { id: 'id', label: 'Order' },
-              { id: 'customer', label: 'Customer' },
-              { id: 'date', label: 'Date' },
-              { id: 'total', label: 'Total' },
-              { id: 'status', label: 'Status' },
+              { id: 'id', label: translate('tableLatestOrders', 'columns.id') },
+              { id: 'customer', label: translate('tableLatestOrders', 'columns.customer') },
+              { id: 'date', label: translate('tableLatestOrders', 'columns.date') },
+              { id: 'total', label: translate('tableLatestOrders', 'columns.total') },
+              { id: 'status', label: translate('tableLatestOrders', 'columns.status') },
               { id: '' },
             ]}
           />
@@ -80,11 +82,11 @@ export function OverviewAppView() {
         <Box sx={{ gridColumn: { md: 'span 1' } }}>
           <Box display="flex" flexDirection="column" gap={3}>
             <AppTopProducts
-              title="Top Products"
+              title={translate('TopProducts', 'title')}
               list={_appProducts}
             />
             <AppTopCustomers
-              title="Top Clients"
+              title={translate('TopClients', 'title')}
               list={_appCustomers}
             />
           </Box>

@@ -1,0 +1,35 @@
+{
+    "languages": {
+        "es": "Spanish",
+        "en": "English"
+    },
+    "loginPage": {
+        "title": "Sign in to your account",
+        "emailForm": "Email address",
+        "passwordForm": "Password",
+        "passwordPh": "6+ Characters",
+        "signIn": "Sign In",
+        "forgotPassword": "Forgot password?",
+        "keepMe": "Keep the session open",
+        "noAccount": "Don’t have an account?",
+        "getStarted": "Get started"
+    },
+    "tableLatestOrders": {
+        "title": "Latest Orders",
+        "columns": {
+            "id": "Order",
+            "customer": "Customer",
+            "date": "Date",
+            "total": "Total",
+            "status": "Status"
+        }
+    },
+    "TopProducts": {
+        "title": "Top Products"
+    },
+    "TopClients": {
+        "title": "Top Clients"
+    },
+    "search": "Search...",
+    "logout": "Logout"
+}

@@ -1,0 +1,35 @@
+{
+    "languages": {
+        "es": "Español",
+        "en": "Inglés"
+    },
+     "loginPage": {
+        "title": "Inicia sesión en tu cuenta",
+        "emailForm": "Correo electrónico",
+        "passwordForm": "Contraseña",
+        "passwordPh": "6+ Caracteres",
+        "signIn": "Iniciar sesión",
+        "forgotPassword": "¿Olvidaste tu contraseña?",
+        "keepMe": "Mantener la sesión abierta",
+        "noAccount": "¿No tienes una cuenta?",
+        "getStarted": "Comenzar"
+    },
+    "tableLatestOrders": {
+        "title": "Últimos Pedidos",
+        "columns": {
+            "id": "Pedido",
+            "customer": "Cliente",
+            "date": "Fecha",
+            "total": "Total",
+            "status": "Estado"
+        }
+    },
+    "TopProducts": {
+        "title": "Productos Principales"
+    },
+    "TopClients": {
+        "title": "Clientes Principales"
+    },
+    "search": "Buscar...",
+    "logout": "Cerrar sesión"
+}

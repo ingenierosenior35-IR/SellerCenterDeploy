@@ -30,6 +30,7 @@ import { Form, Field, schemaUtils } from 'src/components/hook-form';
 import { useAuthContext } from '../hooks';
 import { getErrorMessage } from '../utils';
 import { FormHead } from '../components/form-head';
+import { useTranslate } from 'src/locales/langs/i18n';
 
 // ----------------------------------------------------------------------
 
@@ -46,6 +47,9 @@ export const SignInSchema = z.object({
 // ----------------------------------------------------------------------
 
 export function SignInView() {
+
+  const { translate } = useTranslate();
+
   const router = useRouter();
 
   const showPassword = useBoolean();
@@ -102,13 +106,13 @@ export function SignInView() {
 
   const renderForm = () => (
     <Box sx={{ gap: 3, display: 'flex', flexDirection: 'column' }}>
-      <Field.Text name="email" label="Email address" slotProps={{ inputLabel: { shrink: true } }} />
+      <Field.Text name="email" label={translate("loginPage.emailForm")} slotProps={{ inputLabel: { shrink: true } }} />
 
       <Box sx={{ gap: 1.5, display: 'flex', flexDirection: 'column' }}>
         <Field.Text
           name="password"
-          label="Password"
-          placeholder="6+ characters"
+          label={translate("loginPage.passwordForm")}
+          placeholder={translate("loginPage.passwordPh")}
           type={showPassword.value ? 'text' : 'password'}
           slotProps={{
             inputLabel: { shrink: true },
@@ -140,9 +144,9 @@ export function SignInView() {
         type="submit"
         variant="contained"
         loading={isSubmitting}
-        loadingIndicator="Sign in..."
+        loadingIndicator={translate("loginPage.signIn")}
       >
-        Sign in
+        {translate("loginPage.signIn")}
       </Button>
 
       <Link
@@ -152,11 +156,11 @@ export function SignInView() {
         color="inherit"
         sx={{ alignSelf: 'flex-start' }}
       >
-        Forgot password?
+        {translate("loginPage.forgotPassword")}
       </Link>
 
       <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-        <FormControlLabel control={<Checkbox defaultChecked />} label="Keep the session open" />
+        <FormControlLabel control={<Checkbox defaultChecked />} label={translate("loginPage.keepMe")} />
       </Box>
 
       <Box>
@@ -165,14 +169,14 @@ export function SignInView() {
 
       <Box sx={{ display: 'flex', justifyContent: 'center', gap: 1 }}>
         <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-          {`Don’t have an account? `}
+          {translate("loginPage.noAccount")}
           <Link
             component={RouterLink}
             // href={paths.auth.jwt.signUp}
             href=""
             variant="subtitle2"
           >
-            Get started
+            {translate("loginPage.getStarted")}
           </Link>
         </Typography>
       </Box>
@@ -182,7 +186,7 @@ export function SignInView() {
   return (
     <>
       <FormHead
-        title="Sign in to your account"
+        title={translate("loginPage.title")}
         sx={{ textAlign: { xs: 'center', md: 'left' } }}
       />
 
