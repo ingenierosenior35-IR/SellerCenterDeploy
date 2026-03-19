@@ -2,7 +2,7 @@
 import type { LabelColor } from 'src/components/label';
 import type { SubAccountInterface } from 'src/interfaces';
 
-import { usePopover } from 'minimal-shared/hooks';
+import { useBoolean, usePopover } from 'minimal-shared/hooks';
 
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
@@ -22,6 +22,7 @@ import { Label } from 'src/components/label';
 import { Iconify } from 'src/components/iconify';
 import { CustomPopover } from 'src/components/custom-popover';
 
+import { UserQuickEditForm } from './user-quick-edit-form';
 import { PERMISSIONS, ACCOUNT_STATUS } from '../constants/status';
 
 // ----------------------------------------------------------------------
@@ -35,6 +36,7 @@ type Props = {
 
 export function SubAccountTableRow({ row, selected, onSelectRow, detailsHref }: Props) {
   const menuActions = usePopover();
+  const quickEditForm = useBoolean();
 
   const renderMenuActions = () => (
     <CustomPopover
@@ -49,7 +51,12 @@ export function SubAccountTableRow({ row, selected, onSelectRow, detailsHref }: 
           View
         </MenuItem>
 
-        <MenuItem onClick={() => menuActions.onClose()}>
+        <MenuItem
+          onClick={() => {
+            menuActions.onClose();
+            quickEditForm.onTrue();
+          }}
+        >
           <Iconify icon="solar:pen-bold" />
           Edit
         </MenuItem>
@@ -65,6 +72,14 @@ export function SubAccountTableRow({ row, selected, onSelectRow, detailsHref }: 
         </MenuItem>
       </MenuList>
     </CustomPopover>
+  );
+
+  const renderQuickEditForm = () => (
+    <UserQuickEditForm
+      currentUser={row}
+      open={quickEditForm.value}
+      onClose={quickEditForm.onFalse}
+    />
   );
 
   return (
@@ -159,6 +174,9 @@ export function SubAccountTableRow({ row, selected, onSelectRow, detailsHref }: 
         </TableCell>
 
         <TableCell>
+          <IconButton onClick={quickEditForm.onTrue}>
+            <Iconify icon="solar:pen-bold" />
+          </IconButton>
           <IconButton onClick={menuActions.onOpen}>
             <Iconify icon="eva:more-vertical-fill" />
           </IconButton>
@@ -166,6 +184,7 @@ export function SubAccountTableRow({ row, selected, onSelectRow, detailsHref }: 
       </TableRow>
 
       {renderMenuActions()}
+      {renderQuickEditForm()}
     </>
   );
 }

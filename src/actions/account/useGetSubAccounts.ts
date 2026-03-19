@@ -9,7 +9,8 @@ export function useGetSubAccounts() {
  const accounts: SubAccountInterface[] = useMemo(() => [
     {
       id: 142,
-      name: 'Ana garcia',
+      name: 'Ana',
+      lastname: 'Garcia',
       email: 'ana@gmail.com',
       phone: '+57 310 555 0192',
       status: 'ACTIVE',
@@ -20,7 +21,8 @@ export function useGetSubAccounts() {
     },
     {
       id: 143,
-      name: 'Juan Perez',
+      name: 'Juan',
+      lastname: 'Perez',
       email: 'juan.perez@gmail.com',
       phone: '+57 310 555 0193',
       status: 'INACTIVE',
@@ -31,7 +33,8 @@ export function useGetSubAccounts() {
     },
     {
       id: 144,
-      name: 'Juan Ruiz',
+      name: 'Juan',
+      lastname: 'Ruiz',
       email: 'juan.ruiz@gmail.com',
       phone: '+57 310 555 789',
       status: 'INACTIVE',

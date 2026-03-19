@@ -1,6 +1,7 @@
 export interface SubAccountInterface {
   id: number;
   name: string;
+  lastname: string;
   email: string;
   phone: string;
   status: string;

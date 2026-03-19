@@ -16,7 +16,7 @@ const ICONS = {
   users: icon('ic-users'),
   order: icon('ic-shopping-cart'),
   product: icon('ic-product'),
-  dashboard: icon('ic-dashboard'),
+  home: icon('ic-dashboard'),
   return: icon('ic-refresh'),
 };
 
@@ -31,7 +31,7 @@ export const navData: NavSectionProps['data'] = [
       {
         title: 'Home',
         path: paths.home.root,
-        icon: ICONS.dashboard,
+        icon: ICONS.home,
       },
     ],
   },
@@ -60,4 +60,17 @@ export const navData: NavSectionProps['data'] = [
       },
     ],
   },
+  {
+    subheader: 'Management',
+    items: [
+      {
+        title: 'Sub Accounts',
+        path: paths.account.subaccount.root ,
+        icon: ICONS.users,
+        // children: [
+        //   { title: 'List', path: paths.account.subaccount.root },
+        // ],
+      }
+    ],
+  }
 ];

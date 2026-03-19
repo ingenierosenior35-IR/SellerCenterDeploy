@@ -5,31 +5,28 @@ import type { TableHeadCellProps } from 'src/components/table';
 import type { SubAccountInterface, AccountTableFiltersInterface } from 'src/interfaces';
 
 import { varAlpha } from 'minimal-shared/utils';
-import { useState, useEffect, useCallback } from 'react';
-import { useBoolean, useSetState } from 'minimal-shared/hooks';
 
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import Tabs from '@mui/material/Tabs';
 import Card from '@mui/material/Card';
 import Table from '@mui/material/Table';
+import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import TableBody from '@mui/material/TableBody';
 import IconButton from '@mui/material/IconButton';
 
 import { paths } from 'src/routes/paths';
+import { RouterLink } from 'src/routes/components';
 
 import { HomeContent } from 'src/layouts/home';
-import { useGetSubAccounts } from 'src/actions/account/useGetSubAccounts';
 
 import { Label } from 'src/components/label';
 import { Iconify } from 'src/components/iconify';
 import { Scrollbar } from 'src/components/scrollbar';
 import { CustomBreadcrumbs } from 'src/components/custom-breadcrumbs';
 import {
-  useTable,
   TableNoData,
-  getComparator,
   TableSkeleton,
   TableHeadCustom,
   TableSelectedAction,
@@ -50,7 +47,7 @@ const TABLE_HEAD: TableHeadCellProps[] = [
   { id: 'status', label: 'Status' },
   { id: 'createdAt', label: 'Created date' },
   { id: 'lastAccess', label: 'Last Access' },
-  { id: 'action', label: 'Action' },
+  { id: 'action', label: '' },
 ];
 
 // ----------------------------------------------------------------------
@@ -77,6 +74,16 @@ export function SubAccountListView() {
           { name: 'Subaccount', href: paths.account.subaccount.root },
           { name: 'List' },
         ]}
+        action={
+          <Button
+            component={RouterLink}
+            href={paths.account.subaccount.new}
+            variant="contained"
+            startIcon={<Iconify icon="mingcute:add-line" />}
+          >
+            Add Subaccount
+            </Button>
+          }
         sx={{ mb: { xs: 3, md: 5 } }}
       />
 
