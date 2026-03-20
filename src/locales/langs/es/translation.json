@@ -107,7 +107,6 @@
     "status": "Estado",
     "createdAt": "Fecha de creación",
     "id": "Id",
-    "noDataFound": "No se encontraron datos",
     "feedbackModule": {
         "title": "Opiniones",
         "table": {
@@ -140,7 +139,7 @@
                 }
             }
         }
-    }
+    },
     "noDataFound": "No se encontraron datos",
     "returnStatus": {
         "all": "Todos",
