@@ -53,6 +53,9 @@ export const paths = {
     root: '/return',
     details: (id: number) => `/return/${id}`,
   },
+  feedback: {
+    root: '/feedback',
+  },
   account: {
     root: '/account',
     subaccount: {

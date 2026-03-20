@@ -1,4 +1,3 @@
-import Papa from 'papaparse';
 
 type CsvValue = string | number | boolean | null | undefined;
 type CsvRow = Record<string, CsvValue>;

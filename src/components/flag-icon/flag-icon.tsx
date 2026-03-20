@@ -22,7 +22,7 @@ export function FlagIcon({ code, className, sx, ...other }: FlagIconProps) {
       <FlagImg
         loading="lazy"
         alt={code}
-        src={`/assets/images/country_flags/${code?.toUpperCase()}_flag.svg`}
+        src={`https://purecatamphetamine.github.io/country-flag-icons/3x2/${code?.toUpperCase()}.svg`}
         className={flagIconClasses.img}
       />
     </FlagRoot>
@@ -44,7 +44,7 @@ const FlagRoot = styled('span')(({ theme }) => ({
 }));
 
 const FlagImg = styled('img')(() => ({
-
+  width: '100%',
   height: '100%',
   maxWidth: 'unset',
   objectFit: 'cover',

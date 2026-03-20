@@ -18,7 +18,6 @@ import { Iconify } from 'src/components/iconify';
 import { ConfirmDialog } from 'src/components/custom-dialog';
 
 import { CsvErrorsAlert } from './csv-errors-alert';
-import { CsvHelpTemplate } from './csv-help-template';
 
 const CSV_ACCEPT_ATTR = '.csv,.xml,.xls';
 const IMG_ACCEPT_ATTR = '.jpg,.jpeg,.png';

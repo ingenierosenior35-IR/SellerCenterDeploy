@@ -20,6 +20,7 @@ import IconButton from '@mui/material/IconButton';
 import { paths } from 'src/routes/paths';
 
 import { HomeContent } from 'src/layouts/home';
+import { useTranslate } from 'src/locales/langs/i18n';
 import { useGetReturns } from 'src/actions/return/useGetReturns';
 
 import { Label } from 'src/components/label';
@@ -44,18 +45,21 @@ import { RETURN_STATUS } from '../constants/return/status';
 
 const STATUS_OPTIONS = [{ value: 'all', label: 'All', color: 'default' }, ...RETURN_STATUS];
 
-const TABLE_HEAD: TableHeadCellProps[] = [
-  { id: 'id', label: 'Id', width: 150 },
-  { id: 'orderReference', label: 'Order Reference', width: 150   },
-  { id: 'customerName', label: 'Customer' },
-  { id: 'status', label: 'Status' },
-  { id: 'createdAt', label: 'Created date', width: 150 },
-  { id: 'action', label: '' },
-];
+
 
 // ----------------------------------------------------------------------
 
 export function ReturnListView() {
+  const { translate } = useTranslate();
+
+  const TABLE_HEAD: TableHeadCellProps[] = [
+  { id: 'id', label: translate('id'), width: 150 },
+  { id: 'orderReference', label: translate('orderReference'), width: 150   },
+  { id: 'customerName', label: translate('customerName') },
+  { id: 'status', label: translate('status') },
+  { id: 'createdAt', label: translate('createdAt'), width: 150 },
+  { id: 'action', label: '' },
+];
   const table = useTable({ defaultOrderBy: 'orderNumber' });
 
   const confirmDialog = useBoolean();
@@ -97,11 +101,11 @@ export function ReturnListView() {
   return (
     <HomeContent>
       <CustomBreadcrumbs
-        heading="Return List"
+        heading={translate('returnList')}
         links={[
-          { name: 'Home', href: paths.home.root },
-          { name: 'Return', href: paths.return.root },
-          { name: 'List' },
+          { name: translate('sidebarMenu.home.title'), href: paths.home.root },
+          { name: translate('sidebarMenu.returns.title'), href: paths.return.root },
+          { name: translate('sidebarMenu.returns.subtitles.list') },
         ]}
         sx={{ mb: { xs: 3, md: 5 } }}
       />
@@ -160,7 +164,7 @@ export function ReturnListView() {
               )
             }
             action={
-              <Tooltip title="Delete">
+              <Tooltip title={translate('delete')}  >
                 <IconButton color="primary" onClick={confirmDialog.onTrue}>
                   <Iconify icon="solar:trash-bin-trash-bold" />
                 </IconButton>

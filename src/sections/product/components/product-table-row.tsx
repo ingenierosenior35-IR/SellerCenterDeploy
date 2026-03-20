@@ -1,4 +1,5 @@
 import type { GridCellParams } from '@mui/x-data-grid';
+import type { ProductListInterface } from 'src/interfaces/seller-product.interface';
 
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
@@ -10,10 +11,12 @@ import { RouterLink } from 'src/routes/components';
 
 import { fCurrency } from 'src/utils/format-number';
 
+import { useTranslate } from 'src/locales/langs/i18n';
+
 // ----------------------------------------------------------------------
 
 type ParamsProps = {
-  params: GridCellParams;
+  params: GridCellParams<ProductListInterface>;
 };
 
 export function RenderCellPrice({ params }: ParamsProps) {
@@ -25,18 +28,19 @@ export function RenderCellSku({ params }: ParamsProps) {
 }
 
 export function RenderCellStock({ params }: ParamsProps) {
+  const { translate } = useTranslate();
   let color: LinearProgressProps['color'];
   let stockLabel: string;
 
   if (!params.row.inStock) {
     color = 'error';
-    stockLabel = 'Out of Stock';
+    stockLabel = translate('outOfStock');
   } else if (params.row.stock > 10) {
     color = 'success';
-    stockLabel = 'In Stock';
+    stockLabel = translate('inStock');
   } else {
     color = 'warning';
-    stockLabel = 'Low Stock';
+    stockLabel = translate('lowStock');
   }
 
   return (
@@ -53,11 +57,12 @@ export function RenderCellStock({ params }: ParamsProps) {
 }
 
 export function RenderCellProduct({ params, href }: ParamsProps & { href: string }) {
+  console.log("RenderCellProduct", params.row); // Debug: Verificar los datos que llegan a este componente
   return (
     <Box sx={{ py: 2, gap: 2, width: 1, display: 'flex', alignItems: 'center' }}>
       <Avatar
         alt={params.row.productName}
-        src={params.row.thumbnailUrl}   // <-- FIX: era thumbnail
+        src={params.row.thumbnailUrl}
         variant="rounded"
         sx={{ width: 64, height: 64 }}
       />

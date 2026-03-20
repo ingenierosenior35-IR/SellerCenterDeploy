@@ -7,10 +7,10 @@ import Button, { type ButtonProps } from '@mui/material/Button';
 import { useRouter } from 'src/routes/hooks';
 
 import { CONFIG } from 'src/global-config';
+import { useTranslate } from 'src/locales/langs/i18n';
 import { useLogout } from 'src/actions/auth/useLogout';
 
 import { SvgColor } from 'src/components/svg-color';
-import { useTranslate } from 'src/locales/langs/i18n';
 
 // ----------------------------------------------------------------------
 

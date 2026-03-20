@@ -1,13 +1,15 @@
 import type { NavSectionProps } from 'src/components/nav-section';
 
+import { useMemo } from 'react';
+
 import { paths } from 'src/routes/paths';
 
 import { CONFIG } from 'src/global-config';
+import { useTranslate } from 'src/locales/langs/i18n';
 
 import { SvgColor } from 'src/components/svg-color';
 
 // ----------------------------------------------------------------------
-
 const icon = (name: string) => (
   <SvgColor src={`${CONFIG.assetsDir}/assets/icons/navbar/${name}.svg`} />
 );
@@ -18,46 +20,51 @@ const ICONS = {
   product: icon('ic-product'),
   dashboard: icon('ic-dashboard'),
   return: icon('ic-refresh'),
+  feedback: icon('ic-feedback'),
 };
 
 // ----------------------------------------------------------------------
 
-export const navData: NavSectionProps['data'] = [
-  /**
-   * Overview
-   */
-  {
-    items: [
+export const useNavData = (): NavSectionProps['data'] => {
+  const { translate } = useTranslate();
+
+  return useMemo(
+    () => [
       {
-        title: 'Home',
-        path: paths.home.root,
-        icon: ICONS.dashboard,
-      },
-    ],
-  },
-  /**
-   * Management
-   */
-  {
-    // subheader: 'Management',
-    items: [
-      {
-        title: 'My products',
-        path: paths.product.root,
-        icon: ICONS.product,
-        children: [
-          { title: 'List', path: paths.product.root },
-          { title: 'Load products', path: paths.product.load },
+        items: [
+          {
+            title: translate('tableLatestOrders', 'columns.id'),
+            path: paths.home.root,
+            icon: ICONS.dashboard,
+          },
         ],
       },
       {
-        title: 'Returns',
-        path: paths.return.root,
-        icon: ICONS.return,
-        children: [
-          { title: 'List', path: paths.return.root },
+        items: [
+          {
+            title: translate('sidebarMenu.myProducts.title'),
+            path: paths.product.root,
+            icon: ICONS.product,
+            children: [
+              { title: translate('sidebarMenu.myProducts.subtitles.list'), path: paths.product.root },
+              { title: translate('sidebarMenu.myProducts.subtitles.loadProducts'), path: paths.product.load },
+            ],
+          },
+          {
+            title: translate('sidebarMenu.returns.title'),
+            path: paths.return.root,
+            icon: ICONS.return,
+            children: [{ title: translate('sidebarMenu.returns.subtitles.list'), path: paths.return.root }],
+          },{
+                        title: translate('sidebarMenu.feedback.title'),
+            path: paths.feedback.root,
+            icon: ICONS.feedback,
+          }
+          
         ],
       },
+
     ],
-  },
-];
+    [translate]
+  );
+};

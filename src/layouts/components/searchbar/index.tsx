@@ -15,6 +15,8 @@ import Dialog, { dialogClasses } from '@mui/material/Dialog';
 import MenuItem, { menuItemClasses } from '@mui/material/MenuItem';
 import InputBase, { inputBaseClasses } from '@mui/material/InputBase';
 
+import { useTranslate } from 'src/locales/langs/i18n';
+
 import { Label } from 'src/components/label';
 import { Iconify } from 'src/components/iconify';
 import { SearchIcon } from 'src/components/icons';
@@ -23,7 +25,6 @@ import { SearchNotFound } from 'src/components/search-not-found';
 
 import { ResultItem } from './result-item';
 import { applyFilter, flattenNavSections } from './utils';
-import { useTranslate } from 'src/locales/langs/i18n';
 
 // ----------------------------------------------------------------------
 

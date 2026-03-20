@@ -23,6 +23,7 @@ import { RouterLink } from 'src/routes/components';
 
 import { ErrorCode, ERROR_MESSAGES } from 'src/lib';
 import { useLogin } from 'src/actions/auth/useLogin';
+import { useTranslate } from 'src/locales/langs/i18n';
 
 import { Iconify } from 'src/components/iconify';
 import { Form, Field, schemaUtils } from 'src/components/hook-form';
@@ -30,7 +31,6 @@ import { Form, Field, schemaUtils } from 'src/components/hook-form';
 import { useAuthContext } from '../hooks';
 import { getErrorMessage } from '../utils';
 import { FormHead } from '../components/form-head';
-import { useTranslate } from 'src/locales/langs/i18n';
 
 // ----------------------------------------------------------------------
 

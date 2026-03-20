@@ -1,12 +1,12 @@
 import { useRef, useMemo, useState, useCallback } from 'react';
 
+import { fileToBase64 } from 'src/utils/codificateFile';
+// import { uploadProduct } from 'src/actions/upload/uploadProducts';
 import { validateCsvFile } from 'src/utils/validate-csv';
 
-// import { uploadProduct } from 'src/actions/upload/uploadProducts';
+import { useValidateMassUpload } from 'src/actions/product/useValidateMassUpload';
 
 import { toast } from 'src/components/snackbar';
-import { useValidateMassUpload } from 'src/actions/product/useValidateMassUpload';
-import { fileToBase64 } from 'src/utils/codificateFile';
 
 const MAX_SIZE = 5 * 1024 * 1024; // 5 MB
 const CSV_ACCEPTED = ['text/csv', 'application/vnd.ms-excel', 'text/xml'];

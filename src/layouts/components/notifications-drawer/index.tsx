@@ -16,6 +16,8 @@ import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 
+import { useTranslate } from 'src/locales/langs/i18n';
+
 import { Label } from 'src/components/label';
 import { Iconify } from 'src/components/iconify';
 import { Scrollbar } from 'src/components/scrollbar';
@@ -39,6 +41,7 @@ export type NotificationsDrawerProps = IconButtonProps & {
 };
 
 export function NotificationsDrawer({ data = [], sx, ...other }: NotificationsDrawerProps) {
+  const { translate } = useTranslate();
   const { value: open, onFalse: onClose, onTrue: onOpen } = useBoolean();
 
   const [currentTab, setCurrentTab] = useState('all');
@@ -158,7 +161,7 @@ export function NotificationsDrawer({ data = [], sx, ...other }: NotificationsDr
 
         <Box sx={{ p: 1 }}>
           <Button fullWidth size="large">
-            View all
+             { translate('viewAll') }
           </Button>
         </Box>
       </Drawer>

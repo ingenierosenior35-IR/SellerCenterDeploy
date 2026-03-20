@@ -3,9 +3,9 @@
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 
+import { useTranslate } from 'src/locales';
 import { HomeContent } from 'src/layouts/home';
 import { _appInvoices, _appProducts, _appCustomers } from 'src/_mock';
-import { useTranslate } from 'src/locales';
 
 import { AppKpiCard } from './app-kpi-card';
 import { AppTopProducts } from '../app-top-products';
