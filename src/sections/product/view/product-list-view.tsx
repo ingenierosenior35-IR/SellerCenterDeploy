@@ -133,7 +133,7 @@ const useGetColumns = ({ onDeleteRow }: UseGetColumnsProps) => {
         renderCell: (params) => (
           <RenderCellProduct
             params={params}
-            href={paths.product.root}
+            href={paths.product.details(params.row.id)}
           />
         ),
       },
@@ -175,14 +175,14 @@ const useGetColumns = ({ onDeleteRow }: UseGetColumnsProps) => {
             showInMenu
             label="View"
             icon={<Iconify icon="solar:eye-bold" />}
-            href={paths.product.root}
+            href={paths.product.details(params.row.id)}
           />,
           <CustomGridActionsCellItem
             key={`edit-${params.row.id}`}
             showInMenu
             label="Edit"
             icon={<Iconify icon="solar:pen-bold" />}
-            href={paths.product.root}
+            href={paths.product.details(params.row.id)}
           />,
           <CustomGridActionsCellItem
             key={`delete-${params.row.id}`}

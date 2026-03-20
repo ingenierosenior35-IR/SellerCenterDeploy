@@ -24,6 +24,9 @@
 /* scrollbar */
 @import './components/scrollbar/styles.css';
 
+/* lightbox */
+@import './components/lightbox/styles.css';
+
 /** **************************************
 * Baseline
 *************************************** */

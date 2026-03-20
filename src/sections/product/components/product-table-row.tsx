@@ -54,18 +54,10 @@ export function RenderCellStock({ params }: ParamsProps) {
 
 export function RenderCellProduct({ params, href }: ParamsProps & { href: string }) {
   return (
-    <Box
-      sx={{
-        py: 2,
-        gap: 2,
-        width: 1,
-        display: 'flex',
-        alignItems: 'center',
-      }}
-    >
+    <Box sx={{ py: 2, gap: 2, width: 1, display: 'flex', alignItems: 'center' }}>
       <Avatar
         alt={params.row.productName}
-        src={params.row.thumbnail}
+        src={params.row.thumbnailUrl}   // <-- FIX: era thumbnail
         variant="rounded"
         sx={{ width: 64, height: 64 }}
       />
