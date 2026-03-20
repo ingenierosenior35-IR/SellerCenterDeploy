@@ -30,6 +30,9 @@
             "subtitles": {
                 "list": "List"
             }
+        },
+        "feedback": {
+            "title": "Feedback"
         }
     },
     "tableLatestOrders": {
@@ -104,5 +107,39 @@
     "status": "Status",
     "createdAt": "Created date",
     "id": "Id",
-    "noDataFound": "No data found"
+    "noDataFound": "No data found",
+    "feedbackModule": {
+        "title": "Opiniones",
+        "table": {
+            "columns": {
+                "sku": "Sku",
+                "image": "Image",
+                "name": "Name",
+                "price": "Price",
+                "date": "Date",
+                "value": "Value",
+                "quality": "Quality",
+                "comment": "Comment",
+                "review": "Customer",
+                "status": "Status",
+                "created": "Created at"
+            },
+            "searchFilter": "Search by customer...",
+            "popup": {
+                "title": "Filter options",
+                "filterByRating": {
+                    "title": "Select rating to filter",
+                    "label": "Rating",
+                    "options": {
+                        "5": "5 stars",
+                        "4": "4 stars",
+                        "3": "3 stars",
+                        "2": "2 stars",
+                        "1": "1 star"
+                    }
+                }
+            }
+        }
+    }
+    
 }

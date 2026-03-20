@@ -20,6 +20,7 @@ const ICONS = {
   product: icon('ic-product'),
   dashboard: icon('ic-dashboard'),
   return: icon('ic-refresh'),
+  feedback: icon('ic-feedback'),
 };
 
 // ----------------------------------------------------------------------
@@ -54,9 +55,15 @@ export const useNavData = (): NavSectionProps['data'] => {
             path: paths.return.root,
             icon: ICONS.return,
             children: [{ title: translate('sidebarMenu.returns.subtitles.list'), path: paths.return.root }],
-          },
+          },{
+                        title: translate('sidebarMenu.feedback.title'),
+            path: paths.feedback.root,
+            icon: ICONS.feedback,
+          }
+          
         ],
       },
+
     ],
     [translate]
   );
