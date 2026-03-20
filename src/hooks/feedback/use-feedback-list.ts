@@ -1,8 +1,10 @@
+import type { TableHeadCellProps } from 'src/components';
+import type { FeedbackRequest, FeedbackTableFormated } from 'src/interfaces/feedback/feedback-list';
+
 import { useState } from 'react';
-import { useGetFeedback } from 'src/actions/feedback/useGetFeedback';
-import { TableHeadCellProps } from 'src/components';
-import { FeedbackRequest, FeedbackTableFormated } from 'src/interfaces/feedback/feedback-list';
+
 import { useTranslate } from 'src/locales';
+import { useGetFeedback } from 'src/actions/feedback/useGetFeedback';
 
 export function useFeedbackList() {
   const [sendFilter, setSendFilter] = useState<FeedbackRequest>({});

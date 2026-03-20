@@ -1,18 +1,17 @@
 import {
   Box,
-  Checkbox,
-  InputAdornment,
   Paper,
   Table,
+  TableRow,
   TableBody,
   TableCell,
-  TableContainer,
   TableHead,
-  TablePagination,
-  TableRow,
-  TableSortLabel,
   TextField,
+  InputAdornment,
+  TableContainer,
+  TablePagination,
 } from '@mui/material';
+
 import { Iconify } from 'src/components/iconify';
 
 function createData(

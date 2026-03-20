@@ -1,7 +1,7 @@
-import type { Item2, ReviewListResponse } from 'src/interfaces/feedback/feedback-list';
+import type { ReviewListResponse } from 'src/interfaces/feedback/feedback-list';
+import type { FeedbackItems, FeedbackAdapterInterface } from 'src/interfaces/feedback/feedback-adapter';
 
 import { CONFIG } from 'src/global-config';
-import { FeedbackAdapterInterface, FeedbackItems } from 'src/interfaces/feedback/feedback-adapter';
 
 export function feedbackListAdapter(data: ReviewListResponse | undefined): FeedbackAdapterInterface {
   if (!data?.sellerProducts?.items) {

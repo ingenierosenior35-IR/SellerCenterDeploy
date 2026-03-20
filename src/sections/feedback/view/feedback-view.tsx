@@ -1,29 +1,35 @@
 'use client';
 
+import type { FeedbackTableFormated } from 'src/interfaces/feedback/feedback-list';
+
 import { useState } from 'react';
 
 import {
-  Avatar,
   Box,
+  Avatar,
   Button,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Popover,
   Select,
-  TableCell,
+  Popover,
+  MenuItem,
   TableRow,
+  TableCell,
+  InputLabel,
   Typography,
+  FormControl,
 } from '@mui/material';
-import { CustomBreadcrumbs } from 'src/components/custom-breadcrumbs';
-import { Iconify } from 'src/components/iconify';
+
 // import { DashboardContent } from 'src/layouts/dashboard/content';
 import { paths } from 'src/routes/paths';
+
 import { useFeedbackList } from 'src/hooks/feedback/use-feedback-list';
-import { CommonTable } from '../components/common-table';
-import { FeedbackTableFormated } from 'src/interfaces/feedback/feedback-list';
-import { HomeContent } from 'src/layouts/home';
+
 import { useTranslate } from 'src/locales';
+import { HomeContent } from 'src/layouts/home';
+
+import { Iconify } from 'src/components/iconify';
+import { CustomBreadcrumbs } from 'src/components/custom-breadcrumbs';
+
+import { CommonTable } from '../components/common-table';
 
 export default function FeedbackView() {
   const { reviewsList, tableHead, handleFilterClick } = useFeedbackList();
@@ -47,8 +53,7 @@ export default function FeedbackView() {
 
 
 
-  const sellRender = (review: FeedbackTableFormated, index: number) => {
-    return (
+  const sellRender = (review: FeedbackTableFormated, index: number) => (
       <TableRow key={index}>
         <TableCell align="left">{review.sku}</TableCell>
         <TableCell align="left">
@@ -57,9 +62,9 @@ export default function FeedbackView() {
         <TableCell align="left">{review.name}</TableCell>
         <TableCell align="left">
           <Box sx={{ display: 'flex', flexDirection: 'row' }}>
-            {Array.from({ length: Number(review.price) }).map((_, index) => (
+            {Array.from({ length: Number(review.price) }).map((_, starIndex) => (
               <img
-                key={index}
+                key={starIndex}
                 src="/assets/icons/common/ic-star.svg"
                 alt="star"
                 width={16}
@@ -71,9 +76,9 @@ export default function FeedbackView() {
         </TableCell>
         <TableCell align="left">
           <Box sx={{ display: 'flex', flexDirection: 'row' }}>
-            {Array.from({ length: Number(review.price) }).map((_, index) => (
+            {Array.from({ length: Number(review.price) }).map((_, priceStarIndex) => (
               <img
-                key={index}
+                key={priceStarIndex}
                 src="/assets/icons/common/ic-star.svg"
                 alt="star"
                 width={16}
@@ -85,9 +90,9 @@ export default function FeedbackView() {
         </TableCell>
         <TableCell align="left">
           <Box sx={{ display: 'flex', flexDirection: 'row' }}>
-            {Array.from({ length: Number(review.quality) }).map((_, index) => (
+            {Array.from({ length: Number(review.quality) }).map((_, qualityStarIndex) => (
               <img
-                key={index}
+                key={qualityStarIndex}
                 src="/assets/icons/common/ic-star.svg"
                 alt="star"
                 width={16}
@@ -104,7 +109,6 @@ export default function FeedbackView() {
         <TableCell align="left">{review.created_at}</TableCell>
       </TableRow>
     );
-  };
   return (
     <HomeContent>
       <CustomBreadcrumbs

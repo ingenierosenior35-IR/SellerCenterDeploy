@@ -2,7 +2,7 @@
 
 import type { TableHeadCellProps } from 'src/components/table';
 
-import { useCallback, useMemo, useState } from 'react';
+import { useMemo, useState, useCallback } from 'react';
 
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -20,8 +20,6 @@ import {
   TableHeadCustom,
   TablePaginationCustom,
 } from 'src/components/table';
-
-import { TableCell, TableRow } from '@mui/material';
 
 // ----------------------------------------------------------------------
 
@@ -47,7 +45,7 @@ export function CommonTable({
   filterTemplate,
 }: CommonTableProps) {
   const table = useTable({ defaultOrderBy: 'orderNumber' });
-  const data = contentTable || [];
+  const data = useMemo(() => contentTable ?? [], [contentTable]);
   const [searchValue, setSearchValue] = useState('');
   const isLoading = false;
   const searchableKeys = useMemo(

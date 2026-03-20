@@ -31,6 +31,9 @@
                 "list": "List"
             }
         },
+        "clients": {
+            "title": "Clients"
+        },
         "feedback": {
             "title": "Feedback"
         }
@@ -140,6 +143,20 @@
                 }
             }
         }
+    },
+        "clientsModule": {
+        "title": "Clients",
+        "table": {
+            "columns": {
+                "id": "ID",
+                "name": "Name",
+                "email": "Email",
+                "phone": "Phone",
+                "totalOrders": "Total Orders",
+                "totalSpent": "Total Spent",
+                "createdAt": "Created At"
+            },
+            "searchFilter": "Search by name or email..."
+        }
     }
-    
 }
