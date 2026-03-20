@@ -25,6 +25,8 @@ export const LANGUAGE_OPTIONS: LanguageOption[] = [
   { value: 'en', label: 'English', countryCode: 'en', icon: 'us' },
 ];
 
+export const DEFAULT_LANG: LangCode = LANGUAGE_OPTIONS[0].value;
+
 // Cache en memoria
 export const LANGUAGE_RESOURCE: Partial<Record<LangCode, Record<string, any>>> = {};
 

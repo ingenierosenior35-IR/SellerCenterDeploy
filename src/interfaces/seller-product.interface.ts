@@ -17,6 +17,7 @@ export interface ItemsProducsInterface {
   stock_saleable: number;
   rating_summary: number;
   thumbnail: ThumbnailProductInterface;
+  custom_attributes_info: CustomAttributesInfo;
 };
 
 export interface PriceRangeInterface {
@@ -52,6 +53,9 @@ export interface PageInfoInterface {
   total_pages: number;
 };
 
+export interface CustomAttributesInfo {
+    items: { code: string; value: string }[];
+}
 
 export interface ProductListInterface {
   id: number;
