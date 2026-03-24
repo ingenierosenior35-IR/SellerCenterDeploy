@@ -21,7 +21,7 @@ import { fDate, fTime } from 'src/utils/format-time';
 import { Label } from 'src/components/label';
 import { Iconify } from 'src/components/iconify';
 
-import { RETURN_STATUS } from './constants/return/status';
+import { useReturnStatus } from './constants/return/status';
 
 
 // ----------------------------------------------------------------------
@@ -35,6 +35,7 @@ type Props = {
 
 export function OrderTableRow({ row, selected, onSelectRow, detailsHref }: Props) {
   const collapseRow = useBoolean();
+  const returnStatus = useReturnStatus();
 
   const renderPrimaryRow = () => (
     <TableRow hover selected={selected}>
@@ -69,11 +70,11 @@ export function OrderTableRow({ row, selected, onSelectRow, detailsHref }: Props
         <Label
           variant="soft"
           color={
-            (RETURN_STATUS.find((status) => status.value === row.status)?.color) as LabelColor ||
+            (returnStatus.find((status) => status.value === row.status)?.color) as LabelColor ||
             'default'
           }
         >
-          {RETURN_STATUS.find((status) => status.value === row.status)?.label}
+          {returnStatus.find((status) => status.value === row.status)?.label}
         </Label>
       </TableCell>
 

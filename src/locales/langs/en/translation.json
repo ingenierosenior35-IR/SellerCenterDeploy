@@ -1,159 +1,175 @@
 {
-    "languages": {
-        "es": "Spanish",
-        "en": "English"
+  "languages": {
+    "es": "Spanish",
+    "en": "English"
+  },
+  "loginPage": {
+    "title": "Sign in to your account",
+    "emailForm": "Email address",
+    "passwordForm": "Password",
+    "passwordPh": "6+ Characters",
+    "signIn": "Sign In",
+    "forgotPassword": "Forgot password?",
+    "keepMe": "Keep the session open",
+    "noAccount": "Don’t have an account?",
+    "getStarted": "Get started"
+  },
+  "sidebarMenu": {
+    "home": {
+      "title": "Home"
     },
-    "loginPage": {
-        "title": "Sign in to your account",
-        "emailForm": "Email address",
-        "passwordForm": "Password",
-        "passwordPh": "6+ Characters",
-        "signIn": "Sign In",
-        "forgotPassword": "Forgot password?",
-        "keepMe": "Keep the session open",
-        "noAccount": "Don’t have an account?",
-        "getStarted": "Get started"
+    "myProducts": {
+      "title": "My Products",
+      "subtitles": {
+        "list": "List",
+        "loadProducts": "Load Products"
+      }
     },
-    "sidebarMenu": {
-        "home": {
-            "title": "Home"
-        },
-        "myProducts": {
-            "title": "My Products",
-            "subtitles": {
-                "list": "List",
-                "loadProducts": "Load Products"
-            }
-        },
-        "returns": {
-            "title": "Returns",
-            "subtitles": {
-                "list": "List"
-            }
-        },
-        "clients": {
-            "title": "Clients"
-        },
-        "feedback": {
-            "title": "Feedback"
-        }
+    "returns": {
+      "title": "Returns",
+      "subtitles": {
+        "list": "List"
+      }
     },
-    "tableLatestOrders": {
-        "title": "Latest Orders",
-        "columns": {
-            "id": "Order",
-            "customer": "Customer",
-            "date": "Date",
-            "total": "Total",
-            "status": "Status"
-        }
+    "clients": {
+      "title": "Clients"
     },
-    "TopProducts": {
-        "title": "Top Products"
-    },
-    "TopClients": {
-        "title": "Top Clients"
-    },
-    "mui": {
-        "common": {
-            "all": "All",
-            "search": "Search"
-        },
-        "dataGrid": {
-            "noRowsLabel": "No rows",
-            "noResultsOverlayLabel": "No results found",
-            "toolbarColumns": "Columns",
-            "toolbarFilters": "Filters",
-            "toolbarExport": "Export",
-            "toolbarExportCSV": "Download as CSV",
-            "toolbarExportPrint": "Print",
-            "toolbarQuickFilterLabel": "Search",
-            "toolbarQuickFilterPlaceholder": "Search…",
-            "toolbarQuickFilterDeleteIconLabel": "Clear search",
-            "toolbarSettings": "Settings",
-            "densityCompact": "Compact density",
-            "densityStandard": "Standard density",
-            "densityComfortable": "Comfortable density",
-            "showColumnBorders": "Show column borders",
-            "showCellBorders": "Show cell borders"
-        },
-        "tablePagination": {
-            "rowsPerPage": "Rows per page:",
-            "of": "of",
-            "dense": "Dense"
-        }
-    },
-    "search": "Search...",
-    "logout": "Logout",
-    "productsNotAvailable": "Products not available",
-    "productsLoadError": "We're sorry, we were unable to load the products at this time. Please try again later.",
-    "addProduct": "Add Product",
-    "noResultsFound": "No results found",
-    "product": "Product",
-    "sku": "SKU",
-    "price": "Price",
-    "stock": "Stock",
-    "view": "View",
-    "edit": "Edit",
-    "delete": "Delete",
-    "viewAll": "View all",
-    "outOfStock": "Out of Stock",
-    "inStock": "In Stock",
-    "lowStock": "Low Stock",
-    "print": "Print",
-    "import": "Import",
-    "export": "Export",
-    "searchCustomerOrId": "Search customer or Id...",
-    "completeProfile": "Complete your profile",
-    "orderReference": "Order Reference",
-    "customerName": "Customer",
-    "status": "Status",
-    "createdAt": "Created date",
-    "id": "Id",
-    "noDataFound": "No data found",
-    "feedbackModule": {
-        "title": "Opiniones",
-        "table": {
-            "columns": {
-                "sku": "Sku",
-                "image": "Image",
-                "name": "Name",
-                "price": "Price",
-                "date": "Date",
-                "value": "Value",
-                "quality": "Quality",
-                "comment": "Comment",
-                "review": "Customer",
-                "status": "Status",
-                "created": "Created at"
-            },
-            "searchFilter": "Search by customer...",
-            "popup": {
-                "title": "Filter options",
-                "filterByRating": {
-                    "title": "Select rating to filter",
-                    "label": "Rating",
-                    "options": {
-                        "5": "5 stars",
-                        "4": "4 stars",
-                        "3": "3 stars",
-                        "2": "2 stars",
-                        "1": "1 star"
-                    }
-                }
-            }
-        }
-    },
-    "clientsModule": {
-        "title": "Clients",
-        "table": {
-            "columns": {
-                "name": "Name",
-                "email": "Email",
-                "address": "Address",
-                "clientSince": "Client Since"
-            },
-            "searchFilter": "Search by name or email..."
-        }
+    "feedback": {
+      "title": "Feedback"
     }
+  },
+  "tableLatestOrders": {
+    "title": "Latest Orders",
+    "columns": {
+      "id": "Order",
+      "customer": "Customer",
+      "date": "Date",
+      "total": "Total",
+      "status": "Status"
+    }
+  },
+  "TopProducts": {
+    "title": "Top Products"
+  },
+  "TopClients": {
+    "title": "Top Clients"
+  },
+  "mui": {
+    "common": {
+      "all": "All",
+      "search": "Search"
+    },
+    "dataGrid": {
+      "noRowsLabel": "No rows",
+      "noResultsOverlayLabel": "No results found",
+      "toolbarColumns": "Columns",
+      "toolbarFilters": "Filters",
+      "toolbarExport": "Export",
+      "toolbarExportCSV": "Download as CSV",
+      "toolbarExportPrint": "Print",
+      "toolbarQuickFilterLabel": "Search",
+      "toolbarQuickFilterPlaceholder": "Search…",
+      "toolbarQuickFilterDeleteIconLabel": "Clear search",
+      "toolbarSettings": "Settings",
+      "densityCompact": "Compact density",
+      "densityStandard": "Standard density",
+      "densityComfortable": "Comfortable density",
+      "showColumnBorders": "Show column borders",
+      "showCellBorders": "Show cell borders"
+    },
+    "tablePagination": {
+      "rowsPerPage": "Rows per page:",
+      "of": "of",
+      "dense": "Dense"
+    }
+  },
+  "search": "Search...",
+  "logout": "Logout",
+  "productsNotAvailable": "Products not available",
+  "productsLoadError": "We're sorry, we were unable to load the products at this time. Please try again later.",
+  "addProduct": "Add Product",
+  "noResultsFound": "No results found",
+  "product": "Product",
+  "sku": "SKU",
+  "price": "Price",
+  "stock": "Stock",
+  "view": "View",
+  "edit": "Edit",
+  "delete": "Delete",
+  "viewAll": "View all",
+  "outOfStock": "Out of Stock",
+  "inStock": "In Stock",
+  "lowStock": "Low Stock",
+  "print": "Print",
+  "import": "Import",
+  "export": "Export",
+  "searchCustomerOrId": "Search customer or Id...",
+  "completeProfile": "Complete your profile",
+  "orderReference": "Order Reference",
+  "customerName": "Customer",
+  "status": "Status",
+  "createdAt": "Created date",
+  "id": "Id",
+  "feedbackModule": {
+    "title": "Opiniones",
+    "table": {
+      "columns": {
+        "sku": "Sku",
+        "image": "Image",
+        "name": "Name",
+        "price": "Price",
+        "date": "Date",
+        "value": "Value",
+        "quality": "Quality",
+        "comment": "Comment",
+        "review": "Customer",
+        "status": "Status",
+        "created": "Created at"
+      },
+      "searchFilter": "Search by customer...",
+      "popup": {
+        "title": "Filter options",
+        "filterByRating": {
+          "title": "Select rating to filter",
+          "label": "Rating",
+          "options": {
+            "5": "5 stars",
+            "4": "4 stars",
+            "3": "3 stars",
+            "2": "2 stars",
+            "1": "1 star"
+          }
+        }
+      }
+    }
+  },
+  "noDataFound": "No data found",
+  "returnStatus": {
+    "all": "All",
+    "PENDING": "Pending",
+    "UNCONFIRMED": "Unconfirmed",
+    "AUTHORIZED": "Authorized",
+    "PARTIALLY_AUTHORIZED": "Partially Authorized",
+    "RECEIVED": "Received",
+    "PARTIALLY_RECEIVED": "Partially Received",
+    "APPROVED": "Approved",
+    "PARTIALLY_APPROVED": "Partially Approved",
+    "REJECTED": "Rejected",
+    "PARTIALLY_REJECTED": "Partially Rejected",
+    "DENIED": "Denied",
+    "PROCESSED_AND_CLOSED": "Processed and Closed",
+    "CLOSED": "Closed"
+  },
+  "clientsModule": {
+    "title": "Clients",
+    "table": {
+      "columns": {
+        "name": "Name",
+        "email": "Email",
+        "address": "Address",
+        "clientSince": "Client Since"
+      },
+      "searchFilter": "Search by name or email..."
+    }
+  }
 }

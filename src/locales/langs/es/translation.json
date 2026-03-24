@@ -110,7 +110,6 @@
     "status": "Estado",
     "createdAt": "Fecha de creación",
     "id": "Id",
-    "noDataFound": "No se encontraron datos",
     "feedbackModule": {
         "title": "Opiniones",
         "table": {
@@ -143,6 +142,23 @@
                 }
             }
         }
+    },
+    "noDataFound": "No se encontraron datos",
+    "returnStatus": {
+        "all": "Todos",
+        "PENDING": "Pendiente",
+        "UNCONFIRMED": "Sin confirmar",
+        "AUTHORIZED": "Autorizado",
+        "PARTIALLY_AUTHORIZED": "Parcialmente autorizado",
+        "RECEIVED": "Recibido",
+        "PARTIALLY_RECEIVED": "Parcialmente recibido",
+        "APPROVED": "Aprobado",
+        "PARTIALLY_APPROVED": "Parcialmente aprobado",
+        "REJECTED": "Rechazado",
+        "PARTIALLY_REJECTED": "Parcialmente rechazado",
+        "DENIED": "Denegado",
+        "PROCESSED_AND_CLOSED": "Procesado y cerrado",
+        "CLOSED": "Cerrado"
     },
     "clientsModule": {
         "title": "Clientes",

@@ -57,7 +57,8 @@ export function RenderCellStock({ params }: ParamsProps) {
 }
 
 export function RenderCellProduct({ params, href }: ParamsProps & { href: string }) {
-  console.log("RenderCellProduct", params.row); // Debug: Verificar los datos que llegan a este componente
+  const productName = params.row.productName;
+
   return (
     <Box
       sx={{
@@ -69,7 +70,7 @@ export function RenderCellProduct({ params, href }: ParamsProps & { href: string
       }}
     >
       <Avatar
-        alt={params.row.productName}
+        alt={productName}
         src={params.row.thumbnailUrl}
         variant="rounded"
         sx={{ width: 64, height: 64 }}
@@ -78,7 +79,7 @@ export function RenderCellProduct({ params, href }: ParamsProps & { href: string
       <ListItemText
         primary={
           <Link component={RouterLink} href={href} color="inherit">
-            {params.row.productName}
+            {productName}
           </Link>
         }
         secondary={params.row.category}
