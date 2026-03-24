@@ -11,23 +11,25 @@ import Tabs from '@mui/material/Tabs';
 
 import { paths } from 'src/routes/paths';
 
+import { useTranslate } from 'src/locales';
 import { HomeContent } from 'src/layouts/home';
-import { useGetProductDetailsById } from 'src/actions/product/useGetProductDetailsById';
+import { useGetProductDetailsById } from 'src/actions/product/use-get-product-details-by-id';
 
 import { ErrorContent } from 'src/components/error-content';
 import { LoadingScreen } from 'src/components/loading-screen';
 import { CustomBreadcrumbs } from 'src/components/custom-breadcrumbs';
 
-import { ProductDetailsToolbar } from '../product-details-toolbar';
-import { ProductDetailsSummary } from '../product-details-summary';
-import { ProductDetailsCarousel } from '../product-details-carousel';
-import { ProductDetailsDescription } from '../product-details-description';
+import { ProductDetailsToolbar } from '../components/product-detail-view/product-details-toolbar';
+import { ProductDetailsSummary } from '../components/product-detail-view/product-details-summary';
+import { ProductDetailsCarousel } from '../components/product-detail-view/product-details-carousel';
+import { ProductDetailsDescription } from '../components/product-detail-view/product-details-description';
 
 // ----------------------------------------------------------------------
 
 type Props = Readonly<{ id: number }>;
 
 export function ProductDetailsView({ id }: Props) {
+  const { translate } = useTranslate();
   const tabs = useTabs('description');
 
   const { product, isLoading, isError } = useGetProductDetailsById(id);
@@ -52,8 +54,8 @@ export function ProductDetailsView({ id }: Props) {
     return (
       <HomeContent sx={{ pt: 5 }}>
         <ErrorContent
-          title="Producto no disponible"
-          description="No pudimos cargar el producto en este momento. Por favor intenta más tarde."
+          title={translate('productDetails', 'errors.notAvailable.title')}
+          description={translate('productDetails', 'errors.notAvailable.description')}
         />
       </HomeContent>
     );
@@ -63,8 +65,8 @@ export function ProductDetailsView({ id }: Props) {
     return (
       <HomeContent sx={{ pt: 5 }}>
         <ErrorContent
-          title="Producto no encontrado"
-          description={`No se encontró ningún producto con id: ${id}`}
+          title={translate('productDetails', 'errors.notFound.title')}
+          description={`${translate('productDetails', 'errors.notFound.description')} ${id}`}
         />
       </HomeContent>
     );
@@ -73,20 +75,16 @@ export function ProductDetailsView({ id }: Props) {
   return (
     <HomeContent>
       <CustomBreadcrumbs
-        heading="Product Details"
+        heading={String(translate('productDetails', 'heading'))}
         links={[
-          { name: 'Home', href: paths.product.root },
-          { name: 'My products', href: paths.product.root },
+          { name: String(translate('sidebarMenu', 'home.title')), href: paths.home.root },
+          { name: String(translate('sidebarMenu', 'myProducts.title')), href: paths.product.root },
           { name: product.name },
         ]}
         sx={{ mb: { xs: 3, md: 4 } }}
       />
 
-      <ProductDetailsToolbar
-        publish={publish}
-        onChangePublish={handleChangePublish}
-        product={product}
-      />
+      <ProductDetailsToolbar publish={publish} onChangePublish={handleChangePublish} product={product} />
 
       <Grid container spacing={{ xs: 3, md: 5, lg: 8 }}>
         <Grid size={{ xs: 12, md: 6, lg: 6 }}>
@@ -109,12 +107,10 @@ export function ProductDetailsView({ id }: Props) {
             }),
           ]}
         >
-          <Tab value="description" label="Descripción" />
+          <Tab value="description" label={translate('productDetails', 'tabs.description')} />
         </Tabs>
 
-        {tabs.value === 'description' && (
-          <ProductDetailsDescription description={product.description} />
-        )}
+        {tabs.value === 'description' && <ProductDetailsDescription description={product.description} />}
       </Card>
     </HomeContent>
   );

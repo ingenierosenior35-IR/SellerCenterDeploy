@@ -30,7 +30,7 @@ type Props = {
   product: ProductDetailsUIInterface;
 };
 
-export function ProductDetailsSummary({ product, ...other }: Props) {
+export function ProductDetailsSummary({ product, ...other }: Readonly<Props>) {
   const {
     sku = '',
     name = '',
@@ -38,8 +38,6 @@ export function ProductDetailsSummary({ product, ...other }: Props) {
     inStock,
     stock,
     price,
-    priceSale,
-    discount,
     discountPercent,
     configurableOptions = [],
     variants = [],
@@ -82,8 +80,13 @@ export function ProductDetailsSummary({ product, ...other }: Props) {
     []
   );
 
+  const hasAllOptionsSelected = Object.keys(selectedOptions).length === configurableOptions.length;
+
   const canPurchase = isConfigurable
-    ? selectedVariant !== null && currentStockStatus === 'IN_STOCK' && currentStock > 0
+    ? selectedVariant !== null &&
+      hasAllOptionsSelected &&
+      currentStockStatus === 'IN_STOCK' &&
+      currentStock > 0
     : currentStockStatus === 'IN_STOCK' && currentStock > 0;
 
   const renderHeader = () => (

@@ -9,12 +9,14 @@ import { useState, useEffect, useCallback } from 'react';
 
 import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
-import Stack from '@mui/material/Stack';
 import Alert from '@mui/material/Alert';
+import Stack from '@mui/material/Stack';
 import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import { alpha } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
+
+import { useTranslate } from 'src/locales';
 
 import { Iconify } from 'src/components/iconify';
 
@@ -40,7 +42,9 @@ export function ProductConfigurableOptions({
   variants = [],
   onSelectionChange,
   disabled = false,
-}: Props) {
+}: Readonly<Props>) {
+  const { translate } = useTranslate();
+
   const [selectedOptions, setSelectedOptions] = useState<SelectedOptions>({});
 
   // Inicializar con la primera variante disponible
@@ -95,18 +99,23 @@ export function ProductConfigurableOptions({
     [disabled]
   );
 
-  const isOptionValidWithCurrentSelection = (currentOptionUid: string, currentValueUid: string): boolean => {
+  const isOptionValidWithCurrentSelection = (
+    currentOptionUid: string,
+    currentValueUid: string
+  ): boolean => {
     const tempSelection = { ...selectedOptions, [currentOptionUid]: currentValueUid };
     const selectedUids = Object.values(tempSelection);
 
-    return variants?.some((variant) => {
-      const variantAttributeUids = variant.attributes?.map((attr) => attr.uid) ?? [];
-      const hasAllAttributes = selectedUids.every((uid) => variantAttributeUids.includes(uid));
-      const hasStock =
-        variant.product?.stock_status === 'IN_STOCK' &&
-        (variant.product?.stock_saleable || 0) > 0;
-      return hasAllAttributes && hasStock;
-    }) ?? false;
+    return (
+      variants?.some((variant) => {
+        const variantAttributeUids = variant.attributes?.map((attr) => attr.uid) ?? [];
+        const hasAllAttributes = selectedUids.every((uid) => variantAttributeUids.includes(uid));
+        const hasStock =
+          variant.product?.stock_status === 'IN_STOCK' &&
+          (variant.product?.stock_saleable || 0) > 0;
+        return hasAllAttributes && hasStock;
+      }) ?? false
+    );
   };
 
   const getCurrentVariantStatus = (): VariantStatus => {
@@ -159,9 +168,10 @@ export function ProductConfigurableOptions({
                         <Typography variant="caption" sx={{ fontWeight: 600 }}>
                           {value.label}
                         </Typography>
+
                         {!isValid && (
                           <Typography variant="caption" display="block" sx={{ color: 'grey.400' }}>
-                            No disponible
+                            {translate('productConfigurable', 'notAvailable')}
                           </Typography>
                         )}
                       </Box>
@@ -181,8 +191,8 @@ export function ProductConfigurableOptions({
                           border: (theme) =>
                             `2px solid ${isSelected ? theme.palette.primary.main : theme.palette.divider}`,
                           boxShadow: isSelected ? 2 : 0,
-                          opacity: !isValid ? 0.5 : 1,
-                          filter: !isValid ? 'grayscale(0.4)' : 'none',
+                          opacity: isValid ? 1 : 0.5,
+                          filter: isValid ? 'none' : 'grayscale(0.4)',
                           transition: 'all 0.2s',
                           '&:hover': { transform: 'scale(1.08)', boxShadow: 3 },
                         }}
@@ -236,7 +246,11 @@ export function ProductConfigurableOptions({
                 const isValid = isOptionValidWithCurrentSelection(option.uid, value.uid);
 
                 return (
-                  <Tooltip key={value.uid} title={!isValid ? 'No disponible' : ''} arrow>
+                  <Tooltip
+                    key={value.uid}
+                    title={isValid ? '' : translate('productConfigurable', 'notAvailable')}
+                    arrow
+                  >
                     <Box>
                       <Chip
                         label={value.label}
@@ -244,11 +258,7 @@ export function ProductConfigurableOptions({
                         onClick={() => handleOptionChange(option.uid, value.uid)}
                         color={isSelected ? 'primary' : 'default'}
                         variant={isSelected ? 'filled' : 'outlined'}
-                        icon={
-                          isSelected ? (
-                            <Iconify icon="eva:checkmark-fill" width={16} />
-                          ) : undefined
-                        }
+                        icon={isSelected ? <Iconify icon="eva:checkmark-fill" width={16} /> : undefined}
                         sx={{
                           fontWeight: isSelected ? 600 : 400,
                           cursor: 'pointer',
@@ -272,17 +282,23 @@ export function ProductConfigurableOptions({
 
       {!variantStatus.exists && (
         <Alert severity="warning" icon={<Iconify icon="solar:danger-triangle-bold" />}>
-          <Typography variant="subtitle2">Combinación no disponible</Typography>
+          <Typography variant="subtitle2">
+            {translate('productConfigurable', 'alerts.combinationNotAvailable.title')}
+          </Typography>
           <Typography variant="body2">
-            Esta combinación de opciones no existe. Por favor selecciona otra.
+            {translate('productConfigurable', 'alerts.combinationNotAvailable.description')}
           </Typography>
         </Alert>
       )}
 
       {variantStatus.exists && !variantStatus.hasStock && (
         <Alert severity="error" icon={<Iconify icon="solar:close-circle-bold" />}>
-          <Typography variant="subtitle2">Sin stock disponible</Typography>
-          <Typography variant="body2">Esta variante no tiene stock en este momento.</Typography>
+          <Typography variant="subtitle2">
+            {translate('productConfigurable', 'alerts.outOfStock.title')}
+          </Typography>
+          <Typography variant="body2">
+            {translate('productConfigurable', 'alerts.outOfStock.description')}
+          </Typography>
         </Alert>
       )}
 
@@ -300,7 +316,9 @@ export function ProductConfigurableOptions({
             sx={{ fontWeight: 600, display: 'flex', alignItems: 'center', gap: 1 }}
           >
             <Iconify icon="solar:check-circle-bold" color="success.main" width={20} />
-            Disponible ({variantStatus.variant?.product.stock_saleable} unidades)
+            {translate('productConfigurable', 'available')}{' '}
+            ({variantStatus.variant?.product.stock_saleable}{' '}
+            {translate('productConfigurable', 'units')})
           </Typography>
         </Box>
       )}

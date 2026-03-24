@@ -14,6 +14,37 @@
     "noAccount": "Don’t have an account?",
     "getStarted": "Get started"
   },
+  "productDetails": {
+    "heading": "Product details",
+    "tabs": {
+      "description": "Description"
+    },
+    "errors": {
+      "notAvailable": {
+        "title": "Product not available",
+        "description": "We couldn't load the product at this time. Please try again later."
+      },
+      "notFound": {
+        "title": "Product not found",
+        "description": "No product was found with id:"
+      }
+    }
+  },
+  "productConfigurable": {
+    "notAvailable": "Not available",
+    "available": "Available",
+    "units": "units",
+    "alerts": {
+      "combinationNotAvailable": {
+        "title": "Combination not available",
+        "description": "This combination of options doesn't exist. Please select another one."
+      },
+      "outOfStock": {
+        "title": "Out of stock",
+        "description": "This variant has no stock at the moment."
+      }
+    }
+  },
   "sidebarMenu": {
     "home": {
       "title": "Home"

@@ -14,6 +14,37 @@
         "noAccount": "¿No tienes una cuenta?",
         "getStarted": "Comenzar"
     },
+    "productDetails": {
+      "heading": "Detalle del producto",
+      "tabs": {
+        "description": "Descripción"
+      },
+      "errors": {
+        "notAvailable": {
+          "title": "Producto no disponible",
+          "description": "No pudimos cargar el producto en este momento. Por favor intenta más tarde."
+        },
+        "notFound": {
+          "title": "Producto no encontrado",
+          "description": "No se encontró ningún producto con id:"
+        }
+      }
+    },
+    "productConfigurable": {
+      "notAvailable": "No disponible",
+      "available": "Disponible",
+      "units": "unidades",
+      "alerts": {
+        "combinationNotAvailable": {
+          "title": "Combinación no disponible",
+          "description": "Esta combinación de opciones no existe. Por favor selecciona otra."
+        },
+        "outOfStock": {
+          "title": "Sin stock disponible",
+          "description": "Esta variante no tiene stock en este momento."
+        }
+      }
+    },
     "sidebarMenu": {
         "home": {
             "title": "Inicio"
