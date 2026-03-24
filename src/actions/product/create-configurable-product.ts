@@ -149,33 +149,10 @@ export async function createConfigurableProduct(payload: CreateConfigurableProdu
 
   const graphql = GraphQLService.getInstance();
 
-  // Debug: mostrar payload SIN imágenes base64 para que sea legible
-  const debugInput = {
-    configurableProduct: {
-      ...configurableProduct,
-      media_gallery_entries: configurableProduct.media_gallery_entries
-        ? `[${configurableProduct.media_gallery_entries.length} imágenes]`
-        : null,
-    },
-    simpleProducts: simpleProducts.map((sp) => ({
-      ...sp,
-      media_gallery_entries: sp.media_gallery_entries
-        ? `[${sp.media_gallery_entries.length} imágenes]`
-        : null,
-    })),
-  };
-  console.log('=== CONFIGURABLE PRODUCT - PADRE ===');
-  console.log(JSON.stringify(debugInput.configurableProduct, null, 2));
-  console.log('=== CONFIGURABLE PRODUCT - HIJOS ===');
-  console.log(JSON.stringify(debugInput.simpleProducts, null, 2));
-
   const result = await graphql.request<
     CreateConfigurableProductResponse,
     { input: CreateConfigurableProductInput }
   >(CREATE_CONFIGURABLE_PRODUCT_MUTATION, { input });
-
-  console.log('=== CREATE CONFIGURABLE PRODUCT - RESPONSE ===');
-  console.log(JSON.stringify(result, null, 2));
 
   const data = result?.createConfigurableProduct;
 
