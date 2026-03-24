@@ -10,7 +10,7 @@ import { RouterLink } from 'src/routes/components';
 import { usePathname, useSearchParams } from 'src/routes/hooks';
 
 import { HomeContent } from 'src/layouts/home';
-import { useGetCustomer } from 'src/actions/customer/useGetCustomer';
+import { useGetCustomer } from 'src/actions/customer/use-get-customer';
 
 import { Iconify } from 'src/components/iconify';
 import { ErrorContent } from 'src/components/error-content';
