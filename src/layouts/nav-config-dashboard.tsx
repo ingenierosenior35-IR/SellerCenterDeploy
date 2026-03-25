@@ -46,24 +46,37 @@ export const useNavData = (): NavSectionProps['data'] => {
             path: paths.product.root,
             icon: ICONS.product,
             children: [
-              { title: translate('sidebarMenu.myProducts.subtitles.list'), path: paths.product.root },
-              { title: translate('sidebarMenu.myProducts.subtitles.loadProducts'), path: paths.product.load },
+              {
+                title: translate('sidebarMenu.myProducts.subtitles.list'),
+                path: paths.product.root,
+              },
+              {
+                title: translate('sidebarMenu.myProducts.subtitles.loadProducts'),
+                path: paths.product.load,
+              },
             ],
           },
           {
             title: translate('sidebarMenu.returns.title'),
             path: paths.return.root,
             icon: ICONS.return,
-            children: [{ title: translate('sidebarMenu.returns.subtitles.list'), path: paths.return.root }],
-          },{
-                        title: translate('sidebarMenu.feedback.title'),
+            children: [
+              { title: translate('sidebarMenu.returns.subtitles.list'), path: paths.return.root },
+            ],
+          },
+          {
+            title: translate('sidebarMenu.clients.title'),
+            path: paths.clients.root,
+            icon: ICONS.users,
+            
+          },
+          {
+            title: translate('sidebarMenu.feedback.title'),
             path: paths.feedback.root,
             icon: ICONS.feedback,
-          }
-          
+          },
         ],
       },
-
     ],
     [translate]
   );

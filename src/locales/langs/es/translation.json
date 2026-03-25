@@ -65,6 +65,9 @@
         "list": "Lista"
       }
     },
+            "clients":{
+            "title": "Clientes"
+        },
     "feedback": {
       "title": "Opiniones"
     }
@@ -191,6 +194,18 @@
     "PROCESSED_AND_CLOSED": "Procesado y cerrado",
     "CLOSED": "Cerrado"
   },
+      "clientsModule": {
+        "title": "Clientes",
+        "table": {
+            "columns": {
+                "name": "Nombre",
+                "email": "Correo electrónico",
+                "address": "Dirección",
+                "clientSince": "Cliente desde"
+            },
+            "searchFilter": "Buscar por nombre o correo..."
+        }
+    },
   "customerProfileView": {
     "user": "Usuario",
     "profile": "Perfil",
@@ -244,6 +259,9 @@
     "allowedFormats": "Formatos permitidos: PDF",
     "acceptTyC":"Acepto los términos y condiciones. Autorizo el tratamiento de mis datos personales para los fines descritos en la",
     "privacyPolicy": "Política de privacidad de Inter Rapidísimo"
+  },
+    "breadcrumbs": {
+    "home": "Inicio"
   }
 }
 

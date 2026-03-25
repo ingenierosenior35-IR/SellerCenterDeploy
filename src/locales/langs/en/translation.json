@@ -65,6 +65,9 @@
         "list": "List"
       }
     },
+    "clients": {
+      "title": "Clients"
+    },
     "feedback": {
       "title": "Feedback"
     }
@@ -191,6 +194,18 @@
     "PROCESSED_AND_CLOSED": "Processed and Closed",
     "CLOSED": "Closed"
   },
+  "clientsModule": {
+    "title": "Clients",
+    "table": {
+      "columns": {
+        "name": "Name",
+        "email": "Email",
+        "address": "Address",
+        "clientSince": "Client Since"
+      },
+      "searchFilter": "Search by name or email..."
+    }
+  },
   "customerProfileView": {
     "user": "User",
     "profile": "Profile",
@@ -245,5 +260,8 @@
     "allowedFormats": "Allowed formats: PDF",
     "acceptTyC":"I accept the terms and conditions. I authorize the processing of my personal data for the purposes described in the",
     "privacyPolicy": "Privacy Policy of Inter Rapidísimo"
+  },
+  "breadcrumbs": {
+    "home": "Home"
   }
 }
