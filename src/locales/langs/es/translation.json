@@ -1,35 +1,267 @@
 {
-    "languages": {
-        "es": "Español",
-        "en": "Inglés"
+  "languages": {
+    "es": "Español",
+    "en": "Inglés"
+  },
+  "loginPage": {
+    "title": "Inicia sesión en tu cuenta",
+    "emailForm": "Correo electrónico",
+    "passwordForm": "Contraseña",
+    "passwordPh": "6+ Caracteres",
+    "signIn": "Iniciar sesión",
+    "forgotPassword": "¿Olvidaste tu contraseña?",
+    "keepMe": "Mantener la sesión abierta",
+    "noAccount": "¿No tienes una cuenta?",
+    "getStarted": "Comenzar"
+  },
+    "productDetails": {
+      "heading": "Detalle del producto",
+      "tabs": {
+        "description": "Descripción"
+      },
+      "errors": {
+        "notAvailable": {
+          "title": "Producto no disponible",
+          "description": "No pudimos cargar el producto en este momento. Por favor intenta más tarde."
+        },
+        "notFound": {
+          "title": "Producto no encontrado",
+          "description": "No se encontró ningún producto con id:"
+        }
+      }
     },
-     "loginPage": {
-        "title": "Inicia sesión en tu cuenta",
-        "emailForm": "Correo electrónico",
-        "passwordForm": "Contraseña",
-        "passwordPh": "6+ Caracteres",
-        "signIn": "Iniciar sesión",
-        "forgotPassword": "¿Olvidaste tu contraseña?",
-        "keepMe": "Mantener la sesión abierta",
-        "noAccount": "¿No tienes una cuenta?",
-        "getStarted": "Comenzar"
+    "productConfigurable": {
+      "notAvailable": "No disponible",
+      "available": "Disponible",
+      "units": "unidades",
+      "alerts": {
+        "combinationNotAvailable": {
+          "title": "Combinación no disponible",
+          "description": "Esta combinación de opciones no existe. Por favor selecciona otra."
+        },
+        "outOfStock": {
+          "title": "Sin stock disponible",
+          "description": "Esta variante no tiene stock en este momento."
+        }
+      }
     },
-    "tableLatestOrders": {
-        "title": "Últimos Pedidos",
-        "columns": {
-            "id": "Pedido",
-            "customer": "Cliente",
-            "date": "Fecha",
-            "total": "Total",
-            "status": "Estado"
+  "sidebarMenu": {
+    "home": {
+      "title": "Inicio"
+    },
+    "account": {
+      "title": "Cuenta"
+    },
+    "myProducts": {
+      "title": "Mis Productos",
+      "subtitles": {
+        "list": "Lista",
+        "loadProducts": "Cargar Productos"
+      }
+    },
+    "returns": {
+      "title": "Devoluciones",
+      "subtitles": {
+        "list": "Lista"
+      }
+    },
+            "clients":{
+            "title": "Clientes"
+        },
+    "feedback": {
+      "title": "Opiniones"
+    }
+  },
+  "tableLatestOrders": {
+    "title": "Últimos Pedidos",
+    "columns": {
+      "id": "Pedido",
+      "customer": "Cliente",
+      "date": "Fecha",
+      "total": "Total",
+      "status": "Estado"
+    }
+  },
+  "TopProducts": {
+    "title": "Productos Principales"
+  },
+  "TopClients": {
+    "title": "Clientes Principales"
+  },
+  "mui": {
+    "common": {
+      "all": "Todos",
+      "search": "Buscar"
+    },
+    "dataGrid": {
+      "noRowsLabel": "Sin filas",
+      "noResultsOverlayLabel": "Sin resultados",
+      "toolbarColumns": "Columnas",
+      "toolbarFilters": "Filtros",
+      "toolbarExport": "Exportar",
+      "toolbarExportCSV": "Descargar CSV",
+      "toolbarExportPrint": "Imprimir",
+      "toolbarQuickFilterLabel": "Buscar",
+      "toolbarQuickFilterPlaceholder": "Buscar…",
+      "toolbarQuickFilterDeleteIconLabel": "Limpiar búsqueda",
+      "toolbarSettings": "Configuración",
+      "densityCompact": "Densidad compacta",
+      "densityStandard": "Densidad estándar",
+      "densityComfortable": "Densidad cómoda",
+      "showColumnBorders": "Mostrar bordes de columna",
+      "showCellBorders": "Mostrar bordes de celda"
+    },
+    "tablePagination": {
+      "rowsPerPage": "Filas por página:",
+      "of": "de",
+      "dense": "Denso"
+    }
+  },
+  "search": "Buscar...",
+  "logout": "Cerrar sesión",
+  "productsNotAvailable": "Productos no disponibles",
+  "productsLoadError": "Lo sentimos, no pudimos cargar los productos en este momento. Por favor, inténtalo de nuevo más tarde.",
+  "addProduct": "Agregar Producto",
+  "noResultsFound": "No se encontraron resultados",
+  "product": "Producto",
+  "sku": "SKU",
+  "price": "Precio",
+  "stock": "Inventario",
+  "view": "Ver",
+  "edit": "Editar",
+  "delete": "Eliminar",
+  "viewAll": "Ver todos",
+  "outOfStock": "Agotado",
+  "inStock": "Disponible",
+  "lowStock": "Bajo inventario",
+  "print": "Imprimir",
+  "import": "Importar",
+  "export": "Exportar",
+  "searchCustomerOrId": "Buscar cliente o Id...",
+  "completeProfile": "Completa tu perfil",
+  "orderReference": "Referencia de pedido",
+  "customerName": "Cliente",
+  "status": "Estado",
+  "createdAt": "Fecha de creación",
+  "id": "Id",
+  "feedbackModule": {
+    "title": "Opiniones",
+    "table": {
+      "columns": {
+        "sku": "SKU",
+        "image": "Imagen",
+        "name": "Nombre",
+        "price": "Precio",
+        "date": "Fecha",
+        "value": "Valor",
+        "quality": "Calidad",
+        "comment": "Comentario",
+        "review": "Cliente",
+        "status": "Estado",
+        "created": "Creado el"
+      },
+      "searchFilter": "Buscar por cliente...",
+      "popup": {
+        "title": "Filtros",
+        "filterByRating": {
+          "title": "Filtrar por calificación",
+          "label": "Calificación",
+          "options": {
+            "5": "5 estrellas",
+            "4": "4 estrellas",
+            "3": "3 estrellas",
+            "2": "2 estrellas",
+            "1": "1 estrella"
+          }
+        }
+      }
+    }
+  },
+  "noDataFound": "No se encontraron datos",
+  "returnStatus": {
+    "all": "Todos",
+    "PENDING": "Pendiente",
+    "UNCONFIRMED": "Sin confirmar",
+    "AUTHORIZED": "Autorizado",
+    "PARTIALLY_AUTHORIZED": "Parcialmente autorizado",
+    "RECEIVED": "Recibido",
+    "PARTIALLY_RECEIVED": "Parcialmente recibido",
+    "APPROVED": "Aprobado",
+    "PARTIALLY_APPROVED": "Parcialmente aprobado",
+    "REJECTED": "Rechazado",
+    "PARTIALLY_REJECTED": "Parcialmente rechazado",
+    "DENIED": "Denegado",
+    "PROCESSED_AND_CLOSED": "Procesado y cerrado",
+    "CLOSED": "Cerrado"
+  },
+      "clientsModule": {
+        "title": "Clientes",
+        "table": {
+            "columns": {
+                "name": "Nombre",
+                "email": "Correo electrónico",
+                "address": "Dirección",
+                "clientSince": "Cliente desde"
+            },
+            "searchFilter": "Buscar por nombre o correo..."
         }
     },
-    "TopProducts": {
-        "title": "Productos Principales"
-    },
-    "TopClients": {
-        "title": "Clientes Principales"
-    },
-    "search": "Buscar...",
-    "logout": "Cerrar sesión"
+  "customerProfileView": {
+    "user": "Usuario",
+    "profile": "Perfil",
+    "configuration": "Configuración",
+    "security": "Seguridad",
+    "documents": "Documentos",
+    "personalData": "Datos personales"
+  },
+  "formErrorRequired": {
+    "nameRequired": "Nombre es requerido",
+    "identificationTypeRequired": "Tipo de identificación es requerido",
+    "identificationNumberRequired": "Número de identificación es requerido",
+    "avatarRequired": "Avatar es requerido",
+    "countryRequired": "País es requerido",
+    "cityRequired": "Ciudad es requerida",
+    "addressRequired": "Dirección es requerida",
+    "postalCodeRequired": "Código postal es requerido",
+    "phoneNumberRequired": "Número de teléfono es requerido",
+    "oldPasswordRequired": "Contraseña antigua es requerida",
+    "newPasswordRequired": "Nueva contraseña es requerida",
+    "confirmNewPasswordRequired": "Confirmar nueva contraseña es requerida",
+    "oldPasswordMin": "La contraseña antigua debe tener al menos caracteres",
+    "newPasswordDifferent": "La nueva contraseña debe ser diferente de la contraseña antigua",
+    "passwordsDoNotMatch": "Las contraseñas no coinciden",
+    "documentRequired": "Este documento es obligatorio",
+    "acceptTyC": "Debes aceptar los términos y condiciones"
+  },
+  "formPlaceholder": {
+    "name": "Nombre",
+    "lastName": "Apellido",
+    "email": "Correo electrónico",
+    "identificationType": "Tipo de identificación",
+    "identificationNumber": "Número de identificación",
+    "phoneNumber": "Número de teléfono",
+    "country": "País",
+    "address": "Dirección",
+    "state": "Estado",
+    "city": "Ciudad",
+    "zipCode": "Código postal",
+    "oldPassword": "Contraseña antigua",
+    "newPassword": "Nueva contraseña",
+    "confirmNewPassword": "Confirmar nueva contraseña",
+    "btnSave": "Guardar",
+    "btnLoad": "Cargar",
+    "btnRegister": "Registrar"
+  },
+  "customerProfileViewDocuments": {
+    "title": "Adjuntar documentos",
+    "sellerIdentification": "Identificación del vendedor",
+    "bankCertificate": "Certificado bancario",
+    "allowedFormats": "Formatos permitidos: PDF",
+    "acceptTyC":"Acepto los términos y condiciones. Autorizo el tratamiento de mis datos personales para los fines descritos en la",
+    "privacyPolicy": "Política de privacidad de Inter Rapidísimo"
+  },
+    "breadcrumbs": {
+    "home": "Inicio"
+  }
 }
+

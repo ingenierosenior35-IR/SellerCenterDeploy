@@ -18,18 +18,13 @@ import { Iconify } from 'src/components/iconify';
 import { ConfirmDialog } from 'src/components/custom-dialog';
 
 import { CsvErrorsAlert } from './csv-errors-alert';
-import { CsvHelpTemplate } from './csv-help-template';
 
 const CSV_ACCEPT_ATTR = '.csv,.xml,.xls';
-const IMG_ACCEPT_ATTR = '.jpg,.jpeg,.png';
-const ZIP_ACCEPT_ATTR = '.zip';
-const IMAGES_OR_ZIP_ACCEPT_ATTR = `${IMG_ACCEPT_ATTR},${ZIP_ACCEPT_ATTR}`;
 // const AVAILABLE_FORMAT_TYPES = ['image/jpeg', 'image/png', 'image/jpg'];
 
 export const ProductUploadDialog = ({ open, onClose }: { open: boolean; onClose: () => void }) => {
   const {
     csvInputRef,
-    imgInputRef,
     csvFile,
     images,
     imagesZip,
@@ -37,23 +32,15 @@ export const ProductUploadDialog = ({ open, onClose }: { open: boolean; onClose:
     result,
     showCancelDialog,
     csvInvalid,
-    imgsInvalid,
-    zipInvalid,
     csvErrors,
     onPickCsv,
-    onPickImages,
-    handleCsvFiles,
-    handleImageFiles,
     onDropCsv,
-    onDropImages,
     clearAll,
     disabledUpload,
     handleUpload,
     handleCancelUpload,
     handleCancelBulkUpload,
     setCsvFile,
-    setImages,
-    setImagesZip,
     setShowCancelDialog,
   } = useProductUploadDialog({ onClose });
 

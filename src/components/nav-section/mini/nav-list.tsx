@@ -148,7 +148,7 @@ function NavSubList({
     <NavUl sx={{ gap: 0.5 }}>
       {data.map((list) => (
         <NavList
-          key={list.title}
+          key={list.path}
           data={list}
           render={render}
           depth={depth + 1}

@@ -22,11 +22,11 @@ import { useMockedUser } from 'src/auth/hooks';
 import { NavMobile } from './nav-mobile';
 import { VerticalDivider } from './content';
 import { NavVertical } from './nav-vertical';
+import { useNavData } from '../nav-config-home';
 import { NavHorizontal } from './nav-horizontal';
-import { navData as dashboardNavData } from '../nav-config-home';
 import { dashboardLayoutVars, dashboardNavColorVars } from './css-vars';
 import { MainSection, layoutClasses, HeaderSection, LayoutSection } from '../core';
-import { Searchbar, MenuButton, StoreButton, ThemeToggleButton, NotificationsDrawer, LanguagePopover} from '../components';
+import { Searchbar, MenuButton, StoreButton, LanguagePopover, ThemeToggleButton, NotificationsDrawer} from '../components';
 
 // ----------------------------------------------------------------------
 
@@ -59,6 +59,8 @@ export function HomeLayout({
   const navVars = dashboardNavColorVars(theme, settings.state.navColor, settings.state.navLayout);
 
   const { value: open, onFalse: onClose, onTrue: onOpen } = useBoolean();
+
+  const dashboardNavData = useNavData();
 
   const navData = slotProps?.nav?.data ?? dashboardNavData;
 

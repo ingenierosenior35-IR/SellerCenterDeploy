@@ -1,12 +1,15 @@
+import type { LangCode } from 'src/locales';
 import type { GraphQLErrorResponseInterface } from 'src/interfaces/graphql';
 import type { ProductListInterface, SellerProductsResponseInterface } from 'src/interfaces';
 
 import { CONFIG } from 'src/global-config';
+import { DEFAULT_LANG } from 'src/locales';
 
 export function productListAdapter(
   data: SellerProductsResponseInterface
   | GraphQLErrorResponseInterface
-  | undefined
+  | undefined,
+  lang: LangCode
 ): ProductListInterface[] {
 
   if (
@@ -21,7 +24,7 @@ export function productListAdapter(
   return data.sellerProducts.items.map((product) => ({
       id: product.id,
       sku: product.sku,
-      productName: product.name,
+      productName: (lang !== DEFAULT_LANG ? product.custom_attributes_info.items[0]?.value : undefined) || product.name,
       thumbnailUrl: product.thumbnail?.url ?? CONFIG.assetsDir + '/assets/images/img-not-found.jpg',
       category: product.categories?.[0]?.name ?? "-",
       finalPrice: product.price_range?.minimum_price?.regular_price?.value ?? 0,

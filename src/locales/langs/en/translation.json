@@ -1,35 +1,267 @@
 {
-    "languages": {
-        "es": "Spanish",
-        "en": "English"
+  "languages": {
+    "es": "Spanish",
+    "en": "English"
+  },
+  "loginPage": {
+    "title": "Sign in to your account",
+    "emailForm": "Email address",
+    "passwordForm": "Password",
+    "passwordPh": "6+ Characters",
+    "signIn": "Sign In",
+    "forgotPassword": "Forgot password?",
+    "keepMe": "Keep the session open",
+    "noAccount": "Don’t have an account?",
+    "getStarted": "Get started"
+  },
+  "productDetails": {
+    "heading": "Product details",
+    "tabs": {
+      "description": "Description"
     },
-    "loginPage": {
-        "title": "Sign in to your account",
-        "emailForm": "Email address",
-        "passwordForm": "Password",
-        "passwordPh": "6+ Characters",
-        "signIn": "Sign In",
-        "forgotPassword": "Forgot password?",
-        "keepMe": "Keep the session open",
-        "noAccount": "Don’t have an account?",
-        "getStarted": "Get started"
+    "errors": {
+      "notAvailable": {
+        "title": "Product not available",
+        "description": "We couldn't load the product at this time. Please try again later."
+      },
+      "notFound": {
+        "title": "Product not found",
+        "description": "No product was found with id:"
+      }
+    }
+  },
+  "productConfigurable": {
+    "notAvailable": "Not available",
+    "available": "Available",
+    "units": "units",
+    "alerts": {
+      "combinationNotAvailable": {
+        "title": "Combination not available",
+        "description": "This combination of options doesn't exist. Please select another one."
+      },
+      "outOfStock": {
+        "title": "Out of stock",
+        "description": "This variant has no stock at the moment."
+      }
+    }
+  },
+  "sidebarMenu": {
+    "home": {
+      "title": "Home"
     },
-    "tableLatestOrders": {
-        "title": "Latest Orders",
-        "columns": {
-            "id": "Order",
-            "customer": "Customer",
-            "date": "Date",
-            "total": "Total",
-            "status": "Status"
+    "account": {
+      "title": "Account"
+    },
+    "myProducts": {
+      "title": "My Products",
+      "subtitles": {
+        "list": "List",
+        "loadProducts": "Load Products"
+      }
+    },
+    "returns": {
+      "title": "Returns",
+      "subtitles": {
+        "list": "List"
+      }
+    },
+    "clients": {
+      "title": "Clients"
+    },
+    "feedback": {
+      "title": "Feedback"
+    }
+  },
+  "tableLatestOrders": {
+    "title": "Latest Orders",
+    "columns": {
+      "id": "Order",
+      "customer": "Customer",
+      "date": "Date",
+      "total": "Total",
+      "status": "Status"
+    }
+  },
+  "TopProducts": {
+    "title": "Top Products"
+  },
+  "TopClients": {
+    "title": "Top Clients"
+  },
+  "mui": {
+    "common": {
+      "all": "All",
+      "search": "Search"
+    },
+    "dataGrid": {
+      "noRowsLabel": "No rows",
+      "noResultsOverlayLabel": "No results found",
+      "toolbarColumns": "Columns",
+      "toolbarFilters": "Filters",
+      "toolbarExport": "Export",
+      "toolbarExportCSV": "Download as CSV",
+      "toolbarExportPrint": "Print",
+      "toolbarQuickFilterLabel": "Search",
+      "toolbarQuickFilterPlaceholder": "Search…",
+      "toolbarQuickFilterDeleteIconLabel": "Clear search",
+      "toolbarSettings": "Settings",
+      "densityCompact": "Compact density",
+      "densityStandard": "Standard density",
+      "densityComfortable": "Comfortable density",
+      "showColumnBorders": "Show column borders",
+      "showCellBorders": "Show cell borders"
+    },
+    "tablePagination": {
+      "rowsPerPage": "Rows per page:",
+      "of": "of",
+      "dense": "Dense"
+    }
+  },
+  "search": "Search...",
+  "logout": "Logout",
+  "productsNotAvailable": "Products not available",
+  "productsLoadError": "We're sorry, we were unable to load the products at this time. Please try again later.",
+  "addProduct": "Add Product",
+  "noResultsFound": "No results found",
+  "product": "Product",
+  "sku": "SKU",
+  "price": "Price",
+  "stock": "Stock",
+  "view": "View",
+  "edit": "Edit",
+  "delete": "Delete",
+  "viewAll": "View all",
+  "outOfStock": "Out of Stock",
+  "inStock": "In Stock",
+  "lowStock": "Low Stock",
+  "print": "Print",
+  "import": "Import",
+  "export": "Export",
+  "searchCustomerOrId": "Search customer or Id...",
+  "completeProfile": "Complete your profile",
+  "orderReference": "Order Reference",
+  "customerName": "Customer",
+  "status": "Status",
+  "createdAt": "Created date",
+  "id": "Id",
+  "feedbackModule": {
+    "title": "Opiniones",
+    "table": {
+      "columns": {
+        "sku": "Sku",
+        "image": "Image",
+        "name": "Name",
+        "price": "Price",
+        "date": "Date",
+        "value": "Value",
+        "quality": "Quality",
+        "comment": "Comment",
+        "review": "Customer",
+        "status": "Status",
+        "created": "Created at"
+      },
+      "searchFilter": "Search by customer...",
+      "popup": {
+        "title": "Filter options",
+        "filterByRating": {
+          "title": "Select rating to filter",
+          "label": "Rating",
+          "options": {
+            "5": "5 stars",
+            "4": "4 stars",
+            "3": "3 stars",
+            "2": "2 stars",
+            "1": "1 star"
+          }
         }
-    },
-    "TopProducts": {
-        "title": "Top Products"
-    },
-    "TopClients": {
-        "title": "Top Clients"
-    },
-    "search": "Search...",
-    "logout": "Logout"
+      }
+    }
+  },
+  "noDataFound": "No data found",
+  "returnStatus": {
+    "all": "All",
+    "PENDING": "Pending",
+    "UNCONFIRMED": "Unconfirmed",
+    "AUTHORIZED": "Authorized",
+    "PARTIALLY_AUTHORIZED": "Partially Authorized",
+    "RECEIVED": "Received",
+    "PARTIALLY_RECEIVED": "Partially Received",
+    "APPROVED": "Approved",
+    "PARTIALLY_APPROVED": "Partially Approved",
+    "REJECTED": "Rejected",
+    "PARTIALLY_REJECTED": "Partially Rejected",
+    "DENIED": "Denied",
+    "PROCESSED_AND_CLOSED": "Processed and Closed",
+    "CLOSED": "Closed"
+  },
+  "clientsModule": {
+    "title": "Clients",
+    "table": {
+      "columns": {
+        "name": "Name",
+        "email": "Email",
+        "address": "Address",
+        "clientSince": "Client Since"
+      },
+      "searchFilter": "Search by name or email..."
+    }
+  },
+  "customerProfileView": {
+    "user": "User",
+    "profile": "Profile",
+    "configuration": "Configuration",
+    "security": "Security",
+    "documents": "Documents",
+    "personalData": "Personal Data"
+  },
+  "formErrorRequired": {
+    "nameRequired": "Name is required",
+    "identificationTypeRequired": "Identification type is required",
+    "identificationNumberRequired": "Identification number is required",
+    "avatarRequired": "Avatar is required",
+    "countryRequired": "Country is required",
+    "addressRequired": "Address is required",
+    "stateRequired": "State is required",
+    "cityRequired": "City is required",
+    "zipCodeRequired": "Zip code is required",
+    "phoneNumberRequired": "Phone number is required",
+    "oldPasswordRequired": "Old password is required",
+    "newPasswordRequired": "New password is required",
+    "confirmNewPasswordRequired": "Confirm new password is required",
+    "oldPasswordMin": "Old password must be at least characters",
+    "newPasswordDifferent": "New password must be different from old password",
+    "passwordsDoNotMatch": "Passwords do not match",
+    "documentRequired": "This document is required",
+    "acceptTyC": "You must accept the terms and conditions"
+  },
+  "formPlaceholder": {
+    "name": "Name",
+    "lastName": "Last Name",
+    "email": "Email",
+    "identificationType": "Identification Type",
+    "identificationNumber": "Identification Number",
+    "phoneNumber": "Phone Number",
+    "country": "Country",
+    "address": "Address",
+    "state": "State",
+    "city": "City",
+    "zipCode": "Zip Code",
+    "oldPassword": "Old Password",
+    "newPassword": "New Password",
+    "confirmNewPassword": "Confirm New Password",
+    "btnSave": "Save",
+    "btnLoad": "Load",
+    "btnRegister": "Register"
+  },
+  "customerProfileViewDocuments": {
+    "title": "Attachment of documents",
+    "sellerIdentification": "Seller Identification",
+    "bankCertificate": "Bank Certificate",
+    "allowedFormats": "Allowed formats: PDF",
+    "acceptTyC":"I accept the terms and conditions. I authorize the processing of my personal data for the purposes described in the",
+    "privacyPolicy": "Privacy Policy of Inter Rapidísimo"
+  },
+  "breadcrumbs": {
+    "home": "Home"
+  }
 }

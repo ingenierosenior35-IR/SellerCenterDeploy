@@ -29,6 +29,7 @@ import {
   ColumnsPanelTrigger,
 } from '@mui/x-data-grid';
 
+import { useTranslate } from 'src/locales/langs/i18n';
 import { ExportIcon, FilterIcon, ViewColumnsIcon } from 'src/theme/core/components/mui-x-data-grid';
 
 import { Iconify } from '../iconify';
@@ -189,6 +190,7 @@ export function CustomToolbarQuickFilter({
   slotProps,
   ...other
 }: CustomToolbarQuickFilterProps) {
+  const { translate } = useTranslate();
   const apiRef = useGridApiContext();
   const label = apiRef.current.getLocaleText('toolbarQuickFilterLabel');
   const placeholder = apiRef.current.getLocaleText('toolbarQuickFilterPlaceholder');
@@ -218,7 +220,11 @@ export function CustomToolbarQuickFilter({
                     ),
                     endAdornment: state.value ? (
                       <InputAdornment position="end">
-                        <QuickFilterClear edge="end" size="small" aria-label="Clear search">
+                        <QuickFilterClear
+                          edge="end"
+                          size="small"
+                          aria-label={translate('mui.dataGrid.toolbarQuickFilterDeleteIconLabel')}
+                        >
                           <Iconify icon="mingcute:close-line" width={16} />
                         </QuickFilterClear>
                       </InputAdornment>

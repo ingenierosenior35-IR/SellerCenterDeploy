@@ -18,6 +18,8 @@ import IconButton from '@mui/material/IconButton';
 
 import { fCurrency } from 'src/utils/format-number';
 
+import { useTranslate } from 'src/locales/langs/i18n';
+
 import { Label } from 'src/components/label';
 import { Iconify } from 'src/components/iconify';
 import { Scrollbar } from 'src/components/scrollbar';
@@ -41,6 +43,8 @@ type Props = CardProps & {
 };
 
 export function AppNewInvoices({ title, subheader, tableData, headCells, sx, ...other }: Props) {
+  const { translate } = useTranslate();
+
   return (
     <Card sx={sx} {...other}>
       <CardHeader title={title} subheader={subheader} sx={{ mb: 3 }} />
@@ -65,7 +69,7 @@ export function AppNewInvoices({ title, subheader, tableData, headCells, sx, ...
           color="inherit"
           endIcon={<Iconify icon="eva:arrow-ios-forward-fill" width={18} sx={{ ml: -0.5 }} />}
         >
-          View all
+          { translate('viewAll') }
         </Button>
       </Box>
     </Card>

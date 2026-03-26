@@ -20,6 +20,7 @@ import IconButton from '@mui/material/IconButton';
 import { paths } from 'src/routes/paths';
 
 import { HomeContent } from 'src/layouts/home';
+import { useTranslate } from 'src/locales/langs/i18n';
 import { useGetReturns } from 'src/actions/return/useGetReturns';
 
 import { Label } from 'src/components/label';
@@ -38,31 +39,36 @@ import {
 
 import { OrderTableRow } from '../order-table-row';
 import { OrderTableToolbar } from '../order-table-toolbar';
-import { RETURN_STATUS } from '../constants/return/status';
-
-// ----------------------------------------------------------------------
-
-const STATUS_OPTIONS = [{ value: 'all', label: 'All', color: 'default' }, ...RETURN_STATUS];
-
-const TABLE_HEAD: TableHeadCellProps[] = [
-  { id: 'id', label: 'Id', width: 150 },
-  { id: 'orderReference', label: 'Order Reference', width: 150   },
-  { id: 'customerName', label: 'Customer' },
-  { id: 'status', label: 'Status' },
-  { id: 'createdAt', label: 'Created date', width: 150 },
-  { id: 'action', label: '' },
-];
+import { useReturnStatus } from '../constants/return/status';
 
 // ----------------------------------------------------------------------
 
 export function ReturnListView() {
+  const { translate } = useTranslate();
+  const returnStatus = useReturnStatus();
+
+  const STATUS_OPTIONS = [
+    { value: 'all', label: translate('returnStatus', 'all'), color: 'default' },
+    ...returnStatus,
+  ];
+
+  const TABLE_HEAD: TableHeadCellProps[] = [
+    { id: 'id', label: translate('id'), width: 150 },
+    { id: 'orderReference', label: translate('orderReference'), width: 150 },
+    { id: 'customerName', label: translate('customerName') },
+    { id: 'status', label: translate('status') },
+    { id: 'createdAt', label: translate('createdAt'), width: 150 },
+    { id: 'action', label: '' },
+  ];
   const table = useTable({ defaultOrderBy: 'orderNumber' });
 
   const confirmDialog = useBoolean();
 
   const { returns, isLoading } = useGetReturns();
 
-  const [tableData, setTableData] = useState<ItemsReturnListInterface[]>(returns?.returns?.items || []);
+  const [tableData, setTableData] = useState<ItemsReturnListInterface[]>(
+    returns?.returns?.items || []
+  );
 
   useEffect(() => {
     setTableData(returns?.returns?.items || []);
@@ -80,9 +86,7 @@ export function ReturnListView() {
     filters: currentFilters,
   });
 
-  const canReset =
-    !!currentFilters.name ||
-    currentFilters.status !== 'all';
+  const canReset = !!currentFilters.name || currentFilters.status !== 'all';
 
   const notFound = (!dataFiltered.length && canReset) || !dataFiltered.length;
 
@@ -97,11 +101,11 @@ export function ReturnListView() {
   return (
     <HomeContent>
       <CustomBreadcrumbs
-        heading="Return List"
+        heading={translate('returnList')}
         links={[
-          { name: 'Home', href: paths.home.root },
-          { name: 'Return', href: paths.return.root },
-          { name: 'List' },
+          { name: translate('sidebarMenu.home.title'), href: paths.home.root },
+          { name: translate('sidebarMenu.returns.title'), href: paths.return.root },
+          { name: translate('sidebarMenu.returns.subtitles.list') },
         ]}
         sx={{ mb: { xs: 3, md: 5 } }}
       />
@@ -129,12 +133,9 @@ export function ReturnListView() {
                     ((tab.value === 'all' || tab.value === currentFilters.status) && 'filled') ||
                     'soft'
                   }
-                  color={
-                    (tab.color) as LabelColor ||
-                    'default'
-                  }
+                  color={(tab.color as LabelColor) || 'default'}
                 >
-                  {RETURN_STATUS.map((status) => status.value).includes(tab.value)
+                  {(returnStatus.map((status) => status.value) as string[]).includes(tab.value)
                     ? tableData.filter((returnItem) => returnItem.status === tab.value).length
                     : tableData.length}
                 </Label>
@@ -143,10 +144,7 @@ export function ReturnListView() {
           ))}
         </Tabs>
 
-        <OrderTableToolbar
-          filters={filters}
-          onResetPage={table.onResetPage}
-        />
+        <OrderTableToolbar filters={filters} onResetPage={table.onResetPage} />
 
         <Box sx={{ position: 'relative' }}>
           <TableSelectedAction
@@ -160,7 +158,7 @@ export function ReturnListView() {
               )
             }
             action={
-              <Tooltip title="Delete">
+              <Tooltip title={translate('delete')}>
                 <IconButton color="primary" onClick={confirmDialog.onTrue}>
                   <Iconify icon="solar:trash-bin-trash-bold" />
                 </IconButton>
@@ -180,31 +178,26 @@ export function ReturnListView() {
               />
 
               <TableBody>
-                {
-                  dataFiltered
-                    .slice(
-                      table.page * table.rowsPerPage,
-                      table.page * table.rowsPerPage + table.rowsPerPage
-                    )
-                    .map((row) => (
-                      <OrderTableRow
-                        key={row.uid}
-                        row={row}
-                        selected={table.selected.includes(row.uid.toString())}
-                        onSelectRow={() => table.onSelectRow(row.uid.toString())}
-                        detailsHref={paths.return.details(+row.uid)}
-                      />
-                    ))
-                }
+                {dataFiltered
+                  .slice(
+                    table.page * table.rowsPerPage,
+                    table.page * table.rowsPerPage + table.rowsPerPage
+                  )
+                  .map((row) => (
+                    <OrderTableRow
+                      key={row.uid}
+                      row={row}
+                      selected={table.selected.includes(row.uid.toString())}
+                      onSelectRow={() => table.onSelectRow(row.uid.toString())}
+                      detailsHref={paths.return.details(+row.uid)}
+                    />
+                  ))}
 
-                {
-                  isLoading ? (
-                    <TableSkeleton rowCount={5} cellCount={TABLE_HEAD.length} />
-                  ) : notFound ? (
-                    <TableNoData notFound={notFound} />
-                  ) : null
-                }
-
+                {isLoading ? (
+                  <TableSkeleton rowCount={5} cellCount={TABLE_HEAD.length} />
+                ) : notFound ? (
+                  <TableNoData notFound={notFound} />
+                ) : null}
               </TableBody>
             </Table>
           </Scrollbar>
