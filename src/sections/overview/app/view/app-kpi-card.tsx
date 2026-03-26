@@ -54,7 +54,10 @@ export function AppKpiCard({
     xaxis: { categories: monthlyData || MONTHS },
     stroke: { width: 2 },
     tooltip: {
-      y: { formatter: (value) => fCurrency(value), title: { formatter: () => '' } },
+      y: {
+        formatter: (value) => (typeTotal === 'text' ? String(value) : fCurrency(value)),
+        title: { formatter: () => '' },
+      },
     },
   });
 

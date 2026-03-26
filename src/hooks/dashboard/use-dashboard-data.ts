@@ -21,12 +21,13 @@ interface ItemCustomerProps {
   readonly email: string;
 }
 export function useDashboardData() {
-  const { returns } = useGetDashboardData();
+  const { returns, isLoading } = useGetDashboardData();
   const dashboardData = useMemo(
     () => (Array.isArray(returns?.data) ? returns.data : []),
     [returns]
   );
-
+  
+console.log('isLoading', isLoading);
   let topProducts: ItemProps[] = [];
   let topCustomers: ItemCustomerProps[] = [];
   let averageOrderValue: AverageOrderValue = {
@@ -83,5 +84,6 @@ export function useDashboardData() {
     averageOrderValue,
     totalSales,
     ordersOverTime,
+    isLoading
   };
 }
