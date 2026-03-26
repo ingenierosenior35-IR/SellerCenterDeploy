@@ -117,6 +117,60 @@
       "dense": "Denso"
     }
   },
+    "settings": {
+      "breadcrumb": {
+        "current": "Configuración"
+      },
+      "common": {
+        "selectFile": "Seleccionar archivo",
+        "noFileSelected": "Sin archivos seleccionados",
+        "back": "Regresar"
+      },
+      "sellerProfile": {
+        "breadcrumb": {
+          "heading": "Editar perfil del vendedor"
+        },
+        "cardTitle": "Editar Información de Perfil",
+        "fields": {
+          "storeTitle": "Título de Tienda",
+          "country": "País",
+          "companyLocation": "Ubicación de la Empresa",
+          "companyDescription": "Descripción de la Empresa",
+          "companyDescriptionHelp": "(Por ahora textarea. Luego lo conectamos a TinyMCE si lo necesitas).",
+          "companyBanner": "Banner de la Empresa",
+          "companyLogo": "Logo de Empresa",
+          "metaKeywords": "Meta Términos (Enter Meta Keywords Comma(',') Separated.)",
+          "metaKeywordsPh": "keyword1, keyword2, keyword3",
+          "metaDescription": "Meta Descripción",
+          "googleAnalyticId": "Google Analytic Id",
+          "googleAnalyticIdPh": "UA-XXXXX-Y / G-XXXXXXX"
+        },
+        "actions": {
+          "saveProfile": "Guardar Perfil"
+        }
+      },
+      "shopUrl": {
+        "cardTitle": "Manage Your Shop Url",
+        "fields": {
+          "profileTarget": "Profile Page Target Url Path",
+          "profileRequest": "Profile Page Request Url Path",
+          "collectionTarget": "Collection Page Target Url Path",
+          "collectionRequest": "Collection Page Request Url Path",
+          "reviewTarget": "Review Page Target Url Path",
+          "reviewRequest": "Review Page Request Url Path",
+          "locationTarget": "Location Page Target Url Path",
+          "locationRequest": "Location Page Request Url Path",
+          "privacyPolicyRequest": "Privacy Policy Page Request Url Path"
+        },
+        "actions": {
+          "viewProfile": "Ver Perfil",
+          "viewCollection": "Ver Colección",
+          "saveUrl": "Guardar URL",
+          "viewProfileMock": "Ver Perfil (mock)",
+          "viewCollectionMock": "Ver Colección (mock)"
+        }
+      }
+    },
   "search": "Buscar...",
   "logout": "Cerrar sesión",
   "productsNotAvailable": "Productos no disponibles",

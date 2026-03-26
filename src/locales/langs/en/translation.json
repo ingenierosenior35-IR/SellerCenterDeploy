@@ -72,6 +72,60 @@
       "title": "Feedback"
     }
   },
+  "settings": {
+    "breadcrumb": {
+      "current": "Settings"
+    },
+    "common": {
+      "selectFile": "Select file",
+      "noFileSelected": "No file selected",
+      "back": "Back"
+    },
+    "sellerProfile": {
+      "breadcrumb": {
+        "heading": "Edit seller profile"
+      },
+      "cardTitle": "Edit profile information",
+      "fields": {
+        "storeTitle": "Store Title",
+        "country": "Country",
+        "companyLocation": "Company Location",
+        "companyDescription": "Company Description",
+        "companyDescriptionHelp": "(Textarea for now. We'll connect TinyMCE later if needed).",
+        "companyBanner": "Company Banner",
+        "companyLogo": "Company Logo",
+        "metaKeywords": "Meta Terms (Enter meta keywords comma-separated.)",
+        "metaKeywordsPh": "keyword1, keyword2, keyword3",
+        "metaDescription": "Meta Description",
+        "googleAnalyticId": "Google Analytic Id",
+        "googleAnalyticIdPh": "UA-XXXXX-Y / G-XXXXXXX"
+      },
+      "actions": {
+        "saveProfile": "Save Profile"
+      }
+    },
+    "shopUrl": {
+      "cardTitle": "Manage Your Shop Url",
+      "fields": {
+        "profileTarget": "Profile Page Target Url Path",
+        "profileRequest": "Profile Page Request Url Path",
+        "collectionTarget": "Collection Page Target Url Path",
+        "collectionRequest": "Collection Page Request Url Path",
+        "reviewTarget": "Review Page Target Url Path",
+        "reviewRequest": "Review Page Request Url Path",
+        "locationTarget": "Location Page Target Url Path",
+        "locationRequest": "Location Page Request Url Path",
+        "privacyPolicyRequest": "Privacy Policy Page Request Url Path"
+      },
+      "actions": {
+        "viewProfile": "View Profile",
+        "viewCollection": "View Collection",
+        "saveUrl": "Save Url",
+        "viewProfileMock": "View Profile (mock)",
+        "viewCollectionMock": "View Collection (mock)"
+      }
+    }
+  },
   "tableLatestOrders": {
     "title": "Latest Orders",
     "columns": {
