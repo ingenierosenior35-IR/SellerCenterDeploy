@@ -37,7 +37,7 @@ export function AnimateLogoZoom({ logo, slotProps, sx, ...other }: AnimateLogoPr
             disabled
             {...slotProps?.logo}
             sx={[
-              { width: 64, height: 64 },
+              { width: 64, height: 40 },
               ...(Array.isArray(slotProps?.logo?.sx) ? slotProps.logo.sx : [slotProps?.logo?.sx]),
             ]}
           />

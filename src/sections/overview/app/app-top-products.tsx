@@ -8,6 +8,8 @@ import Card from '@mui/material/Card';
 import Avatar from '@mui/material/Avatar';
 import CardHeader from '@mui/material/CardHeader';
 
+import { FieldsetLegend } from 'src/components';
+
 // ----------------------------------------------------------------------
 
 type Props = CardProps & {
