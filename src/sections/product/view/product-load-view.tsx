@@ -16,6 +16,7 @@ import { paths } from 'src/routes/paths';
 import { RouterLink } from 'src/routes/components';
 
 import { HomeContent } from 'src/layouts/home';
+import { FieldsetLegend } from 'src/components';
 
 import { Iconify } from 'src/components/iconify';
 import { CustomBreadcrumbs } from 'src/components/custom-breadcrumbs';
@@ -63,7 +64,8 @@ export function ProductLoadView() {
           gridTemplateColumns: { xs: '1fr', md: 'repeat(3, 1fr)' },
         }}
       >
-        <Card sx={cardSx}>
+        <Card sx={cardSx} component="fieldset">
+          <FieldsetLegend>Load products in bulk</FieldsetLegend>
           <Stack spacing={2} sx={{ flexGrow: 1 }}>
             <Typography variant="h6">Bulk loading</Typography>
             <Divider />

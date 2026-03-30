@@ -6,6 +6,9 @@ import { alpha } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 
+import { paths } from 'src/routes/paths';
+import { useRouter } from 'src/routes/hooks';
+
 import { getInitials } from 'src/utils';
 import { CONFIG } from 'src/global-config';
 
@@ -18,10 +21,16 @@ interface Props {
   onSettingsClick?: () => void;
 }
 
-export const StoreIdentity = ({
-  user,
-  onSettingsClick,
-}: Props) => {
+export const StoreIdentity = ({ user, onSettingsClick }: Props) => {
+  const router = useRouter();
+
+  const handleSettingsClick = () => {
+    if (onSettingsClick) {
+      onSettingsClick();
+      return;
+    }
+    router.push(paths.settings);
+  };
 
   const renderAvatar = () => (
     <AnimateBorder
@@ -35,10 +44,7 @@ export const StoreIdentity = ({
         primaryBorder: { size: 120, sx: { color: 'primary.main' } },
       }}
     >
-      <Avatar
-        alt={user?.displayName}
-        sx={{ width: 1, height: 1 }}
-      >
+      <Avatar alt={user?.displayName} sx={{ width: 1, height: 1 }}>
         {getInitials(user)}
       </Avatar>
     </AnimateBorder>
@@ -53,40 +59,28 @@ export const StoreIdentity = ({
         px: 2,
         py: 1.5,
         borderRadius: 2,
-        backgroundColor: (theme) =>
-          alpha(theme.palette.common.white, 0.04),
+        backgroundColor: (theme) => alpha(theme.palette.common.white, 0.04),
       }}
       width="90%"
     >
       {renderAvatar()}
 
-      {/* Info tienda */}
       <Box flexGrow={1} minWidth={0}>
-        <Typography
-          variant="subtitle2"
-          fontWeight={600}
-          noWrap
-        >
+        <Typography variant="subtitle2" fontWeight={600} noWrap>
           {user.displayName}
         </Typography>
 
-        <Typography
-          variant="caption"
-          color="text.secondary"
-          noWrap
-        >
+        <Typography variant="caption" color="text.secondary" noWrap>
           {user.email}
         </Typography>
       </Box>
 
       <IconButton
         size="small"
-        onClick={onSettingsClick}
+        onClick={handleSettingsClick}
         sx={{
           color: 'text.secondary',
-          '&:hover': {
-            color: 'primary.main',
-          },
+          '&:hover': { color: 'primary.main' },
         }}
       >
         <SvgColor src={`${CONFIG.assetsDir}/assets/icons/navbar/ic-settings.svg`} />

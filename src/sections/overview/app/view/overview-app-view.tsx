@@ -19,8 +19,9 @@ export function OverviewAppView() {
 
   return (
     <HomeContent maxWidth="xl">
-
-      <Grid container spacing={3}
+      <Grid
+        container
+        spacing={3}
         sx={{
           backgroundColor: 'common.black',
           borderRadius: 2,
@@ -84,15 +85,13 @@ export function OverviewAppView() {
             <AppTopProducts
               title={translate('TopProducts', 'title')}
               list={_appProducts}
+              component="fieldset"
+              sx={{ border: `none` }}
             />
-            <AppTopCustomers
-              title={translate('TopClients', 'title')}
-              list={_appCustomers}
-            />
+            <AppTopCustomers title={translate('TopClients', 'title')} list={_appCustomers} />
           </Box>
         </Box>
       </Box>
-
     </HomeContent>
   );
 }
