@@ -7,6 +7,7 @@ import type {
 
 import { GraphQLService } from 'src/lib/graphql-client';
 
+import { checkMultipleSkusExist } from './check-sku-exists';
 import { CREATE_CONFIGURABLE_PRODUCT_MUTATION } from './graphql';
 
 /**
@@ -14,6 +15,16 @@ import { CREATE_CONFIGURABLE_PRODUCT_MUTATION } from './graphql';
  * La lógica de armado del payload vive en useConfigurableProductPayload.
  */
 export async function createConfigurableProduct(input: CreateConfigurableProductInput) {
+  // Validar que ningún SKU exista (padre + todos los hijos)
+  const allSkus = [
+    input.configurableProduct.sku,
+    ...input.simpleProducts.map((p) => p.sku),
+  ];
+  const existingSkus = await checkMultipleSkusExist(allSkus);
+  if (existingSkus.length > 0) {
+    throw new Error('skuDuplicateError');
+  }
+
   const graphql = GraphQLService.getInstance();
 
   let result: CreateConfigurableProductResponse;

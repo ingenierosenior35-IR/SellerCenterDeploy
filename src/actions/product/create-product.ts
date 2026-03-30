@@ -8,12 +8,19 @@ import type {
 import { GraphQLService } from 'src/lib/graphql-client';
 
 import { CREATE_SIMPLE_PRODUCT_MUTATION } from './graphql';
+import { checkSkuExists } from './check-sku-exists';
 
 /**
  * Envía las variables ya armadas a la mutation GraphQL de crear producto simple.
  * La lógica de armado del payload vive en useSimpleProductPayload.
  */
 export async function createProduct(variables: CreateSimpleProductVariables) {
+  // Validar que el SKU no exista antes de crear
+  const skuExists = await checkSkuExists(variables.sku);
+  if (skuExists) {
+    throw new Error('skuDuplicateError');
+  }
+
   const graphql = GraphQLService.getInstance();
 
   let result: CreateSimpleProductResponse;
