@@ -9,7 +9,7 @@ import type {
 
 import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useState, useEffect, useCallback } from 'react';
+import { useRef, useState, useEffect, useCallback } from 'react';
 import { useForm, Controller, useFormContext } from 'react-hook-form';
 
 import Box from '@mui/material/Box';
@@ -357,7 +357,31 @@ export function ProductCreateConfigurableView() {
     defaultValues,
   });
 
-  const { handleSubmit } = methods;
+  const { handleSubmit, watch } = methods;
+
+  // ===== SINCRONIZAR SKU PADRE → HIJOS =====
+  // Cuando el usuario modifica el SKU del padre, todos los SKUs de los hijos
+  // que tengan el prefijo anterior se actualizan automáticamente.
+  const parentSku = watch('sku');
+  const prevParentSkuRef = useRef<string>('');
+
+  useEffect(() => {
+    const prevSku = prevParentSkuRef.current;
+    prevParentSkuRef.current = parentSku;
+
+    if (!prevSku || prevSku === parentSku || children.length === 0) return;
+
+    setChildren((prev) =>
+      prev.map((child) => {
+        if (child.sku.startsWith(`${prevSku}-`)) {
+          const suffix = child.sku.slice(prevSku.length + 1);
+          return { ...child, sku: parentSku ? `${parentSku}-${suffix}` : suffix };
+        }
+        return child;
+      })
+    );
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [parentSku]);
 
   // ===== SUBMIT TODO (padre + hijos) =====
   const onSubmit = handleSubmit(async (data) => {
