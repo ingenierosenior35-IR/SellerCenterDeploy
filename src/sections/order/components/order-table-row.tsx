@@ -122,7 +122,7 @@ export function OrderTableRow({ row, detailsHref, selected, onSelectRow, userRol
         />
       </TableCell>
 
-      <TableCell align="center"> {row.totalQuantity} </TableCell>
+      <TableCell align="left"> {row.totalQuantity} </TableCell>
 
       <TableCell> {fCurrency(displayTotal)} </TableCell>
 

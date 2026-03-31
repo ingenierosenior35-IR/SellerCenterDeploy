@@ -377,10 +377,16 @@
       "tabs":{
         "all":"Todos"
       },
+      "filters": {
+        "initialDate": "Fecha inicial",
+        "finalDate": "Fecha final",
+        "search": "Buscar por cliente o número de orden..."
+      },
       "columns":{
-        "id":"ID",
+        "order":"Orden",
         "customer":"Cliente",
         "date":"Fecha",
+        "quality":"Cantidad",
         "total":"Total",
         "status":"Estado"
       },

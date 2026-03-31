@@ -1,5 +1,5 @@
 import type { Theme, SxProps } from '@mui/material/styles';
-import type { Prices, OrderRowItemDetail } from 'src/types/order';
+import type { Prices, OrderRowItemDetail } from 'src/interfaces/order';
 
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
@@ -73,7 +73,7 @@ export function OrderDetailsItems({
           >
             <Link
               component={RouterLink}
-              href={paths.home.product.details(item.sku)}
+              href={paths.product.details(item.sku)}
               underline="none"
             >
               {item.coverUrl && (
@@ -89,7 +89,7 @@ export function OrderDetailsItems({
               primary={
                 <Link
                   component={RouterLink}
-                  href={paths.home.product.details(item.sku)}
+                  href={paths.product.details(item.sku)}
                   color="inherit"
                   underline="none"
                 >
@@ -99,8 +99,8 @@ export function OrderDetailsItems({
               secondary={
                 item.selected_options?.length
                   ? renderDetailProduct(
-                    item.selected_options.map((variant) => `${variant.label}`).join(', '),
-                    item.selected_options.map((variant) => `${variant.value}`).join(', '),
+                    item.selected_options.map((variant: any) => `${variant.label}`).join(', '),
+                    item.selected_options.map((variant: any) => `${variant.value}`).join(', '),
                     item.sku,
                   )
                   : ''

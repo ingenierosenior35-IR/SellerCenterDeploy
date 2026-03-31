@@ -378,12 +378,18 @@
       "tabs":{
         "all":"All"
       },
+      "filters": {
+        "initialDate": "Initial date",
+        "finalDate": "Final date",
+        "search": "Search by customer or order reference..."
+      },
       "columns": {
-        "id": "Order Reference",
-        "customer": "Customer",
-        "status": "Status",
-        "createdAt": "Created date",
-        "total": "Total"
+        "order":"Order",
+        "customer":"Customer",
+        "date":"Date",
+        "quality":"Quantity",
+        "total":"Total",
+        "status":"Status"
       },
       "searchFilter": "Search by customer or order reference..."
     },

@@ -1,6 +1,6 @@
 'use client';
 
-import type { DataFormatedDetail } from 'src/types/order';
+import type { DataFormatedDetail } from 'src/interfaces/order';
 
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -31,7 +31,7 @@ export function OrderDetailsView({
         status={order?.status}
         createdAt={order?.createDate}
         orderNumber={order?.orderNumber}
-        backHref={paths.home.order.root}
+        backHref={paths.order.root}
         orderUid={order?.orderNumber}
         userRole={userRole || 'admin'}
         tracking={order?.tracking}

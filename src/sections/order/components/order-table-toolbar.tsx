@@ -10,6 +10,8 @@ import InputAdornment from '@mui/material/InputAdornment';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { formHelperTextClasses } from '@mui/material/FormHelperText';
 
+import { useTranslate } from 'src/locales/langs/i18n';
+
 import { Iconify } from 'src/components/iconify';
 
 type FiltersState = ReturnType<typeof useSetState<FilterModelList>>;
@@ -19,7 +21,7 @@ type FiltersState = ReturnType<typeof useSetState<FilterModelList>>;
 export function OrderTableToolbar({ filters, onResetPage, dateError }: { filters: FiltersState; onResetPage: () => void; dateError: boolean }) {
 
   const { state: currentFilters, setState: updateFilters } = filters;
-
+  const { translate } = useTranslate();
   const handleFilterName = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       onResetPage();
@@ -56,7 +58,7 @@ export function OrderTableToolbar({ filters, onResetPage, dateError }: { filters
       }}
     >
       <DatePicker
-        label="Fecha inicio"
+        label={translate('ordersModule.table.filters.initialDate')}
         value={currentFilters.startDate }
         onChange={handleFilterStartDate}
         format="DD/MM/YYYY"
@@ -64,7 +66,7 @@ export function OrderTableToolbar({ filters, onResetPage, dateError }: { filters
       />
 
       <DatePicker
-        label="Fecha fin"
+        label={translate('ordersModule.table.filters.finalDate')}
         value={currentFilters.endDate}
         format="DD/MM/YYYY"
         onChange={handleFilterEndDate}
@@ -96,7 +98,7 @@ export function OrderTableToolbar({ filters, onResetPage, dateError }: { filters
           fullWidth
           value={currentFilters.name}
           onChange={handleFilterName}
-          placeholder="Buscar cliente o número de orden..."
+          placeholder={translate('ordersModule.table.filters.search')}
           slotProps={{
             input: {
               startAdornment: (

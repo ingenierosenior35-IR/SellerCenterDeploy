@@ -1,5 +1,6 @@
 'use client';
 
+
 export type StatusColor = 'warning' | 'success' | 'error';
 
 export type TableHeadCell = {

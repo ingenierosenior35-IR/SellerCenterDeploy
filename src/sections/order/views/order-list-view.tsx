@@ -15,6 +15,8 @@ import TableBody from '@mui/material/TableBody';
 
 import { paths } from 'src/routes/paths';
 
+import { useOrders } from 'src/hooks/orders/use-orders';
+
 import { fIsAfter, fIsBetween } from 'src/utils/format-time';
 
 import { useTranslate } from 'src/locales';
@@ -40,7 +42,6 @@ import {
 
 import {
   STATUS_COLORS,
-  TABLE_ORDER_HEAD,
   STATUS_WITHOUT_GUIDES,
 } from 'src/sections/order/resources/constants';
 
@@ -49,8 +50,8 @@ import { OrderTableToolbar } from '../components/order-table-toolbar';
 import { OrderTableFiltersResult } from '../components/order-table-filters-results';
 
 export function OrderListView() {
-    const { translate } = useTranslate();
-  
+  const {TABLE_ORDER_HEAD} =useOrders();
+  const { translate } = useTranslate();
   const [tableData, setTableData] = useState<ResponseFormatedList>([]);
   const [countItems, setCountItems] = useState<number>(10);
   const rowsPerPage = 10;
