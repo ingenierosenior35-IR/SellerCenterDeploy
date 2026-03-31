@@ -9,6 +9,7 @@ import { useMemo, useEffect, useCallback } from 'react';
 import { useLogin } from 'src/actions/auth/use-login';
 import { useLogout } from 'src/actions/auth/useLogout';
 import { useCurrentUser } from 'src/actions/auth/use-current-user';
+import { useUpdateToken } from 'src/actions/auth/use-update-token';
 
 import { setSession } from './utils';
 import { AuthContext } from './auth-context';
@@ -20,6 +21,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
   const queryClient = useQueryClient();
   const loginMutation = useLogin();
   const logoutMutation = useLogout();
+  const updateTokenMutation = useUpdateToken();
   const { data: user, isLoading } = useCurrentUser();
 
 
@@ -37,15 +39,13 @@ export function AuthProvider({ children }: PropsWithChildren) {
   );
 
   const handleLogout = useCallback(async() => {
-    console.log('Logging out user:', user);
-
     await logoutMutation.mutateAsync(undefined, {
       onSettled: () => {
         queryClient.clear();
       },
     });
 
-  }, [logoutMutation, queryClient, user]);
+  }, [logoutMutation, queryClient]);
 
 
   const checkUserSession = useCallback(() => {
@@ -54,9 +54,27 @@ export function AuthProvider({ children }: PropsWithChildren) {
     }
   }, [authStatus]);
 
+
   useEffect(() => {
     checkUserSession();
   }, [authStatus, checkUserSession]);
+
+  // Refresh automático del token
+  useEffect(() => {
+    if (authStatus !== 'authenticated') return undefined;
+
+    const tokenExpirationTime = parseInt(
+      process.env.NEXT_PUBLIC_TOKEN_EXPIRATION_TIME || '30',
+      10
+    );
+    const refreshTime = (tokenExpirationTime) * 60 * 1000;
+
+    const timeoutId = setTimeout(async () => {
+      await updateTokenMutation.mutateAsync();
+    }, refreshTime);
+
+    return () => clearTimeout(timeoutId);
+  }, [authStatus, updateTokenMutation]);
 
   const memoizedValue = useMemo(
     () => ({
