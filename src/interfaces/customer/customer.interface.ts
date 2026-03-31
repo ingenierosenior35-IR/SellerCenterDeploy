@@ -9,6 +9,7 @@ export interface ICustomer {
   identificationNumber: INumeroIdentificacion[];
   identificationType: ITipoIdentificacion[];
   addresses: IAddress[];
+  role?: string;
 }
 
 export interface IAddress {

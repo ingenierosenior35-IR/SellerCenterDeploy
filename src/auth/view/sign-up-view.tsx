@@ -18,7 +18,6 @@ import { Iconify } from 'src/components/iconify';
 import { Form, Field, schemaUtils } from 'src/components/hook-form';
 
 import { signUp } from '../context';
-import { useAuthContext } from '../hooks';
 import { getErrorMessage } from '../utils';
 import { FormHead } from '../components/form-head';
 import { SignUpTerms } from '../components/sign-up-terms';
@@ -43,8 +42,6 @@ export function SignUpView() {
   const router = useRouter();
 
   const showPassword = useBoolean();
-
-  const { checkUserSession } = useAuthContext();
 
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
@@ -73,7 +70,6 @@ export function SignUpView() {
         firstName: data.firstName,
         lastName: data.lastName,
       });
-      await checkUserSession?.();
 
       router.refresh();
     } catch (error) {

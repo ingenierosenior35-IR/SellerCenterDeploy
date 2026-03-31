@@ -12,6 +12,7 @@ import { _mock } from 'src/_mock';
 
 // ----------------------------------------------------------------------
 
+// TODO: Remove this hook and use the real user data from the AuthContext instead
 export function useMockedUser() {
   const user = {
     id: '8864c717-587d-472a-929a-8e5f298024da-0',
