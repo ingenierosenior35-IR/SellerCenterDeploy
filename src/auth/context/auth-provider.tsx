@@ -7,7 +7,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useMemo, useEffect, useCallback } from 'react';
 
 import { useLogin } from 'src/actions/auth/use-login';
-import { useLogout } from 'src/actions/auth/useLogout';
+import { useLogout } from 'src/actions/auth/use-logout';
 import { useCurrentUser } from 'src/actions/auth/use-current-user';
 import { useUpdateToken } from 'src/actions/auth/use-update-token';
 
