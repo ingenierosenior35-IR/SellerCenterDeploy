@@ -1,12 +1,13 @@
 'use client';
 
+import type { BoxProps } from '@mui/material/Box';
+import type { Theme, SxProps } from '@mui/material/styles';
+
 import { varAlpha } from 'minimal-shared/utils';
 
-import Box, { BoxProps } from '@mui/material/Box';
+import Box from '@mui/material/Box';
 import Avatar from '@mui/material/Avatar';
 import ListItemText from '@mui/material/ListItemText';
-
-import { SxProps, Theme } from '@mui/material/styles';
 
 // ----------------------------------------------------------------------
 

@@ -7,8 +7,8 @@ import { useQuery } from '@tanstack/react-query';
 
 import { GraphQLService } from 'src/lib/graphql-client';
 
-import { GET_CUSTOMERS } from './graphql/queries';
 import { clientsAdapter } from './adapters/clients-adapter';
+import { GET_CUSTOMERS } from './graphql/queries/get-clients-data';
 
 export function useGetClients() {
 

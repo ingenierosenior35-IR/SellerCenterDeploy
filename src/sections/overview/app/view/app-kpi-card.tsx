@@ -2,12 +2,13 @@
 
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
-import Link from '@mui/material/Link';
 import Badge from '@mui/material/Badge';
 import { useTheme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
 import { fPercent, fCurrency } from 'src/utils/format-number';
+
+import { useTranslate } from 'src/locales';
 
 import { Chart, useChart } from 'src/components/chart';
 
@@ -16,10 +17,12 @@ const MONTHS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 type Props = {
   readonly title?: string;
   readonly total: number;
-  readonly percent: number;
+  readonly percent?: number;
   readonly series: number[];
   readonly showPeriod?: boolean;
   readonly transparentCard?: boolean;
+  readonly monthlyData?: string[];
+  readonly typeTotal?: "text" | "value";
 };
 
 export function AppKpiCard({
@@ -29,9 +32,13 @@ export function AppKpiCard({
   series,
   showPeriod = false,
   transparentCard = false,
+  monthlyData,
+  typeTotal
 }: Props) {
+  const { translate } = useTranslate();
+
   const theme = useTheme();
-  const isPositive = percent >= 0;
+  const isPositive = percent && percent >= 0;
 
   let chartColor: string;
   if (transparentCard) {
@@ -44,10 +51,13 @@ export function AppKpiCard({
 
   const chartOptions = useChart({
     colors: [chartColor],
-    xaxis: { categories: MONTHS },
+    xaxis: { categories: monthlyData || MONTHS },
     stroke: { width: 2 },
     tooltip: {
-      y: { formatter: (value) => fCurrency(value), title: { formatter: () => '' } },
+      y: {
+        formatter: (value) => (typeTotal === 'text' ? String(value) : fCurrency(value)),
+        title: { formatter: () => '' },
+      },
     },
   });
 
@@ -62,27 +72,31 @@ export function AppKpiCard({
           justifyContent: 'space-between',
         }}
       >
-        <Typography variant="subtitle2" color={transparentCard ? "common.white" : "common.black"} sx={{ fontWeight: 400 }}>
+        <Typography
+          variant="subtitle2"
+          color={transparentCard ? 'common.white' : 'common.black'}
+          sx={{ fontWeight: 400 }}
+        >
           {title}
         </Typography>
 
-        {showPeriod ? (
-          <Typography variant="subtitle2" color={transparentCard ? "common.white" : "common.black"}>
-            Periodo:{' '}
+        {showPeriod && (
+          <Typography variant="subtitle2" color={transparentCard ? 'common.white' : 'common.black'}>
+            {translate('dashboardModule.averageOrderValue.period.title')}{' '}
             <Box component="span" sx={{ fontSize: 12, fontWeight: 400, color: 'common.white' }}>
-              Hoy
+              {translate('dashboardModule.averageOrderValue.period.options.day')}
             </Box>
           </Typography>
-        ) : (
-          <Link underline="hover" sx={{ typography: 'subtitle2' }}>
-            Ver detalle
-          </Link>
         )}
       </Box>
 
       {/* Total */}
-      <Typography variant="h4" color={transparentCard ? "common.white" : "common.black"} sx={{ mb: 0.5 }}>
-        {fCurrency(total)}
+      <Typography
+        variant="h4"
+        color={transparentCard ? 'common.white' : 'common.black'}
+        sx={{ mb: 0.5 }}
+      >
+        {typeTotal === "text" ? total : fCurrency(total)}
       </Typography>
 
       {/* Variación */}
@@ -95,33 +109,31 @@ export function AppKpiCard({
           typography: 'subtitle2',
           color: isPositive ? 'success.main' : 'error.main',
         }}
-      >        
-        <Badge 
-          component="div"
-          color={isPositive ? "success" : "error"} 
-          badgeContent={fPercent(percent)} 
-          sx={{ left: 16, mr: 5 }}
-        />
-        <Box component="span" color={transparentCard ? "common.white" : "common.black"} sx={{ fontWeight: 400, fontSize: 12 }}>
-          Últimos 7 días
+      >
+        {percent && (
+          <Badge
+            component="div"
+            color={isPositive ? 'success' : 'error'}
+            badgeContent={percent ? fPercent(percent) : ''}
+            sx={{ left: 16, mr: 5 }}
+          />
+        )}
+        <Box
+          component="span"
+          color={transparentCard ? 'common.white' : 'common.black'}
+          sx={{ fontWeight: 400, fontSize: 12 }}
+        >
+          {translate('dashboardModule.body.last')} 7{' '}
+          {translate('dashboardModule.body.period.options.days')}
         </Box>
       </Box>
-
-      {/* Reference */}
-      <Typography
-        variant="caption"
-        color={transparentCard ? "common.white" : "common.black"}
-        sx={{ mt: 1, display: 'block' }}
-      >
-        $15.000.000
-      </Typography>
 
       {/* Chart */}
       <Chart
         type="line"
         series={[{ data: series }]}
         options={chartOptions}
-        sx={{ height: 120 }}
+        sx={{ height: 'fit-content' }}
       />
     </Card>
   );

@@ -203,7 +203,7 @@
   "createdAt": "Created date",
   "id": "Id",
   "feedbackModule": {
-    "title": "Opiniones",
+    "title": "Feedback",
     "table": {
       "columns": {
         "sku": "Sku",
@@ -422,5 +422,86 @@
       "suspendAccount": "Suspend Account",
       "deleteAccount": "Delete Account"
     }
+  },
+  "home": "Home",
+  "orders": {
+    "list": "Orders List",
+    "details": "Order Details"
+  },
+  "dashboardModule": {
+    "averageOrderValue": {
+      "title": "Average order value",
+      "period": {
+        "title": "Period",
+        "options": {
+          "day": "Today",
+          "week": "This week",
+          "month": "This month",
+          "year": "This year"
+        }
+      },
+      "body": {
+        "last": "Last"
+      }
+    },
+    "totalSales": {
+      "title": "Total sales",
+      "period": {
+        "title": "Period",
+        "options": {
+          "day": "Today",
+          "week": "This week",
+          "month": "This month",
+          "year": "This year"
+        }
+      },
+      "body": {
+        "last": "Last"
+      }
+    },
+    "ordersOverTime": {
+      "title": "Orders over time",
+      "period": {
+        "title": "Period",
+        "options": {
+          "day": "Today",
+          "week": "This week",
+          "month": "This month",
+          "year": "This year"
+        }
+      },
+      "body": {
+        "last": "Last"
+      }
+    },
+    "body": {
+      "last": "Last"
+    }
+  },
+  "ordersModule": {
+    "title": "Orders",
+    "table": {
+      "tabs":{
+        "all":"All"
+      },
+      "filters": {
+        "initialDate": "Initial date",
+        "finalDate": "Final date",
+        "search": "Search by customer or order reference..."
+      },
+      "columns": {
+        "order":"Order",
+        "customer":"Customer",
+        "date":"Date",
+        "quality":"Quantity",
+        "total":"Total",
+        "status":"Status"
+      },
+      "searchFilter": "Search by customer or order reference..."
+    },
+    "list": {
+      "title": "Orders List"
+    }
   }
+
 }

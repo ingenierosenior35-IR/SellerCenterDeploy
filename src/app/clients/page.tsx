@@ -1,4 +1,4 @@
-import ClientsView from 'src/sections/cleints/view/clients-view';
+import ClientsView from 'src/sections/clients/view/clients-view';
 
 
 export default function Clients() {

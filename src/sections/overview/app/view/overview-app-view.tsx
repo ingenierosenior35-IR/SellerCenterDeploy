@@ -3,9 +3,13 @@
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 
+import { useDashboardData } from 'src/hooks/dashboard/use-dashboard-data';
+
+import { _appInvoices } from 'src/_mock';
 import { useTranslate } from 'src/locales';
 import { HomeContent } from 'src/layouts/home';
-import { _appInvoices, _appProducts, _appCustomers } from 'src/_mock';
+
+import { LoadingScreen } from 'src/components/loading-screen';
 
 import { AppKpiCard } from './app-kpi-card';
 import { AppTopProducts } from '../app-top-products';
@@ -16,7 +20,7 @@ import { AppTopCustomers } from '../app-top-customers';
 
 export function OverviewAppView() {
   const { translate } = useTranslate();
-
+  const { topProducts, topCustomers, averageOrderValue, totalSales, ordersOverTime, isLoading} = useDashboardData();
   return (
     <HomeContent maxWidth="xl">
       <Grid
@@ -34,28 +38,29 @@ export function OverviewAppView() {
       >
         <Grid>
           <AppKpiCard
-            title="Net Profit"
-            total={2657.93}
-            percent={2.5}
-            series={[10, 12, 11, 13, 14, 15, 17]}
-            showPeriod
-            transparentCard
+        title={translate('dashboardModule.averageOrderValue.title')}
+        total={Number(averageOrderValue.avg_order_value)}
+        series={averageOrderValue.graph_data.map((price) => Number(price))}
+        showPeriod
+        transparentCard
+        monthlyData={averageOrderValue.graph_x_value}
           />
         </Grid>
         <Grid>
           <AppKpiCard
-            title="Total Sales"
-            total={2657.93}
-            percent={2.5}
-            series={[8, 6, 9, 11, 10, 12, 15]}
+        title={translate('dashboardModule.totalSales.title')}
+        total={Number(totalSales.total_sale_amount)}
+        series={totalSales.graph_data.map((price) => Number(price))}
+        monthlyData={totalSales.graph_x_value}
           />
         </Grid>
         <Grid>
           <AppKpiCard
-            title="Net Profit"
-            total={2657.93}
-            percent={-3.5}
-            series={[15, 14, 14, 13, 11, 10, 10]}
+        title={translate('dashboardModule.ordersOverTime.title')}
+        total={Number(ordersOverTime.graph_data.reduce((sum, value) => sum + Number(value), 0))}
+        series={ordersOverTime.graph_data.map((value) => Number(value))}
+        monthlyData={ordersOverTime.graph_x_value}
+        typeTotal='text'
           />
         </Grid>
       </Grid>
@@ -63,10 +68,10 @@ export function OverviewAppView() {
       <Box
         display="grid"
         gap={2}
-        gridTemplateColumns={{ xs: '1fr', md: 'repeat(3, 1fr)' }}
+        gridTemplateColumns={{ xs: '1fr', md: 'repeat(12, 1fr)' }}
         sx={{ mb: 2 }}
       >
-        <Box sx={{ gridColumn: { md: 'span 2' } }}>
+        <Box sx={{ gridColumn: { md: 'span 8 ' } }}>
           <AppNewInvoices
             title={translate('tableLatestOrders', 'title')}
             tableData={_appInvoices}
@@ -80,15 +85,16 @@ export function OverviewAppView() {
             ]}
           />
         </Box>
-        <Box sx={{ gridColumn: { md: 'span 1' } }}>
+        <Box sx={{ gridColumn: { md: 'span 4' } }}>
           <Box display="flex" flexDirection="column" gap={3}>
-            <AppTopProducts
-              title={translate('TopProducts', 'title')}
-              list={_appProducts}
-              component="fieldset"
-              sx={{ border: `none` }}
-            />
-            <AppTopCustomers title={translate('TopClients', 'title')} list={_appCustomers} />
+            {isLoading ? (
+              <LoadingScreen />
+            ) : (
+              <>
+                <AppTopProducts title={translate('TopProducts', 'title')} list={topProducts} />
+                <AppTopCustomers title={translate('TopClients', 'title')} list={topCustomers} />
+              </>
+            )}
           </Box>
         </Box>
       </Box>
