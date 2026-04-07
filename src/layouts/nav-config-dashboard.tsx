@@ -33,7 +33,7 @@ export const useNavData = (): NavSectionProps['data'] => {
       {
         items: [
           {
-            title: translate('tableLatestOrders', 'columns.id'),
+            title: translate('sidebarMenu.home.title'),
             path: paths.home.root,
             icon: ICONS.dashboard,
           },
@@ -65,10 +65,17 @@ export const useNavData = (): NavSectionProps['data'] => {
             ],
           },
           {
+            title: translate('ordersModule.title'),
+            path: paths.order.root,
+            icon: ICONS.order,
+            children: [
+              { title: translate('ordersModule.list.title'), path: paths.order.root },
+            ],
+          },
+          {
             title: translate('sidebarMenu.clients.title'),
             path: paths.clients.root,
             icon: ICONS.users,
-            
           },
           {
             title: translate('sidebarMenu.feedback.title'),

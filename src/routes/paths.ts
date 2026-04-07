@@ -5,6 +5,7 @@ const ROOTS = {
   HOME: '/home',
   ACCOUNT: '/account',
   PRODUCT: '/product',
+  ORDER: '/order',
 };
 
 // ----------------------------------------------------------------------
@@ -51,7 +52,12 @@ export const paths = {
     root: ROOTS.PRODUCT,
     load: `${ROOTS.PRODUCT}/load`,
     uploadList: `${ROOTS.PRODUCT}/load/list`,
-    details: (id: number) => `${ROOTS.PRODUCT}/${id}`,
+    details: (id: number | string) => `${ROOTS.PRODUCT}/${id}`,
+  },
+  order: {
+    root: ROOTS.ORDER,
+    load: `${ROOTS.ORDER}/load`,
+    details: (id: string) => `${ROOTS.ORDER}/${id}`,
   },
   return: {
     root: '/return',
@@ -64,7 +70,7 @@ export const paths = {
   feedback: {
     root: '/feedback',
   },
-  account: {
+  accountManager: {
     root: '/account',
     subaccount: {
       root: '/account/subaccount',

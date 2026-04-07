@@ -1,6 +1,6 @@
 'use client';
 
-import type { SxProps, Theme } from '@mui/material/styles';
+import type { Theme, SxProps } from '@mui/material/styles';
 import type { ICustomer } from 'src/interfaces/customer/customer.interface';
 
 import Box from '@mui/material/Box';

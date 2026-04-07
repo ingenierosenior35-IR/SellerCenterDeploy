@@ -282,3 +282,49 @@ export function fSub({
 
   return result;
 }
+
+/**
+ * Checks if one date is after another.
+ * @returns `true` if start is after end.
+ * @example
+ * fIsAfter('2024-05-01', '2024-04-01') // true
+ */
+export function fIsAfter(start: DateInput, end: DateInput): boolean {
+  if (!start || !end) return false;
+
+  const startDate = dayjs(start);
+  const endDate = dayjs(end);
+
+  if (!startDate.isValid() || !endDate.isValid()) {
+    return false;
+  }
+
+  return startDate.isAfter(endDate);
+}
+// ----------------------------------------------------------------------
+
+/**
+ * Checks if a date is between two dates (inclusive).
+ * @returns `true` if input is between start and end.
+ * @example
+ * fIsBetween('2024-01-02', '2024-01-01', '2024-01-03') // true
+ */
+export function fIsBetween(input: DateInput, start: DateInput, end: DateInput): boolean {
+  if (!input || !start || !end) return false;
+
+  const inputDate = dayjs(input);
+  const startDate = dayjs(start);
+  const endDate = dayjs(end);
+
+  if (!inputDate.isValid() || !startDate.isValid() || !endDate.isValid()) {
+    return false;
+  }
+
+  const inputValue = inputDate.valueOf();
+  const startValue = startDate.valueOf();
+  const endValue = endDate.valueOf();
+
+  return (
+    inputValue >= Math.min(startValue, endValue) && inputValue <= Math.max(startValue, endValue)
+  );
+}

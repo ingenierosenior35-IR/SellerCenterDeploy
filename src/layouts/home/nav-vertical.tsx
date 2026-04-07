@@ -6,6 +6,9 @@ import { varAlpha, mergeClasses } from 'minimal-shared/utils';
 import Box from '@mui/material/Box';
 import { styled } from '@mui/material/styles';
 
+import { paths } from 'src/routes/paths';
+import { useRouter } from 'src/routes/hooks';
+
 import { ProfileCompletionCard } from 'src/components';
 
 import { Logo } from 'src/components/logo';
@@ -17,8 +20,6 @@ import { useMockedUser } from 'src/auth/hooks';
 
 import { layoutClasses } from '../core';
 import { SignOutButton, NavToggleButton } from '../components';
-import { useRouter } from 'src/routes/hooks';
-import { paths } from 'src/routes/paths';
 
 // ----------------------------------------------------------------------
 

@@ -4,7 +4,7 @@ import type { FeedbackRequest, FeedbackTableFormated } from 'src/interfaces/feed
 import { useState } from 'react';
 
 import { useTranslate } from 'src/locales';
-import { useGetFeedback } from 'src/actions/feedback/useGetFeedback';
+import { useGetFeedback } from 'src/actions/feedback/use-get-feedback';
 
 export function useFeedbackList() {
   const [sendFilter, setSendFilter] = useState<FeedbackRequest>({});
