@@ -1,6 +1,7 @@
 import type { SubAccountInterface } from 'src/interfaces';
 
 import { useForm } from 'react-hook-form';
+import { useBoolean } from 'minimal-shared/hooks';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import Box from '@mui/material/Box';
@@ -12,14 +13,19 @@ import Divider from '@mui/material/Divider';
 import MenuItem from '@mui/material/MenuItem';
 import Typography from '@mui/material/Typography';
 
+import { paths } from 'src/routes/paths';
+import { useRouter } from 'src/routes/hooks';
+
 import { useTranslate } from 'src/locales';
 import { useUpdateSubAccount } from 'src/actions/account/use-edit-subaccount';
+import { useDeleteSubAccount } from 'src/actions/account/use-delete-subaccount';
 
 import { toast } from 'src/components/snackbar';
 import { Form, Field } from 'src/components/hook-form';
 import { Label, type LabelColor } from 'src/components/label';
 
 import { PERMISSIONS, ACCOUNT_STATUS } from '../constants/status';
+import { SubAccountDeleteConfirmDialog } from './subaccount-delete-confirm-dialog';
 import { createSubaccountSchema, type UserQuickEditSchemaType } from './subaccount-edit-dialog-form';
 
 // ----------------------------------------------------------------------
@@ -30,7 +36,10 @@ type Props = {
 
 export function SubAccountEditForm({ currentUser }: Props) {
   const { mutateAsync } = useUpdateSubAccount();
+  const { mutateAsync: deleteSubAccount, isPending: isDeleting } = useDeleteSubAccount();
   const { translate } = useTranslate();
+  const deleteDialog = useBoolean();
+  const router = useRouter();
 
   const defaultValues: UserQuickEditSchemaType = {
     firstname: "",
@@ -89,6 +98,32 @@ export function SubAccountEditForm({ currentUser }: Props) {
   const getStatusColor = (status: string): LabelColor =>
     (ACCOUNT_STATUS.find((s) => s.value === status)?.color ?? 'default') as LabelColor;
 
+  const handleDeleteSubAccount = async () => {
+    const customerId = localStorage.getItem('customer_id');
+
+    if (!customerId) {
+      toast.error(translate('subAccountListView.deleteSubAccount.errorMessage'));
+      return;
+    }
+
+    try {
+      const response = await deleteSubAccount({
+        customerId,
+        id: currentUser.id.toString(),
+      });
+
+      if (!response.deleteSubSellerAccount.message) {
+        throw new Error('Failed to delete subaccount');
+      }
+
+      toast.success(translate('subAccountListView.deleteSubAccount.successMessage'));
+      deleteDialog.onFalse();
+      router.push(paths.account.subaccount.root);
+    } catch {
+      toast.error(translate('subAccountListView.deleteSubAccount.errorMessage'));
+    }
+  };
+
 
   return (
     <Form methods={methods} onSubmit={onSubmit}>
@@ -129,7 +164,7 @@ export function SubAccountEditForm({ currentUser }: Props) {
 
             <Divider sx={{ py: 2}}/>
 
-            <Button variant="soft" color="error" sx={{ mt: 3 }}>
+            <Button type="button" variant="soft" color="error" sx={{ mt: 3 }} onClick={deleteDialog.onTrue}>
               {translate('subAccountDetailsView.actions.deleteAccount')}
             </Button>
           </Card>
@@ -179,6 +214,13 @@ export function SubAccountEditForm({ currentUser }: Props) {
           </Card>
         </Grid>
       </Grid>
+      <SubAccountDeleteConfirmDialog
+        open={deleteDialog.value}
+        onClose={deleteDialog.onFalse}
+        onConfirm={handleDeleteSubAccount}
+        isDeleting={isDeleting}
+        subAccountName={`${currentUser.firstname} ${currentUser.lastname}`}
+      />
     </Form>
   );
 }

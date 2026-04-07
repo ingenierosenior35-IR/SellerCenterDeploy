@@ -385,6 +385,13 @@
       "successMessage": "Subaccount created successfully!",
       "errorMessage": "Failed to create subaccount!"
     },
+    "deleteSubAccount": {
+      "title": "Delete subaccount",
+      "content": "Are you sure you want to delete this subaccount?",
+      "confirmButton": "Delete",
+      "successMessage": "Subaccount deleted successfully.",
+      "errorMessage": "Failed to delete subaccount. Please try again."
+    },
     "unknownPermissions": "Unknown Permissions",
     "searchPlaceholder": "Search name or email..."
   },

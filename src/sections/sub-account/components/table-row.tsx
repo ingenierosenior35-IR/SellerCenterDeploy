@@ -21,13 +21,16 @@ import { RouterLink } from 'src/routes/components';
 import { fDate, fTime } from 'src/utils/format-time';
 
 import { useTranslate } from 'src/locales';
+import { useDeleteSubAccount } from 'src/actions/account/use-delete-subaccount';
 
 import { Label } from 'src/components/label';
+import { toast } from 'src/components/snackbar';
 import { Iconify } from 'src/components/iconify';
 import { CustomPopover } from 'src/components/custom-popover';
 
 import { PERMISSIONS, ACCOUNT_STATUS } from '../constants/status';
 import { SubAccountEditDialogForm } from './subaccount-edit-dialog-form';
+import { SubAccountDeleteConfirmDialog } from './subaccount-delete-confirm-dialog';
 
 // ----------------------------------------------------------------------
 
@@ -41,8 +44,35 @@ type Props = {
 export function SubAccountTableRow({ row, selected, onSelectRow, detailsHref }: Props) {
   const menuActions = usePopover();
   const quickEditForm = useBoolean();
+  const deleteDialog = useBoolean();
+  const { mutateAsync, isPending: isDeleting } = useDeleteSubAccount();
   const { translate } = useTranslate();
   const router = useRouter();
+
+  const handleDeleteSubAccount = async () => {
+    const customerId = localStorage.getItem('customer_id');
+
+    if (!customerId) {
+      toast.error(translate('subAccountListView.deleteSubAccount.errorMessage'));
+      return;
+    }
+
+    try {
+      const response = await mutateAsync({
+        customerId,
+        id: row.id.toString(),
+      });
+
+      if (!response.deleteSubSellerAccount.message) {
+        throw new Error('Failed to delete subaccount');
+      }
+
+      toast.success(translate('subAccountListView.deleteSubAccount.successMessage'));
+      deleteDialog.onFalse();
+    } catch {
+      toast.error(translate('subAccountListView.deleteSubAccount.errorMessage'));
+    }
+  };
 
   const renderMenuActions = () => (
     <CustomPopover
@@ -74,7 +104,10 @@ export function SubAccountTableRow({ row, selected, onSelectRow, detailsHref }: 
         </MenuItem>
 
         <MenuItem
-          onClick={() => menuActions.onClose()}
+          onClick={() => {
+            menuActions.onClose();
+            deleteDialog.onTrue();
+          }}
           sx={{
             color: 'error.main'
           }}
@@ -189,6 +222,13 @@ export function SubAccountTableRow({ row, selected, onSelectRow, detailsHref }: 
 
       {renderMenuActions()}
       {renderEditForm()}
+      <SubAccountDeleteConfirmDialog
+        open={deleteDialog.value}
+        onClose={deleteDialog.onFalse}
+        onConfirm={handleDeleteSubAccount}
+        isDeleting={isDeleting}
+        subAccountName={`${row.firstname} ${row.lastname}`}
+      />
     </>
   );
 }

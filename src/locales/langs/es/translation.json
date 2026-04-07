@@ -463,6 +463,13 @@
       "successMessage": "¡Subcuenta creada con éxito!",
       "errorMessage": "¡No se pudo crear la subcuenta!"
     },
+    "deleteSubAccount": {
+      "title": "Eliminar subcuenta",
+      "content": "¿Seguro que deseas eliminar esta subcuenta?",
+      "confirmButton": "Eliminar",
+      "successMessage": "Subcuenta eliminada correctamente.",
+      "errorMessage": "No se pudo eliminar la subcuenta. Intenta nuevamente."
+    },
     "unknownPermissions": "Permisos desconocidos",
     "searchPlaceholder": "Buscar por nombre o correo..."
   },
