@@ -3,7 +3,7 @@ import type { SubAccountInterface, AccountTableFiltersInterface } from 'src/inte
 import { useState, useEffect, useCallback } from 'react';
 import { useBoolean, useSetState } from 'minimal-shared/hooks';
 
-import { useGetSubAccounts } from 'src/actions/account/useGetSubAccounts';
+import { useGetSubAccounts } from 'src/actions/account/use-get-subaccounts';
 
 import { useTable, getComparator } from 'src/components/table';
 
@@ -21,7 +21,7 @@ interface UseSubAccountTableReturn {
 };
 
 export const useSubAccountTable = (): UseSubAccountTableReturn => {
-  const table = useTable({ defaultOrderBy: 'lastAccess' });
+  const table = useTable({ defaultOrderBy: 'createdAt' });
 
   const confirmDialog = useBoolean();
 
@@ -96,15 +96,17 @@ function applyFilter({ inputData, comparator, filters }: ApplyFilterProps) {
   inputData = stabilizedThis.map((el) => el[0]);
 
   if (name) {
-    inputData = inputData.filter(({ name: accountName, email }) =>
-      [accountName, email].some((field) =>
+    inputData = inputData.filter(({ firstname, email }) =>
+      [firstname, email].some((field) =>
         field?.toLowerCase().includes(name.toLowerCase())
       )
     );
   }
 
   if (permission !== 'all') {
-    inputData = inputData.filter((account) => account.permissions.includes(permission));
+    inputData = inputData.filter((account) =>
+      account.permissions.some((perm) => Object.keys(perm).includes(permission))
+  );
   }
 
   return inputData;

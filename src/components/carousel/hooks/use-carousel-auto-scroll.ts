@@ -1,17 +1,35 @@
-import type {} from 'embla-carousel-auto-scroll';
-import type { EmblaCarouselType } from 'embla-carousel';
+import type { EmblaEventType, EmblaCarouselType } from 'embla-carousel';
 import type { UseCarouselAutoplayReturn } from '../types';
 
 import { useState, useEffect, useCallback } from 'react';
 
 // ----------------------------------------------------------------------
 
+type AutoScrollPlugin = {
+  play: () => void;
+  stop: () => void;
+  reset: () => void;
+  isPlaying: () => boolean;
+  options: {
+    stopOnInteraction?: boolean;
+  };
+};
+
+type AutoScrollEventType = EmblaEventType | 'autoScroll:play' | 'autoScroll:stop';
+
+type EmblaCarouselWithAutoScrollEvents = EmblaCarouselType & {
+  on: (event: AutoScrollEventType, callback: () => void) => EmblaCarouselWithAutoScrollEvents;
+};
+
+const getAutoScroll = (mainApi?: EmblaCarouselType): AutoScrollPlugin | undefined =>
+  mainApi?.plugins()?.autoScroll as AutoScrollPlugin | undefined;
+
 export function useCarouselAutoScroll(mainApi?: EmblaCarouselType): UseCarouselAutoplayReturn {
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
 
   const handleClickPlay = useCallback(
     (callback: () => void) => {
-      const autoScroll = mainApi?.plugins()?.autoScroll;
+      const autoScroll = getAutoScroll(mainApi);
       if (!autoScroll) return;
 
       const resetOrStop =
@@ -24,7 +42,7 @@ export function useCarouselAutoScroll(mainApi?: EmblaCarouselType): UseCarouselA
   );
 
   const handleTogglePlay = useCallback(() => {
-    const autoScroll = mainApi?.plugins()?.autoScroll;
+    const autoScroll = getAutoScroll(mainApi);
     if (!autoScroll) return;
 
     const playOrStop = autoScroll.isPlaying() ? autoScroll.stop : autoScroll.play;
@@ -32,11 +50,13 @@ export function useCarouselAutoScroll(mainApi?: EmblaCarouselType): UseCarouselA
   }, [mainApi]);
 
   useEffect(() => {
-    const autoScroll = mainApi?.plugins()?.autoScroll;
+    const autoScroll = getAutoScroll(mainApi);
     if (!autoScroll) return;
 
+    const emblaApi = mainApi as EmblaCarouselWithAutoScrollEvents;
+
     setIsPlaying(autoScroll.isPlaying());
-    mainApi
+    emblaApi
       .on('autoScroll:play', () => setIsPlaying(true))
       .on('autoScroll:stop', () => setIsPlaying(false))
       .on('reInit', () => setIsPlaying(autoScroll.isPlaying()));

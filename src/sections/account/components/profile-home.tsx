@@ -25,7 +25,7 @@ export function ProfileHome({ sx, customer }: ProfileHomeProps) {
 
   const displayName =
     [firstName, lastName].filter(Boolean).join(' ') || customer?.email || translate('customerProfileView.user');
-  
+
   const email = customer?.email || '';
 
   const identificationType = customer?.identificationType?.[0]?.code ?? '-';

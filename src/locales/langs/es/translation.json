@@ -52,6 +52,10 @@
     "account": {
       "title": "Cuenta"
     },
+    "subAccount": {
+      "subheader": "Gestión",
+      "title": "Sub Cuentas"
+    },
     "myProducts": {
       "title": "Mis Productos",
       "subtitles": {
@@ -395,6 +399,113 @@
     "list": {
       "title": "Listado de órdenes"
     }
+  },
+  "subAccountListView": {
+    "heading": "Gestionar Subcuentas",
+    "breadcrumbs": {
+      "home": "Inicio",
+      "subaccount": "Subcuenta",
+      "list": "Lista"
+    },
+    "actions": {
+      "addSubaccount": "Agregar Subcuenta",
+      "view": "Ver",
+      "edit": "Editar",
+      "delete": "Eliminar",
+      "print": "Imprimir",
+      "export": "Exportar",
+      "import": "Importar"
+    },
+    "table": {
+      "columns": {
+        "user": "Usuario",
+        "permissions": "Permisos",
+        "status": "Estado",
+        "createdAt": "Creado desde",
+        "actions": "Acciones"
+      },
+      "noData": "No se encontraron datos",
+      "loading": "Cargando..."
+    },
+    "filters": {
+      "all": "Todos",
+      "permissions": "Permisos"
+    },
+    "status": {
+      "ACTIVE": "Activo",
+      "INACTIVE": "Inactivo"
+    },
+    "updateSubAccount": {
+      "info": "La subcuenta está esperando confirmación",
+      "title": "Actualizar Subcuenta",
+      "status": "Estado",
+      "firstname": "Nombre",
+      "lastname": "Apellido",
+      "email": "Correo electrónico",
+      "permissions": "Permisos",
+      "btnUpdate": "Actualizar",
+      "btnSave": "Guardar cambios",
+      "btnCancel": "Cancelar",
+      "successMessage": "¡Subcuenta actualizada con éxito!",
+      "errorMessage": "No se pudo actualizar la subcuenta. Por favor, inténtalo de nuevo."
+    },
+    "createSubAccount": {
+      "info": "La subcuenta está esperando confirmación",
+      "title": "Crear Subcuenta",
+      "status": "Estado",
+      "firstname": "Nombre",
+      "lastname": "Apellido",
+      "email": "Correo electrónico",
+      "permissions": "Permisos",
+      "btnUpdate": "Actualizar",
+      "btnCreate": "Crear",
+      "btnCancel": "Cancelar",
+      "successMessage": "¡Subcuenta creada con éxito!",
+      "errorMessage": "¡No se pudo crear la subcuenta!"
+    },
+    "deleteSubAccount": {
+      "title": "Eliminar subcuenta",
+      "content": "¿Seguro que deseas eliminar esta subcuenta?",
+      "confirmButton": "Eliminar",
+      "successMessage": "Subcuenta eliminada correctamente.",
+      "errorMessage": "No se pudo eliminar la subcuenta. Intenta nuevamente."
+    },
+    "unknownPermissions": "Permisos desconocidos",
+    "searchPlaceholder": "Buscar por nombre o correo..."
+  },
+  "validation": {
+    "firstnameRequired": "¡El nombre es obligatorio!",
+    "lastnameRequired": "¡El apellido es obligatorio!",
+    "emailRequired": "¡El correo electrónico es obligatorio!",
+    "emailInvalid": "¡El correo electrónico debe ser válido!",
+    "permissionsRequired": "¡Cada permiso es obligatorio!",
+    "permissionsNonEmpty": "¡Se requiere al menos un permiso!",
+    "statusRequired": "¡El estado es obligatorio!"
+  },
+  "subAccountDetailsView": {
+    "breadcrumbs": {
+      "heading": "Detalles de la Subcuenta",
+      "home": "Inicio",
+      "subaccount": "Subcuenta",
+      "details": "Detalles"
+    },
+    "accountInfo": {
+      "id": "Id",
+      "title": "Información de la cuenta",
+      "status": "Estado",
+      "permissionsAssigned": "Permisos asignados",
+      "firstName": "Nombre",
+      "lastName": "Apellido",
+      "createdAt": "Creado el",
+      "email": "Correo electrónico"
+    },
+    "actions": {
+      "addSubaccount": "Agregar Subcuenta",
+      "edit": "Editar",
+      "delete": "Eliminar",
+      "update": "Actualizar",
+      "suspendAccount": "Suspender Cuenta",
+      "deleteAccount": "Eliminar Cuenta"
+    }
   }
 }
-

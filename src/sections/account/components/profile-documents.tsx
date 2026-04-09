@@ -151,7 +151,7 @@ export function ProfileDocuments({ onSubmit, sx, ...other }: Props) {
         color="white"
         startIcon={<Iconify icon="solar:paperclip-2-bold" />}
         onClick={onChoose}
-        sx={{ 
+        sx={{
           justifySelf: { xs: 'start', sm: 'end' },
         }}
       >

@@ -1,58 +1,93 @@
 'use client';
 
 import type { PropsWithChildren } from 'react';
-import type { AuthState } from '../types';
+import type { AuthStatus } from './auth-context';
 
-import { useSetState } from 'minimal-shared/hooks';
+import { useQueryClient } from '@tanstack/react-query';
 import { useMemo, useEffect, useCallback } from 'react';
 
-import { useMockedUser } from 'src/auth/hooks';
+import { useLogin } from 'src/actions/auth/use-login';
+import { useLogout } from 'src/actions/auth/use-logout';
+import { useCurrentUser } from 'src/actions/auth/use-current-user';
+import { useUpdateToken } from 'src/actions/auth/use-update-token';
 
 import { setSession } from './utils';
 import { AuthContext } from './auth-context';
-import { ACCESS_TOKEN_STORAGE_KEY } from './constant';
 
 // ----------------------------------------------------------------------
 
 export function AuthProvider({ children }: PropsWithChildren) {
-  const { state, setState } = useSetState<AuthState>({ user: null, loading: true });
-  const { user } = useMockedUser();
 
-  const checkUserSession = useCallback(async () => {
-    try {
-      const accessToken = sessionStorage.getItem(ACCESS_TOKEN_STORAGE_KEY);
+  const queryClient = useQueryClient();
+  const loginMutation = useLogin();
+  const logoutMutation = useLogout();
+  const updateTokenMutation = useUpdateToken();
+  const { data: user, isLoading } = useCurrentUser();
 
-      if (accessToken) {
-        setSession(accessToken);
-        setState({ user: { ...user }, loading: false });
-      } else {
-        setState({ user: null, loading: false });
-      }
-    } catch {
-      setState({ user: null, loading: false });
+
+  const authStatus: AuthStatus = isLoading
+    ? 'checking'
+    : user
+      ? 'authenticated'
+      : 'not-authenticated';
+
+  const handleLogin = useCallback(
+    async (credentials: { email: string; password: string }) => {
+      await loginMutation.mutateAsync(credentials);
+    },
+    [loginMutation]
+  );
+
+  const handleLogout = useCallback(async() => {
+    await logoutMutation.mutateAsync(undefined, {
+      onSettled: () => {
+        queryClient.clear();
+      },
+    });
+
+  }, [logoutMutation, queryClient]);
+
+
+  const checkUserSession = useCallback(() => {
+    if (authStatus === 'not-authenticated') {
+      setSession(null);
     }
-  }, [setState, user]);
+  }, [authStatus]);
+
 
   useEffect(() => {
     checkUserSession();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [authStatus, checkUserSession]);
 
-  // ----------------------------------------------------------------------
+  // Refresh automático del token
+  useEffect(() => {
+    if (authStatus !== 'authenticated') return undefined;
 
-  const checkAuthenticated = state.user ? 'authenticated' : 'unauthenticated';
+    const tokenExpirationTime = parseInt(
+      process.env.NEXT_PUBLIC_TOKEN_EXPIRATION_TIME || '30',
+      10
+    );
+    const refreshTime = (tokenExpirationTime) * 60 * 1000;
 
-  const status = state.loading ? 'loading' : checkAuthenticated;
+    const timeoutId = setTimeout(async () => {
+      await updateTokenMutation.mutateAsync();
+    }, refreshTime);
+
+    return () => clearTimeout(timeoutId);
+  }, [authStatus, updateTokenMutation]);
 
   const memoizedValue = useMemo(
     () => ({
-      user: state.user ? { ...state.user, role: state.user?.role ?? 'admin' } : null,
-      checkUserSession,
-      loading: status === 'loading',
-      authenticated: status === 'authenticated',
-      unauthenticated: status === 'unauthenticated',
+      user,
+      authStatus,
+      loading: authStatus === 'checking',
+      authenticated: authStatus === 'authenticated',
+      unauthenticated: authStatus === 'not-authenticated',
+
+      login: handleLogin,
+      logout: handleLogout,
     }),
-    [checkUserSession, state.user, status]
+    [authStatus, handleLogin, handleLogout, user]
   );
 
   return <AuthContext value={memoizedValue}>{children}</AuthContext>;

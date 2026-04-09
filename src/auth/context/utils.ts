@@ -1,56 +1,49 @@
 import type { ICustomer } from 'src/interfaces/customer/customer.interface';
 
-import { paths } from 'src/routes/paths';
+import { jwtDecode } from 'jwt-decode';
 
-import { CUSTOMER_KEY, EXPIRATION_TIME, ACCESS_TOKEN_STORAGE_KEY } from './constant';
-
+import { CUSTOMER_ID, CUSTOMER_KEY, EXPIRATION_TIME, ACCESS_TOKEN_STORAGE_KEY } from './constant';
 
 // ----------------------------------------------------------------------
 
-export async function validateSession() {
-  try {
-    const accessToken = sessionStorage.getItem(ACCESS_TOKEN_STORAGE_KEY);
-    const expirationTime = sessionStorage.getItem(EXPIRATION_TIME);
+export function validateSession() {
+  const accessToken = localStorage.getItem(ACCESS_TOKEN_STORAGE_KEY);
+  const expirationTime = localStorage.getItem(EXPIRATION_TIME);
 
-    if (accessToken && expirationTime) {
-      const currentTime = Date.now() / 1000;
+  if (!accessToken || !expirationTime) {
+    setSession(null);
+    return false;
+  }
 
-      // Si el token ha expirado, eliminarlo y redirigir al usuario
-      if (currentTime - parseFloat(expirationTime) > 3600) {
-        sessionStorage.removeItem(ACCESS_TOKEN_STORAGE_KEY);
-        sessionStorage.removeItem(EXPIRATION_TIME);
-        window.location.href = paths.auth.signIn;
-      }
-    } else {
-      // Si no hay token, redirigir al usuario a la página de inicio de sesión
-      window.location.href = paths.auth.signIn;
+  const isExpired = parseFloat(expirationTime) < Date.now() / 1000;
+
+  if (isExpired) {
+    setSession(null);
+    return false;
+  }
+
+  return true;
+}
+
+export function setSession(accessToken: string | null) {
+  if (accessToken) {
+    const payload: { uid: string, exp: number } = jwtDecode(accessToken);
+
+    if (!(payload.exp < Date.now() / 1000)) {
+      localStorage.setItem(EXPIRATION_TIME, payload.exp.toString());
     }
-  } catch (error) {
-    console.error('Error during session validation:', error);
-    throw error;
+
+    localStorage.setItem(CUSTOMER_ID, payload.uid);
+    localStorage.setItem(ACCESS_TOKEN_STORAGE_KEY, accessToken);
+
+  } else {
+    localStorage.removeItem(ACCESS_TOKEN_STORAGE_KEY);
+    localStorage.removeItem(EXPIRATION_TIME);
+    localStorage.removeItem(CUSTOMER_ID);
   }
 }
 
-export async function setSession(accessToken: string | null) {
-  try {
-    if (accessToken) {
-      sessionStorage.setItem(ACCESS_TOKEN_STORAGE_KEY, accessToken);
-
-      // variable para guardar momento que se guarda el token
-      const currentTime = Date.now() / 1000;
-      sessionStorage.setItem(EXPIRATION_TIME, currentTime.toString());
-    } else {
-      sessionStorage.removeItem(ACCESS_TOKEN_STORAGE_KEY);
-      sessionStorage.removeItem(EXPIRATION_TIME);
-      window.location.href = paths.auth.signIn;
-    }
-  } catch (error) {
-    console.error('Error during set session:', error);
-    throw error;
-  }
-}
-
-export async function setCustomerStorage(customer: ICustomer | null) {
+export function setCustomerStorage(customer: ICustomer | null) {
   try {
     if (customer) {
       localStorage.setItem(CUSTOMER_KEY, JSON.stringify(customer));
@@ -65,7 +58,11 @@ export async function setCustomerStorage(customer: ICustomer | null) {
 
 export function getSession() {
   try {
-    const accessToken = sessionStorage.getItem(ACCESS_TOKEN_STORAGE_KEY);
+    if (typeof window === 'undefined') {
+      return null;
+    }
+
+    const accessToken = localStorage.getItem(ACCESS_TOKEN_STORAGE_KEY);
 
     if (!accessToken) {
       return null;

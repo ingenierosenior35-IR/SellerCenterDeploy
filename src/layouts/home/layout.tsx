@@ -17,13 +17,13 @@ import { _notifications } from 'src/_mock';
 import { Logo } from 'src/components/logo';
 import { useSettingsContext } from 'src/components/settings';
 
-import { useMockedUser } from 'src/auth/hooks';
+import { useAuthContext } from 'src/auth/hooks';
 
 import { NavMobile } from './nav-mobile';
 import { VerticalDivider } from './content';
 import { NavVertical } from './nav-vertical';
+import { useNavData } from '../nav-config-home';
 import { NavHorizontal } from './nav-horizontal';
-import { useNavData } from '../nav-config-dashboard';
 import { dashboardLayoutVars, dashboardNavColorVars } from './css-vars';
 import { MainSection, layoutClasses, HeaderSection, LayoutSection } from '../core';
 import { Searchbar, MenuButton, StoreButton, LanguagePopover, ThemeToggleButton, NotificationsDrawer} from '../components';
@@ -52,7 +52,7 @@ export function HomeLayout({
 }: HomeLayoutProps) {
   const theme = useTheme();
 
-  const { user } = useMockedUser();
+  const { user } = useAuthContext();
 
   const settings = useSettingsContext();
 
@@ -61,6 +61,7 @@ export function HomeLayout({
   const { value: open, onFalse: onClose, onTrue: onOpen } = useBoolean();
 
   const dashboardNavData = useNavData();
+
   const navData = slotProps?.nav?.data ?? dashboardNavData;
 
   const isNavMini = settings.state.navLayout === 'mini';
@@ -68,7 +69,7 @@ export function HomeLayout({
   const isNavVertical = isNavMini || settings.state.navLayout === 'vertical';
 
   const canDisplayItemByRole = (allowedRoles: NavItemProps['allowedRoles']): boolean =>
-    !allowedRoles?.includes(user?.role);
+    !allowedRoles?.includes(user?.role ?? '');
 
   const renderHeader = () => {
     const headerSlotProps: HeaderSectionProps['slotProps'] = {

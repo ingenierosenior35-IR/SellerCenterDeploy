@@ -1,4 +1,4 @@
-import type { IUserProfile } from 'src/interfaces';
+import type { ICustomer } from 'src/interfaces/customer/customer.interface';
 
 import Box from '@mui/material/Box';
 import Avatar from '@mui/material/Avatar';
@@ -17,7 +17,7 @@ import { AnimateBorder } from 'src/components/animate';
 import { SvgColor } from '../svg-color';
 
 interface Props {
-  user: IUserProfile;
+  user: ICustomer;
   onSettingsClick?: () => void;
 }
 
@@ -44,7 +44,7 @@ export const StoreIdentity = ({ user, onSettingsClick }: Props) => {
         primaryBorder: { size: 120, sx: { color: 'primary.main' } },
       }}
     >
-      <Avatar alt={user?.displayName} sx={{ width: 1, height: 1 }}>
+      <Avatar alt={user?.firstname} sx={{ width: 1, height: 1 }}>
         {getInitials(user)}
       </Avatar>
     </AnimateBorder>
@@ -67,7 +67,7 @@ export const StoreIdentity = ({ user, onSettingsClick }: Props) => {
 
       <Box flexGrow={1} minWidth={0}>
         <Typography variant="subtitle2" fontWeight={600} noWrap>
-          {user.displayName}
+          {`${user.firstname} ${user.lastname}`}
         </Typography>
 
         <Typography variant="caption" color="text.secondary" noWrap>

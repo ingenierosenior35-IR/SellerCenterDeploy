@@ -11,6 +11,8 @@ import TextField from '@mui/material/TextField';
 import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
 
+import { useTranslate } from 'src/locales';
+
 import { Iconify } from 'src/components/iconify';
 import { CustomPopover } from 'src/components/custom-popover';
 
@@ -23,6 +25,7 @@ type Props = {
 
 export function SubAccountTableToolbar({ filters, onResetPage }: Props) {
   const menuActions = usePopover();
+  const { translate } = useTranslate();
 
   const { state: currentFilters, setState: updateFilters } = filters;
 
@@ -44,17 +47,17 @@ export function SubAccountTableToolbar({ filters, onResetPage }: Props) {
       <MenuList>
         <MenuItem onClick={() => menuActions.onClose()}>
           <Iconify icon="solar:printer-minimalistic-bold" />
-          Print
+          {translate('subAccountListView.actions.print')}
         </MenuItem>
 
         <MenuItem onClick={() => menuActions.onClose()}>
           <Iconify icon="solar:import-bold" />
-          Import
+          {translate('subAccountListView.actions.import')}
         </MenuItem>
 
         <MenuItem onClick={() => menuActions.onClose()}>
           <Iconify icon="solar:export-bold" />
-          Export
+          {translate('subAccountListView.actions.export')}
         </MenuItem>
       </MenuList>
     </CustomPopover>
@@ -85,7 +88,7 @@ export function SubAccountTableToolbar({ filters, onResetPage }: Props) {
             fullWidth
             value={currentFilters.name}
             onChange={handleFilterName}
-            placeholder="Search name or email..."
+            placeholder={translate('subAccountListView.searchPlaceholder')}
             slotProps={{
               input: {
                 startAdornment: (

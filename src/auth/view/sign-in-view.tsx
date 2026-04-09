@@ -22,7 +22,6 @@ import { useRouter } from 'src/routes/hooks';
 import { RouterLink } from 'src/routes/components';
 
 import { ErrorCode, ERROR_MESSAGES } from 'src/lib';
-import { useLogin } from 'src/actions/auth/useLogin';
 import { useTranslate } from 'src/locales/langs/i18n';
 
 import { Iconify } from 'src/components/iconify';
@@ -54,12 +53,9 @@ export function SignInView() {
 
   const showPassword = useBoolean();
 
-  const { checkUserSession } = useAuthContext();
+  const { login } = useAuthContext();
 
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-
-  const { mutateAsync } = useLogin();
-
 
   const defaultValues: SignInSchemaType = {
     email: '',
@@ -78,8 +74,7 @@ export function SignInView() {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      await mutateAsync({ email: data.email, password: data.password });
-      await checkUserSession?.();
+      await login({ email: data.email, password: data.password });
 
       router.refresh();
     } catch (error) {
@@ -172,7 +167,6 @@ export function SignInView() {
           {translate("loginPage.noAccount")}
           <Link
             component={RouterLink}
-            // href={paths.auth.jwt.signUp}
             href=""
             variant="subtitle2"
           >

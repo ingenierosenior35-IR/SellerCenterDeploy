@@ -4,19 +4,23 @@ import type { LabelColor } from 'src/components/label';
 import type { TableHeadCellProps } from 'src/components/table';
 import type { SubAccountInterface, AccountTableFiltersInterface } from 'src/interfaces';
 
+import { useMemo } from 'react';
 import { varAlpha } from 'minimal-shared/utils';
+import { useBoolean } from 'minimal-shared/hooks';
 
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import Tabs from '@mui/material/Tabs';
 import Card from '@mui/material/Card';
 import Table from '@mui/material/Table';
+import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import TableBody from '@mui/material/TableBody';
 import IconButton from '@mui/material/IconButton';
 
 import { paths } from 'src/routes/paths';
 
+import { useTranslate } from 'src/locales';
 import { HomeContent } from 'src/layouts/home';
 
 import { Label } from 'src/components/label';
@@ -32,25 +36,20 @@ import {
 } from 'src/components/table';
 
 import { PERMISSIONS } from '../constants/status';
-import { useSubAccountTable } from './useSubAccountTable';
+import { useSubAccountTable } from './use-subaccount-table';
+import { SubAccountCreateForm } from './subaccount-create-form';
 import { SubAccountTableRow, SubAccountTableToolbar } from '../components';
 
 // ----------------------------------------------------------------------
 
 const PERMISSION_OPTIONS = [{ value: 'all', label: 'All', color: 'default' }, ...PERMISSIONS];
 
-const TABLE_HEAD: TableHeadCellProps[] = [
-  { id: 'user', label: 'User' },
-  { id: 'permissions', label: 'Permissions', width: 200   },
-  { id: 'status', label: 'Status' },
-  { id: 'createdAt', label: 'Created date' },
-  { id: 'lastAccess', label: 'Last Access' },
-  { id: 'action', label: 'Action' },
-];
-
 // ----------------------------------------------------------------------
 
 export function SubAccountListView() {
+  const createForm = useBoolean();
+  const { translate } = useTranslate();
+
   const {
     table,
     confirmDialog,
@@ -63,99 +62,130 @@ export function SubAccountListView() {
     handleFilterPermission,
   } = useSubAccountTable();
 
+  const TABLE_HEAD = useMemo<TableHeadCellProps[]>(() => {
+  const t = translate;
+
+  return [
+      { id: 'user', label: t('subAccountListView.table.columns.user') },
+      { id: 'permissions', label: t('subAccountListView.table.columns.permissions'), width: 200 },
+      { id: 'status', label: t('subAccountListView.table.columns.status') },
+      { id: 'createdAt', label: t('subAccountListView.table.columns.createdAt') },
+      { id: 'action', label: t('subAccountListView.table.columns.actions') },
+    ];
+  }, [translate]);
+
+  const renderCreateForm = () => (
+    <SubAccountCreateForm
+      open={createForm.value}
+      onClose={createForm.onFalse}
+    />
+  );
+
   return (
-    <HomeContent>
-      <CustomBreadcrumbs
-        heading="Manage Subaccounts"
-        links={[
-          { name: 'Home', href: paths.home.root },
-          { name: 'Subaccount', href: paths.account.subaccount.root },
-          { name: 'List' },
-        ]}
-        sx={{ mb: { xs: 3, md: 5 } }}
-      />
-
-      <Card>
-        {generateFilterTabs(currentFilters, handleFilterPermission, tableData)}
-
-        <SubAccountTableToolbar
-          filters={filters}
-          onResetPage={table.onResetPage}
+    <>
+      <HomeContent>
+        <CustomBreadcrumbs
+          heading={translate('subAccount.manageSubaccounts')}
+          links={[
+            { name: translate('subAccountListView.breadcrumbs.home'), href: paths.home.root },
+            { name: translate('subAccountListView.breadcrumbs.subaccount'), href: paths.account.subaccount.root },
+            { name: translate('subAccountListView.breadcrumbs.list') },
+          ]}
+          action={
+            <Button
+              onClick={createForm.onTrue}
+              variant="contained"
+              startIcon={<Iconify icon="mingcute:add-line" />}
+            >
+              {translate('subAccountListView.actions.addSubaccount')}
+            </Button>
+          }
+          sx={{ mb: { xs: 3, md: 5 } }}
         />
 
-        <Box sx={{ position: 'relative' }}>
-          <TableSelectedAction
-            dense={table.dense}
-            numSelected={table.selected.length}
-            rowCount={dataFiltered.length}
-            onSelectAllRows={(checked) =>
-              table.onSelectAllRows(
-                checked,
-                dataFiltered.map((row) => row.id.toString())
-              )
-            }
-            action={
-              <Tooltip title="Delete">
-                <IconButton color="primary" onClick={confirmDialog.onTrue}>
-                  <Iconify icon="solar:trash-bin-trash-bold" />
-                </IconButton>
-              </Tooltip>
-            }
+        <Card>
+          {generateFilterTabs(currentFilters, handleFilterPermission, tableData)}
+
+          <SubAccountTableToolbar
+            filters={filters}
+            onResetPage={table.onResetPage}
           />
 
-          <Scrollbar sx={{ minHeight: 444 }}>
-            <Table size={table.dense ? 'small' : 'medium'} sx={{ minWidth: 960 }}>
-              <TableHeadCustom
-                order={table.order}
-                orderBy={table.orderBy}
-                headCells={TABLE_HEAD}
-                rowCount={dataFiltered.length}
-                numSelected={table.selected.length}
-                onSort={table.onSort}
-              />
+          <Box sx={{ position: 'relative' }}>
+            <TableSelectedAction
+              // dense={table.dense}
+              numSelected={table.selected.length}
+              rowCount={dataFiltered.length}
+              onSelectAllRows={(checked) =>
+                table.onSelectAllRows(
+                  checked,
+                  dataFiltered.map((row) => row.id.toString())
+                )
+              }
+              action={
+                <Tooltip title="Delete">
+                  <IconButton color="primary" onClick={confirmDialog.onTrue}>
+                    <Iconify icon="solar:trash-bin-trash-bold" />
+                  </IconButton>
+                </Tooltip>
+              }
+            />
 
-              <TableBody>
-                {
-                  dataFiltered
-                    .slice(
-                      table.page * table.rowsPerPage,
-                      table.page * table.rowsPerPage + table.rowsPerPage
-                    )
-                    .map((row) => (
-                      <SubAccountTableRow
-                        key={row.id}
-                        row={row}
-                        selected={table.selected.includes(row.id.toString())}
-                        onSelectRow={() => table.onSelectRow(row.id.toString())}
-                        detailsHref={paths.return.details(+row.id)}
-                      />
-                    ))
-                }
+            <Scrollbar sx={{ minHeight: 444 }}>
+              <Table size={table.dense ? 'small' : 'medium'} sx={{ minWidth: 960 }}>
+                <TableHeadCustom
+                  order={table.order}
+                  orderBy={table.orderBy}
+                  headCells={TABLE_HEAD}
+                  rowCount={dataFiltered.length}
+                  numSelected={table.selected.length}
+                  onSort={table.onSort}
+                />
 
-                {
-                  isLoading ? (
-                    <TableSkeleton rowCount={5} cellCount={TABLE_HEAD.length} />
-                  ) : notFound ? (
-                    <TableNoData notFound={notFound} />
-                  ) : null
-                }
+                <TableBody>
+                  {
+                    dataFiltered
+                      .slice(
+                        table.page * table.rowsPerPage,
+                        table.page * table.rowsPerPage + table.rowsPerPage
+                      )
+                      .map((row) => (
+                        <SubAccountTableRow
+                          key={row.id}
+                          row={row}
+                          selected={table.selected.includes(row.id.toString())}
+                          onSelectRow={() => table.onSelectRow(row.id.toString())}
+                          detailsHref={paths.return.details(+row.id)}
+                        />
+                      ))
+                  }
 
-              </TableBody>
-            </Table>
-          </Scrollbar>
-        </Box>
+                  {
+                    isLoading ? (
+                      <TableSkeleton rowCount={5} cellCount={TABLE_HEAD.length} />
+                    ) : notFound ? (
+                      <TableNoData notFound={notFound} />
+                    ) : null
+                  }
 
-        <TablePaginationCustom
-          page={table.page}
-          // dense={table.dense}
-          count={dataFiltered.length}
-          rowsPerPage={table.rowsPerPage}
-          onPageChange={table.onChangePage}
-          // onChangeDense={table.onChangeDense}
-          onRowsPerPageChange={table.onChangeRowsPerPage}
-        />
-      </Card>
-    </HomeContent>
+                </TableBody>
+              </Table>
+            </Scrollbar>
+          </Box>
+
+          <TablePaginationCustom
+            page={table.page}
+            // dense={table.dense}
+            count={dataFiltered.length}
+            rowsPerPage={table.rowsPerPage}
+            onPageChange={table.onChangePage}
+            // onChangeDense={table.onChangeDense}
+            onRowsPerPageChange={table.onChangeRowsPerPage}
+          />
+        </Card>
+      </HomeContent>
+      {renderCreateForm()}
+    </>
   );
 }
 
@@ -191,7 +221,9 @@ function generateFilterTabs(
               'default'}
           >
             {
-              tableData.filter((account) => tab.value === 'all' || account.permissions.includes(tab.value)).length
+              tableData.filter((account) =>
+                tab.value === 'all' || account.permissions.some((perm) => Object.keys(perm).includes(tab.value))
+              ).length
             }
           </Label>} />
       ))}

@@ -1,9 +1,22 @@
 'use client';
 
-import type { AuthContextValue } from '../types';
+import type { ICustomer } from 'src/interfaces/customer/customer.interface';
 
 import { createContext } from 'react';
 
 // ----------------------------------------------------------------------
 
-export const AuthContext = createContext<AuthContextValue | undefined>(undefined);
+export type AuthStatus = 'checking' | 'authenticated' | 'not-authenticated';
+
+interface AuthContextProps {
+  user: ICustomer | null | undefined;
+  authStatus: AuthStatus;
+  loading: boolean;
+  authenticated: boolean;
+  unauthenticated: boolean;
+
+  login: (credentials: { email: string; password: string }) => Promise<void>;
+  logout: () => Promise<void>;
+}
+
+export const AuthContext = createContext<AuthContextProps | undefined>(undefined);

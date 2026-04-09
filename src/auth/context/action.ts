@@ -44,7 +44,7 @@ export const signUp = async ({
       throw new Error('Access token not found in response');
     }
 
-    sessionStorage.setItem(ACCESS_TOKEN_STORAGE_KEY, accessToken);
+    localStorage.setItem(ACCESS_TOKEN_STORAGE_KEY, accessToken);
   } catch (error) {
     console.error('Error during sign up:', error);
     throw error;

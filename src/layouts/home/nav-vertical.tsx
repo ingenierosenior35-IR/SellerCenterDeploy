@@ -16,7 +16,7 @@ import { Scrollbar } from 'src/components/scrollbar';
 import { StoreIdentity } from 'src/components/store-identity';
 import { NavSectionMini, NavSectionVertical } from 'src/components/nav-section';
 
-import { useMockedUser } from 'src/auth/hooks';
+import { useAuthContext } from 'src/auth/hooks';
 
 import { layoutClasses } from '../core';
 import { SignOutButton, NavToggleButton } from '../components';
@@ -54,7 +54,7 @@ export function NavVertical({
   };
   //go to account page
 
-  const { user } = useMockedUser();
+  const { user } = useAuthContext();
 
   const renderNavVertical = () => (
     <>
@@ -65,7 +65,9 @@ export function NavVertical({
       )}
 
       <Box sx={{ pt: 2.5, pb: 2, display: 'flex', justifyContent: 'center' }}>
-        <StoreIdentity user={user} onSettingsClick={handleAccount} />
+        {
+          user && <StoreIdentity user={user} onSettingsClick={handleAccount} />
+        }
       </Box>
 
       <Box sx={{ pt: 1, pb: 2, display: 'flex', justifyContent: 'center' }}>

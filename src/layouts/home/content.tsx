@@ -14,7 +14,7 @@ import { layoutClasses } from '../core';
 
 // ----------------------------------------------------------------------
 
-export type DashboardContentProps = ContainerProps & {
+export type HomeContentProps = ContainerProps & {
   layoutQuery?: Breakpoint;
   disablePadding?: boolean;
 };
@@ -27,7 +27,7 @@ export function HomeContent({
   maxWidth = 'lg',
   layoutQuery = 'lg',
   ...other
-}: DashboardContentProps) {
+}: HomeContentProps) {
   const settings = useSettingsContext();
 
   const isNavHorizontal = settings.state.navLayout === 'horizontal';

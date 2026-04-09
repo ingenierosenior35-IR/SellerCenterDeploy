@@ -70,25 +70,29 @@ export default async function RootLayout({
           defaultMode={themeConfig.defaultMode}
         />
 
-        <AuthProvider>
-          <SettingsProvider
-            cookieSettings={appConfig.cookieSettings}
-            defaultSettings={defaultSettings}
+<AppRouterCacheProvider options={{ key: 'css' }}>
+        <SettingsProvider
+          cookieSettings={appConfig.cookieSettings}
+          defaultSettings={defaultSettings}
+        >
+          <ThemeProvider
+            modeStorageKey={themeConfig.modeStorageKey}
+            defaultMode={themeConfig.defaultMode}
           >
-            <AppRouterCacheProvider options={{ key: 'css' }}>
-              <ThemeProvider
-                modeStorageKey={themeConfig.modeStorageKey}
-                defaultMode={themeConfig.defaultMode}
-              >
-                <MotionLazy>
-                  <ProgressBar />
-                  <SettingsDrawer defaultSettings={defaultSettings} />
-                  <Providers>{children}</Providers>
-                </MotionLazy>
-              </ThemeProvider>
-            </AppRouterCacheProvider>
-          </SettingsProvider>
-        </AuthProvider>
+            <Providers>
+              <AuthProvider>
+
+                  <MotionLazy>
+                    <ProgressBar />
+                    <SettingsDrawer defaultSettings={defaultSettings} />
+                    {children}
+                  </MotionLazy>
+
+              </AuthProvider>
+            </Providers>
+          </ThemeProvider>
+        </SettingsProvider>
+                </AppRouterCacheProvider>
       </body>
     </html>
   );

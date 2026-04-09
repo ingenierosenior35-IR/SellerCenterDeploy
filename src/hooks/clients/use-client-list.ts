@@ -3,7 +3,7 @@ import type { TableHeadCellProps } from 'src/components';
 import { useMemo } from 'react';
 
 import { useTranslate } from 'src/locales';
-import { useGetClients } from 'src/actions/clients/useGetClients';
+import { useGetClients } from 'src/actions/clients/use-get-clients';
 
 export function useClientList() {
   const { customers, isLoading, isError } = useGetClients();
@@ -18,7 +18,7 @@ export function useClientList() {
     { id: 'clientSince', label: `${translate('clientsModule.table.columns.clientSince')}`, width: 150 },
   ];
 
-  
+
   return {
     clientList,
     isLoading,
