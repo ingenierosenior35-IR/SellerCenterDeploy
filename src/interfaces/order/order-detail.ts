@@ -1,5 +1,3 @@
-// This file contains the TypeScript interfaces for the order detail
-// response returned by the GraphQL API.
 export interface OrderDetailResponse {
   data: DataDetail;
 }
@@ -56,7 +54,6 @@ export interface TotalDetail {
   total_store_credit: TotalDetails;
 }
 
-// General type for values with currency and value
 export interface TotalDetails {
   value: number;
 }

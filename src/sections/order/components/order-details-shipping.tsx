@@ -1,4 +1,4 @@
-import type { ShippingAddressDetail } from 'src/types/order';
+import type { AddressDetail } from 'src/interfaces/order';
 
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
@@ -6,7 +6,7 @@ import CardHeader from '@mui/material/CardHeader';
 
 interface OrderDetailsShippingProps {
   isOwnOrder: boolean;
-  shippingAddress: ShippingAddressDetail;
+  shippingAddress: AddressDetail;
   clientName: string;
   clientEmail: string;
 }

@@ -20,8 +20,6 @@ export interface ClientListApiResponse {
   data: ClientListData;
 }
 
-//
-
 export interface ClientListDataTable {
   full_name: string;
   email: string;

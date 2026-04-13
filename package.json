@@ -99,6 +99,7 @@
     "@types/react": "19.2.7",
     "@types/react-dom": "19.2.3",
     "@types/stylis": "4.2.7",
+    "@types/turndown": "5.0.6",
     "@typescript-eslint/parser": "8.49.0",
     "baseline-browser-mapping": "^2.10.8",
     "eslint": "9.39.2",

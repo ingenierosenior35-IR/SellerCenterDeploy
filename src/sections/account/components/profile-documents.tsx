@@ -149,7 +149,7 @@ export function ProfileDocuments({ onSubmit, sx, ...other }: Props) {
       <Button
         variant="contained"
         color="white"
-        startIcon={<Iconify icon="solar:paperclip-2-bold" />}
+        startIcon={<Iconify icon="solar:import-bold" />}
         onClick={onChoose}
         sx={{
           justifySelf: { xs: 'start', sm: 'end' },

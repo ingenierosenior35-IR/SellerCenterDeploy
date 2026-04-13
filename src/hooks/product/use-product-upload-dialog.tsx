@@ -1,7 +1,6 @@
 import { useRef, useMemo, useState, useCallback } from 'react';
 
 import { fileToBase64 } from 'src/utils/codificateFile';
-// import { uploadProduct } from 'src/actions/upload/uploadProducts';
 import { validateCsvFile } from 'src/utils/validate-csv';
 
 import { useValidateMassUpload } from 'src/actions/product/useValidateMassUpload';
@@ -136,14 +135,6 @@ export const useProductUploadDialog = ({ onClose }: { onClose: () => void }) => 
     (csvInvalid && (csvInvalid.badType || csvInvalid.tooBig)) ||
     (csvErrors && csvErrors.length > 0);
 
-  const handleCancelUpload = useCallback(() => {
-    setCsvFile(null);
-    setImages([]);
-    setImagesZip(null);
-    setResult(null);
-    setShowCancelDialog(false);
-    onClose();
-  }, [onClose]);
 
   const handleUpload = useCallback(async () => {
     if (!csvFile) {
@@ -200,7 +191,13 @@ export const useProductUploadDialog = ({ onClose }: { onClose: () => void }) => 
     } finally {
       setUploading(false);
     }
-  }, [csvFile, handleCancelUpload, disabledUpload, mutateAsync]);
+  }, [csvFile, disabledUpload]);
+
+  const handleCancelUpload = () => {
+    clearAll();
+    setShowCancelDialog(false);
+    onClose();
+  };
 
   const handleCancelBulkUpload = () => {
     if (!!csvFile || images.length > 0 || !!imagesZip) {

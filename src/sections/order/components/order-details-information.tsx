@@ -1,4 +1,4 @@
-import type { BillingAddressDetail, ShippingAddressDetail } from 'src/types/order';
+import type { AddressDetail, BillingAddressDetail } from 'src/interfaces/order';
 
 import Box from '@mui/material/Box';
 import { Card } from '@mui/material';
@@ -6,7 +6,7 @@ import CardHeader from '@mui/material/CardHeader';
 
 interface OrderDetailsInformationProps {
   isOwnOrder: boolean;
-  shippingAddress: ShippingAddressDetail;
+  shippingAddress: AddressDetail;
   billingAddress?: BillingAddressDetail;
   shippingMethod: string;
   paymentMethod: string;

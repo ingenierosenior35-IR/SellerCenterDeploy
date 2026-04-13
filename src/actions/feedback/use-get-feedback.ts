@@ -41,8 +41,8 @@ export function useGetFeedback(request?: FeedbackRequest) {
       request?.currentPage,
       request?.pageSize,
       request?.rating,
-      request?.filter?.isReviewApproved,
-      request?.filter?.rating,
+      request?.filter?.isReviewApproved?.eq,
+      request?.filter?.rating?.eq,
     ]
   );
 

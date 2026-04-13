@@ -14,37 +14,37 @@
     "noAccount": "¿No tienes una cuenta?",
     "getStarted": "Comenzar"
   },
-    "productDetails": {
-      "heading": "Detalle del producto",
-      "tabs": {
-        "description": "Descripción"
+  "productDetails": {
+    "heading": "Detalle del producto",
+    "tabs": {
+      "description": "Descripción"
+    },
+    "errors": {
+      "notAvailable": {
+        "title": "Producto no disponible",
+        "description": "No pudimos cargar el producto en este momento. Por favor intenta más tarde."
       },
-      "errors": {
-        "notAvailable": {
-          "title": "Producto no disponible",
-          "description": "No pudimos cargar el producto en este momento. Por favor intenta más tarde."
-        },
-        "notFound": {
-          "title": "Producto no encontrado",
-          "description": "No se encontró ningún producto con id:"
-        }
+      "notFound": {
+        "title": "Producto no encontrado",
+        "description": "No se encontró ningún producto con id:"
       }
-    },
-    "productConfigurable": {
-      "notAvailable": "No disponible",
-      "available": "Disponible",
-      "units": "unidades",
-      "alerts": {
-        "combinationNotAvailable": {
-          "title": "Combinación no disponible",
-          "description": "Esta combinación de opciones no existe. Por favor selecciona otra."
-        },
-        "outOfStock": {
-          "title": "Sin stock disponible",
-          "description": "Esta variante no tiene stock en este momento."
-        }
+    }
+  },
+  "productConfigurable": {
+    "notAvailable": "No disponible",
+    "available": "Disponible",
+    "units": "unidades",
+    "alerts": {
+      "combinationNotAvailable": {
+        "title": "Combinación no disponible",
+        "description": "Esta combinación de opciones no existe. Por favor selecciona otra."
+      },
+      "outOfStock": {
+        "title": "Sin stock disponible",
+        "description": "Esta variante no tiene stock en este momento."
       }
-    },
+    }
+  },
   "sidebarMenu": {
     "home": {
       "title": "Inicio"
@@ -69,9 +69,9 @@
         "list": "Lista"
       }
     },
-            "clients":{
-            "title": "Clientes"
-        },
+    "clients": {
+      "title": "Clientes"
+    },
     "feedback": {
       "title": "Opiniones"
     }
@@ -121,60 +121,60 @@
       "dense": "Denso"
     }
   },
-    "settings": {
+  "settings": {
+    "breadcrumb": {
+      "current": "Configuración"
+    },
+    "common": {
+      "selectFile": "Seleccionar archivo",
+      "noFileSelected": "Sin archivos seleccionados",
+      "back": "Regresar"
+    },
+    "sellerProfile": {
       "breadcrumb": {
-        "current": "Configuración"
+        "heading": "Editar perfil del vendedor"
       },
-      "common": {
-        "selectFile": "Seleccionar archivo",
-        "noFileSelected": "Sin archivos seleccionados",
-        "back": "Regresar"
+      "cardTitle": "Editar Información de Perfil",
+      "fields": {
+        "storeTitle": "Título de Tienda",
+        "country": "País",
+        "companyLocation": "Ubicación de la Empresa",
+        "companyDescription": "Descripción de la Empresa",
+        "companyDescriptionHelp": "(Por ahora textarea. Luego lo conectamos a TinyMCE si lo necesitas).",
+        "companyBanner": "Banner de la Empresa",
+        "companyLogo": "Logo de Empresa",
+        "metaKeywords": "Meta Términos (Enter Meta Keywords Comma(',') Separated.)",
+        "metaKeywordsPh": "keyword1, keyword2, keyword3",
+        "metaDescription": "Meta Descripción",
+        "googleAnalyticId": "Google Analytic Id",
+        "googleAnalyticIdPh": "UA-XXXXX-Y / G-XXXXXXX"
       },
-      "sellerProfile": {
-        "breadcrumb": {
-          "heading": "Editar perfil del vendedor"
-        },
-        "cardTitle": "Editar Información de Perfil",
-        "fields": {
-          "storeTitle": "Título de Tienda",
-          "country": "País",
-          "companyLocation": "Ubicación de la Empresa",
-          "companyDescription": "Descripción de la Empresa",
-          "companyDescriptionHelp": "(Por ahora textarea. Luego lo conectamos a TinyMCE si lo necesitas).",
-          "companyBanner": "Banner de la Empresa",
-          "companyLogo": "Logo de Empresa",
-          "metaKeywords": "Meta Términos (Enter Meta Keywords Comma(',') Separated.)",
-          "metaKeywordsPh": "keyword1, keyword2, keyword3",
-          "metaDescription": "Meta Descripción",
-          "googleAnalyticId": "Google Analytic Id",
-          "googleAnalyticIdPh": "UA-XXXXX-Y / G-XXXXXXX"
-        },
-        "actions": {
-          "saveProfile": "Guardar Perfil"
-        }
-      },
-      "shopUrl": {
-        "cardTitle": "Manage Your Shop Url",
-        "fields": {
-          "profileTarget": "Profile Page Target Url Path",
-          "profileRequest": "Profile Page Request Url Path",
-          "collectionTarget": "Collection Page Target Url Path",
-          "collectionRequest": "Collection Page Request Url Path",
-          "reviewTarget": "Review Page Target Url Path",
-          "reviewRequest": "Review Page Request Url Path",
-          "locationTarget": "Location Page Target Url Path",
-          "locationRequest": "Location Page Request Url Path",
-          "privacyPolicyRequest": "Privacy Policy Page Request Url Path"
-        },
-        "actions": {
-          "viewProfile": "Ver Perfil",
-          "viewCollection": "Ver Colección",
-          "saveUrl": "Guardar URL",
-          "viewProfileMock": "Ver Perfil (mock)",
-          "viewCollectionMock": "Ver Colección (mock)"
-        }
+      "actions": {
+        "saveProfile": "Guardar Perfil"
       }
     },
+    "shopUrl": {
+      "cardTitle": "Manage Your Shop Url",
+      "fields": {
+        "profileTarget": "Profile Page Target Url Path",
+        "profileRequest": "Profile Page Request Url Path",
+        "collectionTarget": "Collection Page Target Url Path",
+        "collectionRequest": "Collection Page Request Url Path",
+        "reviewTarget": "Review Page Target Url Path",
+        "reviewRequest": "Review Page Request Url Path",
+        "locationTarget": "Location Page Target Url Path",
+        "locationRequest": "Location Page Request Url Path",
+        "privacyPolicyRequest": "Privacy Policy Page Request Url Path"
+      },
+      "actions": {
+        "viewProfile": "Ver Perfil",
+        "viewCollection": "Ver Colección",
+        "saveUrl": "Guardar URL",
+        "viewProfileMock": "Ver Perfil (mock)",
+        "viewCollectionMock": "Ver Colección (mock)"
+      }
+    }
+  },
   "search": "Buscar...",
   "logout": "Cerrar sesión",
   "productsNotAvailable": "Productos no disponibles",
@@ -252,18 +252,18 @@
     "PROCESSED_AND_CLOSED": "Procesado y cerrado",
     "CLOSED": "Cerrado"
   },
-      "clientsModule": {
-        "title": "Clientes",
-        "table": {
-            "columns": {
-                "name": "Nombre",
-                "email": "Correo electrónico",
-                "address": "Dirección",
-                "clientSince": "Cliente desde"
-            },
-            "searchFilter": "Buscar por nombre o correo..."
-        }
-    },
+  "clientsModule": {
+    "title": "Clientes",
+    "table": {
+      "columns": {
+        "name": "Nombre",
+        "email": "Correo electrónico",
+        "address": "Dirección",
+        "clientSince": "Cliente desde"
+      },
+      "searchFilter": "Buscar por nombre o correo..."
+    }
+  },
   "customerProfileView": {
     "user": "Usuario",
     "profile": "Perfil",
@@ -278,6 +278,8 @@
     "identificationNumberRequired": "Número de identificación es requerido",
     "avatarRequired": "Avatar es requerido",
     "countryRequired": "País es requerido",
+    "stateRequired": "Estado es requerido",
+    "zipCodeRequired": "Código postal es requerido",
     "cityRequired": "Ciudad es requerida",
     "addressRequired": "Dirección es requerida",
     "postalCodeRequired": "Código postal es requerido",
@@ -315,7 +317,7 @@
     "sellerIdentification": "Identificación del vendedor",
     "bankCertificate": "Certificado bancario",
     "allowedFormats": "Formatos permitidos: PDF",
-    "acceptTyC":"Acepto los términos y condiciones. Autorizo el tratamiento de mis datos personales para los fines descritos en la",
+    "acceptTyC": "Acepto los términos y condiciones. Autorizo el tratamiento de mis datos personales para los fines descritos en la",
     "privacyPolicy": "Política de privacidad de Inter Rapidísimo"
   },
   "breadcrumbs": {
@@ -325,76 +327,76 @@
       "details": "Detalles de la orden"
     }
   },
-  "dashboardModule":{
-    "averageOrderValue":{
-      "title":"Promedio valor órdenes",
-      "period":{
-        "title":"periodo",
-        "options":{
-          "day":"Hoy",
-          "week":"Esta semana",
-          "month":"Este mes",
-          "year":"Este año"
+  "dashboardModule": {
+    "averageOrderValue": {
+      "title": "Promedio valor órdenes",
+      "period": {
+        "title": "Periodo",
+        "options": {
+          "day": "Hoy",
+          "week": "Esta semana",
+          "month": "Este mes",
+          "year": "Este año"
         }
       },
-      "body":{
+      "body": {
         "last": "Últimos"
       }
     },
-    "totalSales":{
-      "title":"Ventas totales",
-      "period":{
-        "title":"periodo",
-        "options":{
-          "day":"Hoy",
-          "week":"Esta semana",
-          "month":"Este mes",
-          "year":"Este año"
+    "totalSales": {
+      "title": "Ventas totales",
+      "period": {
+        "title": "periodo",
+        "options": {
+          "day": "Hoy",
+          "week": "Esta semana",
+          "month": "Este mes",
+          "year": "Este año"
         }
       },
-      "body":{
+      "body": {
         "last": "Últimos"
       }
     },
-    "ordersOverTime":{
-      "title":"Pedidos a lo largo del tiempo",
-      "period":{
-        "title":"periodo",
-        "options":{
-          "day":"Hoy",
-          "week":"Esta semana",
-          "month":"Este mes",
-          "year":"Este año"
+    "ordersOverTime": {
+      "title": "Pedidos a lo largo del tiempo",
+      "period": {
+        "title": "periodo",
+        "options": {
+          "day": "Hoy",
+          "week": "Esta semana",
+          "month": "Este mes",
+          "year": "Este año"
         }
       },
-      "body":{
+      "body": {
         "last": "Últimos"
       }
     },
-          "body":{
-        "last": "Últimos"
-      }
+    "body": {
+      "last": "Últimos"
+    }
   },
-  "ordersModule":{
-    "title":"Pedidos",
-    "table":{
-      "tabs":{
-        "all":"Todos"
+  "ordersModule": {
+    "title": "Pedidos",
+    "table": {
+      "tabs": {
+        "all": "Todos"
       },
       "filters": {
         "initialDate": "Fecha inicial",
         "finalDate": "Fecha final",
         "search": "Buscar por cliente o número de orden..."
       },
-      "columns":{
-        "order":"Orden",
-        "customer":"Cliente",
-        "date":"Fecha",
-        "quality":"Cantidad",
-        "total":"Total",
-        "status":"Estado"
+      "columns": {
+        "order": "Orden",
+        "customer": "Cliente",
+        "date": "Fecha",
+        "quality": "Cantidad",
+        "total": "Total",
+        "status": "Estado"
       },
-      "searchFilter":"Buscar por cliente o ID..."
+      "searchFilter": "Buscar por cliente o ID..."
     },
     "list": {
       "title": "Listado de órdenes"
@@ -509,3 +511,4 @@
     }
   }
 }
+

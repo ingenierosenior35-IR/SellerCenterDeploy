@@ -1,5 +1,5 @@
 import type { Theme, SxProps } from '@mui/material/styles';
-import type { Prices, OrderRowItemDetail } from 'src/types/order';
+import type { Prices, OrderRowItemDetail } from 'src/interfaces/order';
 
 import Box from '@mui/material/Box';
 import CardHeader from '@mui/material/CardHeader';

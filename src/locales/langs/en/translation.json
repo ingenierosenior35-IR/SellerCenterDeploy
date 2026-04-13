@@ -320,120 +320,11 @@
     "privacyPolicy": "Privacy Policy of Inter Rapidísimo"
   },
   "breadcrumbs": {
-    "home": "Home"
-  },
-  "subAccountListView": {
-    "heading": "Manage Subaccounts",
-    "breadcrumbs": {
-      "home": "Home",
-      "subaccount": "Subaccount",
-      "list": "List"
-    },
-    "actions": {
-      "addSubaccount": "Add Subaccount",
-      "view": "View",
-      "edit": "Edit",
-      "delete": "Delete",
-      "print": "Print",
-      "export": "Export",
-      "import": "Import"
-    },
-    "table": {
-      "columns": {
-        "user": "User",
-        "permissions": "Permissions",
-        "status": "Status",
-        "createdAt": "Created date",
-        "actions": "Actions"
-      },
-      "noData": "No data found",
-      "loading": "Loading..."
-    },
-    "filters": {
-      "all": "All",
-      "permissions": "Permissions"
-    },
-    "status": {
-      "ACTIVE": "Active",
-      "INACTIVE": "Inactive"
-    },
-    "updateSubAccount": {
-      "info": "SubAccount is waiting for confirmation",
-      "title": "Update Subaccount",
-      "status": "Status",
-      "firstname": "First Name",
-      "lastname": "Last Name",
-      "email": "Email",
-      "permissions": "Permissions",
-      "btnUpdate": "Update",
-      "btnSave": "Save Changes",
-      "btnCancel": "Cancel",
-      "successMessage": "Subaccount updated successfully!",
-      "errorMessage": "Failed to update subaccount. Please try again."
-    },
-    "createSubAccount": {
-      "info": "SubAccount is waiting for confirmation",
-      "title": "Create Subaccount",
-      "status": "Status",
-      "firstname": "First Name",
-      "lastname": "Last Name",
-      "email": "Email",
-      "permissions": "Permissions",
-      "btnUpdate": "Update",
-      "btnCreate": "Create",
-      "btnCancel": "Cancel",
-      "successMessage": "Subaccount created successfully!",
-      "errorMessage": "Failed to create subaccount!"
-    },
-    "deleteSubAccount": {
-      "title": "Delete subaccount",
-      "content": "Are you sure you want to delete this subaccount?",
-      "confirmButton": "Delete",
-      "successMessage": "Subaccount deleted successfully.",
-      "errorMessage": "Failed to delete subaccount. Please try again."
-    },
-    "unknownPermissions": "Unknown Permissions",
-    "searchPlaceholder": "Search name or email..."
-  },
-  "validation": {
-    "firstnameRequired": "Name is required!",
-    "lastnameRequired": "Lastname is required!",
-    "emailRequired": "Email is required!",
-    "emailInvalid": "Email must be a valid email address!",
-    "permissionsRequired": "Each permission is required!",
-    "permissionsNonEmpty": "At least one permission is required!",
-    "statusRequired": "Status is required!"
-  },
-  "subAccountDetailsView": {
-    "breadcrumbs": {
-      "heading": "Subaccount Details",
-      "home": "Home",
-      "subaccount": "Subaccount",
-      "details": "Details"
-    },
-    "accountInfo": {
-      "id": "Id",
-      "title": "Account Information",
-      "status": "Status",
-      "permissionsAssigned": "Permissions assigned",
-      "firstName": "First Name",
-      "lastName": "Last Name",
-      "createdAt": "Created at",
-      "email": "Email"
-    },
-    "actions": {
-      "addSubaccount": "Add Subaccount",
-      "edit": "Edit",
-      "update": "Update",
-      "delete": "Delete",
-      "suspendAccount": "Suspend Account",
-      "deleteAccount": "Delete Account"
+    "home": "Home",
+    "orders": {
+      "list": "Orders list",
+      "details": "Order details"
     }
-  },
-  "home": "Home",
-  "orders": {
-    "list": "Orders List",
-    "details": "Order Details"
   },
   "dashboardModule": {
     "averageOrderValue": {
@@ -454,7 +345,7 @@
     "totalSales": {
       "title": "Total sales",
       "period": {
-        "title": "Period",
+        "title": "period",
         "options": {
           "day": "Today",
           "week": "This week",
@@ -469,7 +360,7 @@
     "ordersOverTime": {
       "title": "Orders over time",
       "period": {
-        "title": "Period",
+        "title": "period",
         "options": {
           "day": "Today",
           "week": "This week",
@@ -488,27 +379,134 @@
   "ordersModule": {
     "title": "Orders",
     "table": {
-      "tabs":{
-        "all":"All"
+      "tabs": {
+        "all": "All"
       },
       "filters": {
-        "initialDate": "Initial date",
-        "finalDate": "Final date",
-        "search": "Search by customer or order reference..."
+        "initialDate": "Start date",
+        "finalDate": "End date",
+        "search": "Search by customer or order number..."
       },
       "columns": {
-        "order":"Order",
-        "customer":"Customer",
-        "date":"Date",
-        "quality":"Quantity",
-        "total":"Total",
-        "status":"Status"
+        "order": "Order",
+        "customer": "Customer",
+        "date": "Date",
+        "quality": "Quantity",
+        "total": "Total",
+        "status": "Status"
       },
-      "searchFilter": "Search by customer or order reference..."
+      "searchFilter": "Search by customer or ID..."
     },
     "list": {
-      "title": "Orders List"
+      "title": "Orders list"
+    }
+  },
+  "subAccountListView": {
+    "heading": "Manage Sub Accounts",
+    "breadcrumbs": {
+      "home": "Home",
+      "subaccount": "Sub Account",
+      "list": "List"
+    },
+    "actions": {
+      "addSubaccount": "Add Sub Account",
+      "view": "View",
+      "edit": "Edit",
+      "delete": "Delete",
+      "print": "Print",
+      "export": "Export",
+      "import": "Import"
+    },
+    "table": {
+      "columns": {
+        "user": "User",
+        "permissions": "Permissions",
+        "status": "Status",
+        "createdAt": "Created since",
+        "actions": "Actions"
+      },
+      "noData": "No data found",
+      "loading": "Loading..."
+    },
+    "filters": {
+      "all": "All",
+      "permissions": "Permissions"
+    },
+    "status": {
+      "ACTIVE": "Active",
+      "INACTIVE": "Inactive"
+    },
+    "updateSubAccount": {
+      "info": "The sub account is awaiting confirmation",
+      "title": "Update Sub Account",
+      "status": "Status",
+      "firstname": "First name",
+      "lastname": "Last name",
+      "email": "Email",
+      "permissions": "Permissions",
+      "btnUpdate": "Update",
+      "btnSave": "Save changes",
+      "btnCancel": "Cancel",
+      "successMessage": "Sub account updated successfully!",
+      "errorMessage": "Could not update the sub account. Please try again."
+    },
+    "createSubAccount": {
+      "info": "The sub account is awaiting confirmation",
+      "title": "Create Sub Account",
+      "status": "Status",
+      "firstname": "First name",
+      "lastname": "Last name",
+      "email": "Email",
+      "permissions": "Permissions",
+      "btnUpdate": "Update",
+      "btnCreate": "Create",
+      "btnCancel": "Cancel",
+      "successMessage": "Sub account created successfully!",
+      "errorMessage": "Could not create the sub account!"
+    },
+    "deleteSubAccount": {
+      "title": "Delete sub account",
+      "content": "Are you sure you want to delete this sub account?",
+      "confirmButton": "Delete",
+      "successMessage": "Sub account deleted successfully.",
+      "errorMessage": "Could not delete the sub account. Please try again."
+    },
+    "unknownPermissions": "Unknown permissions",
+    "searchPlaceholder": "Search by name or email..."
+  },
+  "validation": {
+    "firstnameRequired": "First name is required!",
+    "lastnameRequired": "Last name is required!",
+    "emailRequired": "Email is required!",
+    "emailInvalid": "Email must be valid!",
+    "permissionsRequired": "Each permission is required!",
+    "permissionsNonEmpty": "At least one permission is required!",
+    "statusRequired": "Status is required!"
+  },
+  "subAccountDetailsView": {
+    "breadcrumbs": {
+      "heading": "Sub Account Details",
+      "home": "Home",
+      "subaccount": "Sub Account",
+      "details": "Details"
+    },
+    "accountInfo": {
+      "id": "Id",
+      "title": "Account information",
+      "status": "Status",
+      "permissionsAssigned": "Assigned permissions",
+      "firstName": "First name",
+      "lastName": "Last name",
+      "createdAt": "Created at",
+      "email": "Email"
+    },
+    "actions": {
+      "addSubaccount": "Add Sub Account",
+      "edit": "Edit",
+      "delete": "Delete",
+      "update": "Update",
+      "suspendAccount": "Suspend Account",
+      "deleteAccount": "Delete Account"
     }
   }
-
 }

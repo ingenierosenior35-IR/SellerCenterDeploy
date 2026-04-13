@@ -20,7 +20,6 @@ import { ConfirmDialog } from 'src/components/custom-dialog';
 import { CsvErrorsAlert } from './csv-errors-alert';
 
 const CSV_ACCEPT_ATTR = '.csv,.xml,.xls';
-// const AVAILABLE_FORMAT_TYPES = ['image/jpeg', 'image/png', 'image/jpg'];
 
 export const ProductUploadDialog = ({ open, onClose }: { open: boolean; onClose: () => void }) => {
   const {
@@ -34,6 +33,7 @@ export const ProductUploadDialog = ({ open, onClose }: { open: boolean; onClose:
     csvInvalid,
     csvErrors,
     onPickCsv,
+    handleCsvFiles,
     onDropCsv,
     clearAll,
     disabledUpload,

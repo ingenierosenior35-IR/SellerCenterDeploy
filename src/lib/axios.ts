@@ -6,6 +6,8 @@ import { CONFIG } from 'src/global-config';
 
 // ----------------------------------------------------------------------
 
+// TODO ayn: remove this file.
+
 const axiosInstance = axios.create({
   baseURL: CONFIG.serverUrl,
   headers: {

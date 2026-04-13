@@ -14,7 +14,7 @@ import { HomeContent } from 'src/layouts/home';
 
 import { CustomBreadcrumbs } from 'src/components/custom-breadcrumbs';
 
-import { CommonTable } from 'src/sections/common/common-table';
+import { CommonTable } from 'src/sections/common';
 
 
 

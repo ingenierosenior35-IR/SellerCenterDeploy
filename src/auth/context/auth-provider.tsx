@@ -6,6 +6,7 @@ import type { AuthStatus } from './auth-context';
 import { useQueryClient } from '@tanstack/react-query';
 import { useMemo, useEffect, useCallback } from 'react';
 
+import { CONFIG } from 'src/global-config';
 import { useLogin } from 'src/actions/auth/use-login';
 import { useLogout } from 'src/actions/auth/use-logout';
 import { useCurrentUser } from 'src/actions/auth/use-current-user';
@@ -63,11 +64,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
   useEffect(() => {
     if (authStatus !== 'authenticated') return undefined;
 
-    const tokenExpirationTime = parseInt(
-      process.env.NEXT_PUBLIC_TOKEN_EXPIRATION_TIME || '30',
-      10
-    );
-    const refreshTime = (tokenExpirationTime) * 60 * 1000;
+    const refreshTime = CONFIG.auth.tokenExpirationTime * 60 * 1000;
 
     const timeoutId = setTimeout(async () => {
       await updateTokenMutation.mutateAsync();

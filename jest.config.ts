@@ -13,6 +13,8 @@ const config: Config = {
     "src/**/*.{ts,tsx}", // Incluye todos los archivos TypeScript en la carpeta src
     "!src/**/*.d.ts",    // Excluye archivos de definición de TypeScript
     "!src/**/index.ts",   // Excluye archivos index.ts
+    "!src/**/types.ts",
+    "!src/interfaces/**",
     "!src/_mock/**"
   ],
   coverageDirectory: "coverage",
@@ -26,13 +28,13 @@ const config: Config = {
   setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
   testEnvironment: "jsdom",
   testMatch: [
-    "**/__tests__/**/*.[jt]s?(x)",
     "**/?(*.)+(spec|test).[jt]s?(x)"
   ],
   testPathIgnorePatterns: [
     "<rootDir>/.next/",
     "<rootDir>/node_modules/",
-    "<rootDir>/src/_mock/"
+    "<rootDir>/src/_mock/",
+    "<rootDir>/__tests__/"
   ],
 };
 

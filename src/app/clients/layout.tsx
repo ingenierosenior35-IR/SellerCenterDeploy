@@ -1,5 +1,5 @@
 import { CONFIG } from 'src/global-config';
-import { HomeLayout } from 'src/layouts/home/layout';
+import { HomeLayout } from 'src/layouts/home';
 
 import { AuthGuard } from 'src/auth/guard';
 

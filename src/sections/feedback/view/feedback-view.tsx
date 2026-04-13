@@ -29,7 +29,8 @@ import { HomeContent } from 'src/layouts/home';
 import { Iconify } from 'src/components/iconify';
 import { CustomBreadcrumbs } from 'src/components/custom-breadcrumbs';
 
-import { CommonTable } from '../../common/common-table';
+import { CommonTable } from 'src/sections/common';
+
 
 export default function FeedbackView() {
   const { reviewsList, tableHead, handleFilterClick } = useFeedbackList();
@@ -76,9 +77,9 @@ export default function FeedbackView() {
         </TableCell>
         <TableCell align="left">
           <Box sx={{ display: 'flex', flexDirection: 'row' }}>
-            {Array.from({ length: Number(review.price) }).map((_, priceStarIndex) => (
+            {Array.from({ length: Number(review.price) }).map((_, inx) => (
               <img
-                key={priceStarIndex}
+                key={inx}
                 src="/assets/icons/common/ic-star.svg"
                 alt="star"
                 width={16}
@@ -90,9 +91,9 @@ export default function FeedbackView() {
         </TableCell>
         <TableCell align="left">
           <Box sx={{ display: 'flex', flexDirection: 'row' }}>
-            {Array.from({ length: Number(review.quality) }).map((_, qualityStarIndex) => (
+            {Array.from({ length: Number(review.quality) }).map((_, starIndex) => (
               <img
-                key={qualityStarIndex}
+                key={starIndex}
                 src="/assets/icons/common/ic-star.svg"
                 alt="star"
                 width={16}
@@ -116,6 +117,7 @@ export default function FeedbackView() {
         links={[{ name: 'Home', href: paths.home.root }, { name: translate('feedbackModule.title') }]}
         sx={{ mb: { xs: 3, md: 5 } }}
       />
+      {/* <CustomTable /> */}
       <CommonTable
         tableHeadCell={tableHead}
         contentTable={reviewsList}

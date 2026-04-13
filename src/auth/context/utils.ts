@@ -4,6 +4,7 @@ import { jwtDecode } from 'jwt-decode';
 
 import { CUSTOMER_ID, CUSTOMER_KEY, EXPIRATION_TIME, ACCESS_TOKEN_STORAGE_KEY } from './constant';
 
+
 // ----------------------------------------------------------------------
 
 export function validateSession() {
@@ -43,7 +44,8 @@ export function setSession(accessToken: string | null) {
   }
 }
 
-export function setCustomerStorage(customer: ICustomer | null) {
+
+export async function setCustomerStorage(customer: ICustomer | null) {
   try {
     if (customer) {
       localStorage.setItem(CUSTOMER_KEY, JSON.stringify(customer));

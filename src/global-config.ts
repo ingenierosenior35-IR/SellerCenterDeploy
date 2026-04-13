@@ -14,6 +14,7 @@ export type ConfigValue = {
     method: 'jwt' | 'amplify' | 'firebase' | 'supabase' | 'auth0';
     skip: boolean;
     redirectPath: string;
+    tokenExpirationTime: number;
   };
   firebase: {
     appId: string;
@@ -45,6 +46,7 @@ export const CONFIG: ConfigValue = {
     method: 'jwt',
     skip: false,
     redirectPath: paths.home.root,
+    tokenExpirationTime: parseInt(process.env.NEXT_PUBLIC_TOKEN_EXPIRATION_TIME ?? '30'), // en minutos
   },
   /**
    * Firebase
