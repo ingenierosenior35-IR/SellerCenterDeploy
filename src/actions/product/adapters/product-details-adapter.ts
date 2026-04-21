@@ -16,7 +16,6 @@ export function productDetailsAdapter(
   data: ProductDetailsResponseInterface | GraphQLErrorResponseInterface | undefined
 ): ProductDetailsUIInterface | null {
   if (!data || !('sellerProducts' in data) || !data.sellerProducts?.items?.length) {
-    console.warn('No found product details');
     return null;
   }
 

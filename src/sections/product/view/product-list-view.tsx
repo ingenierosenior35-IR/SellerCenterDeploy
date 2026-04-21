@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import type { GridColDef } from '@mui/x-data-grid';
 import type { LangCode } from 'src/locales/langs/i18n';
@@ -13,7 +13,7 @@ import { esES } from '@mui/x-data-grid/locales';
 import { DataGrid, gridClasses } from '@mui/x-data-grid';
 
 import { paths } from 'src/routes/paths';
-import { RouterLink } from 'src/routes/components';
+import { useRouter } from 'src/routes/hooks';
 
 import { HomeContent } from 'src/layouts/home';
 import { useTranslate } from 'src/locales/langs/i18n';
@@ -28,6 +28,7 @@ import { useToolbarSettings, CustomGridActionsCellItem } from 'src/components/cu
 
 import { PRODUCT_STOCK_OPTIONS } from 'src/sections/product/constants/product-constants';
 
+import { ProductTypeSelectorDialog } from '../components/product-type-selector-dialog';
 import {
   RenderCellSku,
   RenderCellStock,
@@ -36,6 +37,7 @@ import {
 } from '../components/product-table-row';
 
 export function ProductListView() {
+  const router = useRouter();
   const { translate } = useTranslate();
 
   const legnuageStored = localStorage.getItem('i18n_lang') as LangCode | null;
@@ -59,6 +61,8 @@ export function ProductListView() {
 
   const [tableData, setTableData] = useState<ProductListInterface[]>([]);
 
+   const [openTypeSelector, setOpenTypeSelector] = useState(false);
+
   useEffect(() => {
     setTableData(products);
     if (totalCount !== totalCounts && totalCount > 0) {
@@ -70,6 +74,19 @@ export function ProductListView() {
     setTableData((prev) => prev.filter((row) => row.id !== id));
     toast.success('Delete success!');
   }, []);
+
+  const handleSelectProductType = useCallback(
+    (type: 'simple' | 'configurable') => {
+      setOpenTypeSelector(false);
+      if (type === 'simple') {
+        router.push(paths.product.create);
+      }
+      if (type === 'configurable') {
+        router.push(paths.product.createConfigurable);
+      }
+    },
+    [router]
+  );
 
   const columns = useGetColumns({ onDeleteRow: handleDeleteRow, translate });
 
@@ -84,10 +101,9 @@ export function ProductListView() {
         ]}
         action={
           <Button
-            component={RouterLink}
-            href={paths.product.root}
             variant="contained"
             startIcon={<Iconify icon="mingcute:add-line" />}
+            onClick={() => setOpenTypeSelector(true)}
           >
             {translate('addProduct')}
           </Button>
@@ -137,6 +153,12 @@ export function ProductListView() {
           />
         )}
       </Card>
+
+      <ProductTypeSelectorDialog
+        open={openTypeSelector}
+        onClose={() => setOpenTypeSelector(false)}
+        onSelect={handleSelectProductType}
+      />
     </HomeContent>
   );
 }

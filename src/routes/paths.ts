@@ -47,6 +47,8 @@ export const paths = {
   },
   product: {
     root: ROOTS.PRODUCT,
+    create: `${ROOTS.PRODUCT}/create`,
+    createConfigurable: `${ROOTS.PRODUCT}/create/configurable`,
     load: `${ROOTS.PRODUCT}/load`,
     uploadList: `${ROOTS.PRODUCT}/load/list`,
     details: (id: number | string) => `${ROOTS.PRODUCT}/${id}`,

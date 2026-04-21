@@ -182,7 +182,6 @@ export const useProductUploadDialog = ({ onClose }: { onClose: () => void }) => 
         });
       }
     } catch (err: { message?: string } | any) {
-      console.error('[ProductUploadDialog] upload error', err);
       toast.error(err?.message || 'Error en la carga');
       setResult({
         ok: false,

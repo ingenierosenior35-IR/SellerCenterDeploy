@@ -69,27 +69,27 @@ export function ProfileConfiguration({  customer }: ProfileConfigurationProps) {
   const schemaUser = useMemo(() => UserSchema(translate), [translate]);
 
   const currentUser: FormValues = useMemo(() => {
-    const firstName = (user?.firstName ?? user?.firstname ?? '').trim();
-    const lastName = (user?.lastName ?? user?.lastname ?? '').trim();
+    const firstName = (user?.firstname ?? '').trim();
+    const lastName = (user?.lastname ?? '').trim();
 
-    const addr = user?.address ?? null;
+    const addr = user?.addresses?.[0] ?? null;
 
-    const countryCode = addr?.countryCode ?? addr?.countryId ?? null;
-    const street = addr?.street || ''; // string ya normalizada en el AuthProvider
-    const stateName = addr?.region?.name || addr?.region?.code || '';
+    const countryCode = null;
+    const street = addr?.street?.join(', ') || '';
+    const stateName = addr?.region?.region_code || '';
 
     return {
       displayName: [firstName, lastName].filter(Boolean).join(' ') || user?.email || '',
       email: user?.email || '',
       photoURL: null,
-      identificationType: user?.identificationType || '',
-      identificationNumber: user?.identificationNumber || '',
+      identificationType: user?.identificationType?.[0]?.code || '',
+      identificationNumber: user?.identificationNumber?.[0]?.value || '',
       phoneNumber: addr?.telephone || '',
       country: countryCode,
       address: street,
       state: stateName,
       city: addr?.city || '',
-      zipCode: addr?.postcode || '',
+      zipCode: '',
       about: '',
       isPublic: false,
     };
