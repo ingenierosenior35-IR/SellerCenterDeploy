@@ -1,10 +1,9 @@
 import type { Customer } from 'src/interfaces/customer/customer.interface';
 
 import * as z from 'zod';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm, useFormContext, useWatch } from 'react-hook-form';
-import { isValidPhoneNumber } from 'react-phone-number-input/input';
 
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -121,14 +120,13 @@ export function ProfileConfiguration({ customer }: ProfileConfigurationProps) {
   const {
     regions,
     isLoading: isLoadingRegions,
-    isError: isErrorRegions,
   } = useGetRegions(customer.addresss?.country_code || undefined);
 
   const [regionId, setRegionId] = useState<number>(
     customer.addresss?.region?.region_id ? Number(customer.addresss.region.region_id) : 0
   );
 
-  const { cities, isLoading: isLoadingCities, isError: isErrorCities } = useGetCities(regionId);
+  const { cities, isLoading: isLoadingCities } = useGetCities(regionId);
 
   const handleChangeState = (event: React.SyntheticEvent<Element, Event>, value: any) => {
     if (value == null) {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { renderHook, waitFor } from '@testing-library/react';
+import { waitFor, renderHook } from '@testing-library/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import { useGetSubAccounts } from './use-get-subaccounts';
