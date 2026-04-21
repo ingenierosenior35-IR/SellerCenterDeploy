@@ -17,7 +17,6 @@ export function productListAdapter(
     !('sellerProducts' in data) ||
     !data?.sellerProducts?.items
   ) {
-      console.warn("No found products");
       return [];
   }
 

@@ -1,4 +1,4 @@
-import type { IDateValue } from './common';
+import type { IDateValue } from '../common';
 
 // ----------------------------------------------------------------------
 

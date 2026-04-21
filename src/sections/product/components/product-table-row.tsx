@@ -1,5 +1,5 @@
 import type { GridCellParams } from '@mui/x-data-grid';
-import type { ProductListInterface } from 'src/interfaces/seller-product.interface';
+import type { ProductListInterface } from 'src/interfaces/product/seller-product.interface';
 
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';

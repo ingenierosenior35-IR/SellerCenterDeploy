@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import type { GridColDef } from '@mui/x-data-grid';
 import type { ProductListInterface } from 'src/interfaces';
@@ -11,7 +11,7 @@ import { useTheme } from '@mui/material/styles';
 import { DataGrid, gridClasses } from '@mui/x-data-grid';
 
 import { paths } from 'src/routes/paths';
-import { RouterLink } from 'src/routes/components';
+import { useRouter } from 'src/routes/hooks';
 
 import { HomeContent } from 'src/layouts/home';
 import { useTranslate } from 'src/locales/langs/i18n';
@@ -26,6 +26,7 @@ import { useToolbarSettings, CustomGridActionsCellItem } from 'src/components/cu
 
 import { PRODUCT_STOCK_OPTIONS } from 'src/sections/product/constants/product-constants';
 
+import { ProductTypeSelectorDialog } from '../components/product-type-selector-dialog';
 import {
   RenderCellSku,
   RenderCellStock,
@@ -36,10 +37,12 @@ import {
 // ----------------------------------------------------------------------
 
 export function ProductListView() {
+  const router = useRouter();
   const { translate } = useTranslate();
   const toolbarOptions = useToolbarSettings();
   const { products, isLoading, isError } = useGetProducts();
   const [tableData, setTableData] = useState<ProductListInterface[]>(products);
+  const [openTypeSelector, setOpenTypeSelector] = useState(false);
 
   useEffect(() => {
     setTableData(products);
@@ -50,12 +53,25 @@ export function ProductListView() {
     toast.success('Delete success!');
   }, []);
 
+  const handleSelectProductType = useCallback(
+    (type: 'simple' | 'configurable') => {
+      setOpenTypeSelector(false);
+      if (type === 'simple') {
+        router.push(paths.product.create);
+      }
+      if (type === 'configurable') {
+        router.push(paths.product.createConfigurable);
+      }
+    },
+    [router]
+  );
+
   const columns = useGetColumns({ onDeleteRow: handleDeleteRow, translate });
 
   return (
     <HomeContent sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
       <CustomBreadcrumbs
-        heading= {translate('sidebarMenu.myProducts.title')}
+        heading={translate('sidebarMenu.myProducts.title')}
         links={[
           { name: translate('sidebarMenu.home.title'), href: paths.home.root },
           { name: translate('sidebarMenu.myProducts.title'), href: paths.product.root },
@@ -63,10 +79,9 @@ export function ProductListView() {
         ]}
         action={
           <Button
-            component={RouterLink}
-            href={paths.product.root}
             variant="contained"
             startIcon={<Iconify icon="mingcute:add-line" />}
+            onClick={() => setOpenTypeSelector(true)}
           >
             {translate('addProduct')}
           </Button>
@@ -111,6 +126,12 @@ export function ProductListView() {
           )
         }
       </Card>
+
+      <ProductTypeSelectorDialog
+        open={openTypeSelector}
+        onClose={() => setOpenTypeSelector(false)}
+        onSelect={handleSelectProductType}
+      />
     </HomeContent>
   );
 }

@@ -69,11 +69,11 @@
         "list": "List"
       }
     },
-    "clients": {
-      "title": "Clients"
-    },
     "feedback": {
       "title": "Feedback"
+    },
+    "clients": {
+      "title": "Clients"
     }
   },
   "settings": {
@@ -225,11 +225,11 @@
           "title": "Select rating to filter",
           "label": "Rating",
           "options": {
-            "5": "5 stars",
-            "4": "4 stars",
-            "3": "3 stars",
+            "1": "1 star",
             "2": "2 stars",
-            "1": "1 star"
+            "3": "3 stars",
+            "4": "4 stars",
+            "5": "5 stars"
           }
         }
       }
@@ -251,6 +251,111 @@
     "DENIED": "Denied",
     "PROCESSED_AND_CLOSED": "Processed and Closed",
     "CLOSED": "Closed"
+  },
+  "productList": {
+    "heading": "Product List",
+    "breadcrumbHome": "Home",
+    "breadcrumbProduct": "Product",
+    "breadcrumbList": "List",
+    "addProduct": "Add product"
+  },
+  "productTypeSelector": {
+    "title": "Select product type",
+    "subtitle": "Choose the type of product you want to create.",
+    "simpleTitle": "Simple Product",
+    "simpleDescription": "A single product without variations of size, color, etc.",
+    "configurableTitle": "Configurable Product",
+    "configurableDescription": "A product with variations such as size, color, etc.",
+    "comingSoon": "Coming soon"
+  },
+  "productCreate": {
+    "heading": "Create simple product",
+    "breadcrumbCreate": "Create",
+    "basicInfo": "Product information",
+    "productName": "Product name *",
+    "sku": "SKU *",
+    "category": "Category *",
+    "loadingCategories": "Loading categories...",
+    "selectCategory": "Select a category",
+    "selectedCategories": "Selected categories",
+    "price": "Price *",
+    "weight": "Weight (kg) *",
+    "shortDescription": "Short description *",
+    "descriptionSection": "Full product description",
+    "fullDescription": "Full description *",
+    "descriptionPlaceholder": "Write the product description...",
+    "imagesSection": "Images",
+    "stockSection": "Product stock",
+    "stock": "Stock *",
+    "savePublish": "Save & Publish",
+    "successMessage": "Product created successfully!",
+    "errorMessage": "Error creating product",
+    "missingFieldsError": "Missing required fields: name, SKU or category",
+    "skuDuplicateError": "The entered SKU is already registered. Please use a different SKU.",
+    "loadingMessage": "Creating simple product, please wait...",
+    "validation": {
+      "nameRequired": "Product name is required",
+      "skuRequired": "SKU is required",
+      "categoryRequired": "Category is required",
+      "pricePositive": "Price must be greater than 0",
+      "weightPositive": "Weight must be greater than 0",
+      "stockMin": "Stock cannot be negative",
+      "shortDescRequired": "Short description is required",
+      "descRequired": "Description is required"
+    }
+  },
+  "configurableCreate": {
+    "heading": "Create configurable product",
+    "breadcrumbCreate": "Create configurable",
+    "infoBannerTitle": "Configurable product",
+    "infoBannerDescription": "Fill in the base product information and then configure the variations (size, color, etc.).",
+    "baseProductTitle": "Base product information",
+    "variationsSectionTitle": "Variations configuration",
+    "attributesHint": "Select the attributes that will define your product variations (e.g.: Color, Size).",
+    "selectAttributeLabel": "Select attribute",
+    "selectAttributePlaceholder": "Search attribute...",
+    "noAttributeFound": "No attributes found",
+    "selectValuesHint": "Select values",
+    "bulkModeTab": "Bulk configuration",
+    "manualModeTab": "Manual configuration",
+    "bulkConfigTitle": "Bulk variation configuration",
+    "bulkConfigHint": "Configure images, prices and quantities in bulk for all variations.",
+    "imagesSingleLabel": "Same images for all",
+    "imagesByAttrLabel": "Images by attribute",
+    "imagesSkipLabel": "Skip",
+    "selectGroupAttr": "Group by attribute",
+    "priceSingleLabel": "Same price for all",
+    "priceByAttrLabel": "Price by attribute",
+    "priceSkipLabel": "Skip",
+    "qtySingleLabel": "Same quantity for all",
+    "qtyByAttrLabel": "Quantity by attribute",
+    "qtySkipLabel": "Skip",
+    "generateCombinations": "Generate combinations",
+    "variationsTitle": "Variations",
+    "summaryHint": "Review and adjust each variation before publishing.",
+    "childName": "Name",
+    "deleteVariation": "Delete variation",
+    "addVariationRow": "Add variation",
+    "duplicateWarning": "There are variations with duplicate combinations. Fix them before continuing.",
+    "savePublish": "Save & Publish",
+    "successMessage": "Configurable product created successfully!",
+    "errorMessage": "Error creating configurable product",
+    "missingFieldsError": "Missing required fields: name, SKU or category",
+    "skuDuplicateError": "One or more SKUs are already registered. Please verify the SKUs of the variations.",
+    "noVariationsError": "You must add at least one variation",
+    "invalidChildError": "Some variations have incomplete or invalid data",
+    "duplicateSkuError": "There are variations with duplicate SKU. Each variation must have a unique SKU.",
+    "loadingMessage": "Creating configurable product, please wait..."
+  },
+  "productImageUpload": {
+    "main": "Main",
+    "addImages": "Add images",
+    "images": "images",
+    "mainImageHint": "The first image will be the main image.",
+    "formatHint": "(Allowed formats: PNG, JPG, JPEG. Maximum size per image: {maxSizeKB}KB. Maximum {maxImages} images.)",
+    "errorFormat": "Format not allowed. Only PNG, JPG or JPEG images are accepted.",
+    "errorSize": "One or more images exceed the maximum size of {maxSizeKB}KB.",
+    "errorMaxImages": "You can only upload a maximum of {maxImages} images."
   },
   "clientsModule": {
     "title": "Clients",
@@ -316,7 +421,7 @@
     "sellerIdentification": "Seller Identification",
     "bankCertificate": "Bank Certificate",
     "allowedFormats": "Allowed formats: PDF",
-    "acceptTyC":"I accept the terms and conditions. I authorize the processing of my personal data for the purposes described in the",
+    "acceptTyC": "I accept the terms and conditions. I authorize the processing of my personal data for the purposes described in the",
     "privacyPolicy": "Privacy Policy of Inter Rapidísimo"
   },
   "breadcrumbs": {

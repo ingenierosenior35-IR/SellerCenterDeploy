@@ -225,11 +225,11 @@
           "title": "Filtrar por calificación",
           "label": "Calificación",
           "options": {
-            "5": "5 estrellas",
-            "4": "4 estrellas",
-            "3": "3 estrellas",
+            "1": "1 estrella",
             "2": "2 estrellas",
-            "1": "1 estrella"
+            "3": "3 estrellas",
+            "4": "4 estrellas",
+            "5": "5 estrellas"
           }
         }
       }
@@ -251,6 +251,111 @@
     "DENIED": "Denegado",
     "PROCESSED_AND_CLOSED": "Procesado y cerrado",
     "CLOSED": "Cerrado"
+  },
+  "productList": {
+    "heading": "Lista de Productos",
+    "breadcrumbHome": "Inicio",
+    "breadcrumbProduct": "Producto",
+    "breadcrumbList": "Lista",
+    "addProduct": "Agregar producto"
+  },
+  "productTypeSelector": {
+    "title": "Seleccionar tipo de producto",
+    "subtitle": "Elige el tipo de producto que deseas crear.",
+    "simpleTitle": "Producto Simple",
+    "simpleDescription": "Un producto único sin variaciones de talla, color, etc.",
+    "configurableTitle": "Producto Configurable",
+    "configurableDescription": "Un producto con variaciones como talla, color, etc.",
+    "comingSoon": "Próximamente"
+  },
+  "productCreate": {
+    "heading": "Crear producto simple",
+    "breadcrumbCreate": "Crear",
+    "basicInfo": "Información del producto",
+    "productName": "Nombre del producto *",
+    "sku": "SKU *",
+    "category": "Categoría *",
+    "loadingCategories": "Cargando categorías...",
+    "selectCategory": "Selecciona una categoría",
+    "selectedCategories": "Categorías seleccionadas",
+    "price": "Precio *",
+    "weight": "Peso (kg) *",
+    "shortDescription": "Descripción corta *",
+    "descriptionSection": "Descripción completa del producto",
+    "fullDescription": "Descripción completa *",
+    "descriptionPlaceholder": "Escribe la descripción del producto...",
+    "imagesSection": "Imágenes",
+    "stockSection": "Stock del producto",
+    "stock": "Stock *",
+    "savePublish": "Guardar y Publicar",
+    "successMessage": "¡Producto creado exitosamente!",
+    "errorMessage": "Error al crear el producto",
+    "missingFieldsError": "Faltan campos obligatorios: nombre, SKU o categoría",
+    "skuDuplicateError": "El SKU ingresado ya se encuentra registrado. Por favor utiliza un SKU diferente.",
+    "loadingMessage": "Creando producto simple, espere por favor...",
+    "validation": {
+      "nameRequired": "El nombre del producto es obligatorio",
+      "skuRequired": "El SKU es obligatorio",
+      "categoryRequired": "La categoría es obligatoria",
+      "pricePositive": "El precio debe ser mayor a 0",
+      "weightPositive": "El peso debe ser mayor a 0",
+      "stockMin": "El stock no puede ser negativo",
+      "shortDescRequired": "La descripción corta es obligatoria",
+      "descRequired": "La descripción es obligatoria"
+    }
+  },
+  "configurableCreate": {
+    "heading": "Crear producto configurable",
+    "breadcrumbCreate": "Crear configurable",
+    "infoBannerTitle": "Producto configurable",
+    "infoBannerDescription": "Completa la información del producto base y luego configura las variaciones (talla, color, etc.).",
+    "baseProductTitle": "Información base del producto",
+    "variationsSectionTitle": "Configuración de variaciones",
+    "attributesHint": "Selecciona los atributos que definirán las variaciones de tu producto (ej: Color, Talla).",
+    "selectAttributeLabel": "Seleccionar atributo",
+    "selectAttributePlaceholder": "Buscar atributo...",
+    "noAttributeFound": "No se encontraron atributos",
+    "selectValuesHint": "Selecciona los valores",
+    "bulkModeTab": "Configuración masiva",
+    "manualModeTab": "Configuración manual",
+    "bulkConfigTitle": "Configuración masiva de variaciones",
+    "bulkConfigHint": "Configura imágenes, precios y cantidades de manera masiva para todas las variaciones.",
+    "imagesSingleLabel": "Mismas imágenes para todas",
+    "imagesByAttrLabel": "Imágenes por atributo",
+    "imagesSkipLabel": "Omitir",
+    "selectGroupAttr": "Agrupar por atributo",
+    "priceSingleLabel": "Mismo precio para todas",
+    "priceByAttrLabel": "Precio por atributo",
+    "priceSkipLabel": "Omitir",
+    "qtySingleLabel": "Misma cantidad para todas",
+    "qtyByAttrLabel": "Cantidad por atributo",
+    "qtySkipLabel": "Omitir",
+    "generateCombinations": "Generar combinaciones",
+    "variationsTitle": "Variaciones",
+    "summaryHint": "Revisa y ajusta cada variación antes de publicar.",
+    "childName": "Nombre",
+    "deleteVariation": "Eliminar variación",
+    "addVariationRow": "Agregar variación",
+    "duplicateWarning": "Existen variaciones con combinaciones duplicadas. Corrígelas antes de continuar.",
+    "savePublish": "Guardar y Publicar",
+    "successMessage": "¡Producto configurable creado exitosamente!",
+    "errorMessage": "Error al crear el producto configurable",
+    "missingFieldsError": "Faltan campos obligatorios: nombre, SKU o categoría",
+    "skuDuplicateError": "Uno o más SKU ingresados ya se encuentran registrados. Por favor verifica los SKU de las variaciones.",
+    "noVariationsError": "Debes agregar al menos una variación",
+    "invalidChildError": "Hay variaciones con datos incompletos o inválidos",
+    "duplicateSkuError": "Hay variaciones con SKU duplicado. Cada variación debe tener un SKU único.",
+    "loadingMessage": "Creando producto configurable, espere por favor..."
+  },
+  "productImageUpload": {
+    "main": "Principal",
+    "addImages": "Agregar imágenes",
+    "images": "imágenes",
+    "mainImageHint": "La primera imagen será la imagen principal.",
+    "formatHint": "(Formatos permitidos: PNG, JPG, JPEG. Tamaño máximo por imagen: {maxSizeKB}KB. Máximo {maxImages} imágenes.)",
+    "errorFormat": "Formato no permitido. Solo se aceptan imágenes PNG, JPG o JPEG.",
+    "errorSize": "Una o más imágenes superan el tamaño máximo de {maxSizeKB}KB.",
+    "errorMaxImages": "Solo puedes subir un máximo de {maxImages} imágenes."
   },
   "clientsModule": {
     "title": "Clientes",
@@ -511,4 +616,3 @@
     }
   }
 }
-

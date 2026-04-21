@@ -5,7 +5,6 @@ export function validateMassUploadAdapter(
   data: ValidateMassUploadResponseInterface | GraphQLErrorResponseInterface | undefined
 ): ValidateMassUploadResponseInterface {
   if (!data || !('validateMassUpload' in data)) {
-    console.warn('Load invalid');
     return {
       validateMassUpload: {
         extension: '',
