@@ -2,6 +2,7 @@ import type { Customer } from 'src/interfaces/customer/customer.interface';
 
 import Box from '@mui/material/Box';
 import Avatar from '@mui/material/Avatar';
+import Tooltip from '@mui/material/Tooltip';
 import { alpha } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
@@ -18,10 +19,11 @@ import { SvgColor } from '../svg-color';
 
 interface Props {
   user: Customer;
+  isNavMini?: boolean;
   onSettingsClick?: () => void;
 }
 
-export const StoreIdentity = ({ user, onSettingsClick }: Props) => {
+export const StoreIdentity = ({ user, isNavMini = false, onSettingsClick }: Props) => {
   const router = useRouter();
 
   const handleSettingsClick = () => {
@@ -49,6 +51,16 @@ export const StoreIdentity = ({ user, onSettingsClick }: Props) => {
       </Avatar>
     </AnimateBorder>
   );
+
+  if (isNavMini) {
+    return (
+      <Tooltip title={`${user.firstname} ${user.lastname}`} placement="right" arrow>
+        <Box onClick={handleSettingsClick} sx={{ cursor: 'pointer' }}>
+          {renderAvatar()}
+        </Box>
+      </Tooltip>
+    );
+  }
 
   return (
     <Box

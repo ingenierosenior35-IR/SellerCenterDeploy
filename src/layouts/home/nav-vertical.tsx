@@ -46,12 +46,10 @@ export function NavVertical({
   ...other
 }: NavVerticalProps) {
 
-  //go to account page
   const router = useRouter();
   const handleAccount = () => {
     router.push(paths.account.root);
   };
-  //go to account page
 
   const { user } = useAuthContext();
 
@@ -94,6 +92,10 @@ export function NavVertical({
         </Box>
       )}
 
+      <Box sx={{ py: 2, display: 'flex', justifyContent: 'center' }}>
+        {user && <StoreIdentity user={user} isNavMini onSettingsClick={handleAccount} />}
+      </Box>
+
       <NavSectionMini
         data={data}
         cssVars={cssVars}
@@ -108,7 +110,7 @@ export function NavVertical({
         ]}
       />
 
-      {slots?.bottomArea}
+      {slots?.bottomArea ?? <SignOutButton isNavMini />}
     </>
   );
 
