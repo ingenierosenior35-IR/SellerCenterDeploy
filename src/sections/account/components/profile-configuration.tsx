@@ -146,21 +146,13 @@ export function ProfileConfiguration({ customer }: ProfileConfigurationProps) {
       (attr) => attr.value === customer?.identificationType?.value
     );
     return {
-      displayName: [firstName, lastName].filter(Boolean).join(' ') || user?.email || '',
-      email: user?.email || '',
-      photoURL: null,
-      identificationType: user?.identificationType || '',
-      identificationNumber: user?.identificationNumber || '',
-      phoneNumber: addr?.telephone || '',
-      country: countryCode,
-      address: street,
-      state: stateName,
-      city: addr?.city || '',
-      zipCode: addr?.postcode || '',
-      about: '',
-      isPublic: false,
+      firstName: (customer?.firstname || '').trim(),
+      lastName: (customer?.lastname || '').trim(),
+      email: customer?.email || '',
+      identificationType: option || { label: '', value: '' },
+      identificationNumber: customer?.identificationNumber?.value || '',
     };
-  }, [user]);
+  }, [customer, attributes]);
 
   const methodPersonalData = useForm({
     mode: 'all',
