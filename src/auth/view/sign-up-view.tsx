@@ -17,7 +17,6 @@ import { useRouter } from 'src/routes/hooks';
 import { Iconify } from 'src/components/iconify';
 import { Form, Field, schemaUtils } from 'src/components/hook-form';
 
-import { signUp } from '../context';
 import { getErrorMessage } from '../utils';
 import { FormHead } from '../components/form-head';
 import { SignUpTerms } from '../components/sign-up-terms';
@@ -64,12 +63,12 @@ export function SignUpView() {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      await signUp({
-        email: data.email,
-        password: data.password,
-        firstName: data.firstName,
-        lastName: data.lastName,
-      });
+      // await signUp({
+      //   email: data.email,
+      //   password: data.password,
+      //   firstName: data.firstName,
+      //   lastName: data.lastName,
+      // });
 
       router.refresh();
     } catch (error) {
