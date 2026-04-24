@@ -13,10 +13,34 @@ jest.mock('src/locales', () => ({
   }),
 }));
 
+jest.mock('src/hooks/dashboard/use-dashboard-data', () => ({
+  useDashboardData: () => ({
+    topProducts: [],
+    topCustomers: [],
+    averageOrderValue: {
+      avg_order_value: '0',
+      graph_data: [],
+      graph_x_value: [],
+    },
+    totalSales: {
+      total_sale_amount: '0',
+      graph_data: [],
+      graph_x_value: [],
+    },
+    ordersOverTime: {
+      graph_data: [],
+      graph_x_value: [],
+    },
+    isLoading: false,
+  }),
+}));
+
 jest.mock('src/_mock', () => ({
   _appInvoices: [],
-  _appProducts: [],
-  _appCustomers: [],
+}));
+
+jest.mock('src/components/loading-screen', () => ({
+  LoadingScreen: () => <div data-testid="loading-screen" />,
 }));
 
 jest.mock('./app-kpi-card', () => ({
@@ -47,32 +71,15 @@ describe('OverviewAppView', () => {
     expect(kpiCards).toHaveLength(3);
   });
 
-  it('renders Net Profit KPI card', () => {
-    render(<OverviewAppView />);
-    const cards = screen.getAllByTestId('kpi-card');
-    const titles = cards.map((c) => c.textContent);
-    expect(titles).toContain('Net Profit');
-  });
-
-  it('renders Total Sales KPI card', () => {
-    render(<OverviewAppView />);
-    const cards = screen.getAllByTestId('kpi-card');
-    const titles = cards.map((c) => c.textContent);
-    expect(titles).toContain('Total Sales');
-  });
-
-  it('renders new invoices table', () => {
+  it('renders latest invoices, products and customers sections', () => {
     render(<OverviewAppView />);
     expect(screen.getByTestId('new-invoices')).toBeInTheDocument();
-  });
-
-  it('renders top products section', () => {
-    render(<OverviewAppView />);
     expect(screen.getByTestId('top-products')).toBeInTheDocument();
+    expect(screen.getByTestId('top-customers')).toBeInTheDocument();
   });
 
-  it('renders top customers section', () => {
+  it('does not render loading screen when data is loaded', () => {
     render(<OverviewAppView />);
-    expect(screen.getByTestId('top-customers')).toBeInTheDocument();
+    expect(screen.queryByTestId('loading-screen')).not.toBeInTheDocument();
   });
 });

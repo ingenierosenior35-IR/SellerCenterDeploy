@@ -25,6 +25,10 @@ jest.mock('src/components/iconify', () => ({
   Iconify: ({ icon }: any) => <span data-testid={`icon-${icon}`} />,
 }));
 
+jest.mock('src/components', () => ({
+  FieldsetLegend: ({ children }: any) => <legend>{children}</legend>,
+}));
+
 describe('ProductLoadView', () => {
   it('renders home content', () => {
     render(<ProductLoadView />);

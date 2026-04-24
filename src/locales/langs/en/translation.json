@@ -49,6 +49,9 @@
     "home": {
       "title": "Home"
     },
+    "dashboard": {
+      "title": "Dashboard"
+    },
     "account": {
       "title": "Account"
     },
@@ -434,6 +437,41 @@
     }
   },
   "dashboardModule": {
+    "summary": {
+      "subtitle": "General status of your operation",
+      "upcoming": "Coming soon",
+      "detail": "Click to view details",
+      "filters": {
+        "initialDate": "Start date",
+        "finalDate": "End date",
+        "apply": "Apply",
+        "invalidRange": "End date must be greater than or equal to start date."
+      },
+      "metrics": {
+        "grossSales": {
+          "title": "Gross sales",
+          "subtitle": "Last 7 days"
+        },
+        "orders": {
+          "title": "Orders",
+          "subtitle": "General summary"
+        },
+        "products": {
+          "title": "Products",
+          "subtitle": "General summary"
+        }
+      },
+      "cards": {
+        "sales": "Sales",
+        "grossSales": "Gross sales",
+        "netSales": "Net sales",
+        "orders": "Orders",
+        "products": "Products",
+        "messages": "Messages/Inquiries",
+        "logistics": "Logistics",
+        "reputation": "Reputation"
+      }
+    },
     "averageOrderValue": {
       "title": "Average order value",
       "period": {

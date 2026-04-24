@@ -3,8 +3,7 @@ import { render, screen, waitFor, fireEvent } from '@testing-library/react';
 import { SignInView } from './sign-in-view';
 
 const mockRefresh = jest.fn();
-const mockMutateAsync = jest.fn();
-const mockCheckUserSession = jest.fn();
+const mockLogin = jest.fn();
 const mockGetErrorMessage = jest.fn();
 
 jest.mock('@hookform/resolvers/zod', () => ({
@@ -29,11 +28,7 @@ jest.mock('src/routes/hooks', () => ({
 }));
 
 jest.mock('src/routes/components', () => ({
-  RouterLink: ({ children }: { children: React.ReactNode }) => <a>{children}</a>,
-}));
-
-jest.mock('src/actions/auth/useLogin', () => ({
-  useLogin: () => ({ mutateAsync: mockMutateAsync }),
+  RouterLink: ({ href = '#', children }: { href?: string; children: React.ReactNode }) => <a href={href}>{children}</a>,
 }));
 
 jest.mock('src/locales/langs/i18n', () => ({
@@ -66,7 +61,7 @@ jest.mock('src/components/hook-form', () => ({
 }));
 
 jest.mock('../hooks', () => ({
-  useAuthContext: () => ({ checkUserSession: mockCheckUserSession }),
+  useAuthContext: () => ({ login: mockLogin }),
 }));
 
 jest.mock('../utils', () => ({
@@ -80,8 +75,7 @@ jest.mock('../components/form-head', () => ({
 describe('SignInView', () => {
   beforeEach(() => {
     mockRefresh.mockClear();
-    mockMutateAsync.mockReset();
-    mockCheckUserSession.mockReset();
+    mockLogin.mockReset();
     mockGetErrorMessage.mockReset();
   });
 
@@ -95,25 +89,23 @@ describe('SignInView', () => {
   });
 
   it('submits login and refreshes session on success', async () => {
-    mockMutateAsync.mockResolvedValue(undefined);
-    mockCheckUserSession.mockResolvedValue(undefined);
+    mockLogin.mockResolvedValue(undefined);
 
     render(<SignInView />);
 
     fireEvent.submit(screen.getByRole('button', { name: 'loginPage.signIn' }).closest('form')!);
 
     await waitFor(() => {
-      expect(mockMutateAsync).toHaveBeenCalledWith({ email: 'john@doe.com', password: 'secret123' });
+      expect(mockLogin).toHaveBeenCalledWith({ email: 'john@doe.com', password: 'secret123' });
     });
 
-    expect(mockCheckUserSession).toHaveBeenCalledTimes(1);
     expect(mockRefresh).toHaveBeenCalledTimes(1);
   });
 
   it('shows mapped error message when submit fails', async () => {
     const consoleError = jest.spyOn(console, 'error').mockImplementation(() => {});
 
-    mockMutateAsync.mockRejectedValue(new Error('backend failed'));
+    mockLogin.mockRejectedValue(new Error('backend failed'));
     mockGetErrorMessage.mockReturnValue('Mensaje controlado');
 
     render(<SignInView />);

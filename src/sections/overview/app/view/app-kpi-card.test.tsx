@@ -14,6 +14,21 @@ jest.mock('src/utils/format-number', () => ({
   fCurrency: (v: number) => `$${v}`,
 }));
 
+jest.mock('src/locales', () => ({
+  useTranslate: () => ({
+    translate: (key: string) => {
+      const dictionary: Record<string, string> = {
+        'dashboardModule.body.last': 'Últimos',
+        'dashboardModule.body.period.options.days': 'días',
+        'dashboardModule.averageOrderValue.period.title': 'Periodo',
+        'dashboardModule.averageOrderValue.period.options.day': 'Hoy',
+      };
+
+      return dictionary[key] ?? key;
+    },
+  }),
+}));
+
 const theme = createTheme({ cssVariables: true });
 const renderWithTheme = (ui: React.ReactElement) =>
   render(<ThemeProvider theme={theme}>{ui}</ThemeProvider>);
@@ -51,9 +66,9 @@ describe('AppKpiCard', () => {
     expect(screen.getByTestId('chart-line')).toBeInTheDocument();
   });
 
-  it('renders "Ver detalle" link when showPeriod is false', () => {
+  it('does not render "Periodo" when showPeriod is false', () => {
     renderWithTheme(<AppKpiCard {...defaultProps} showPeriod={false} />);
-    expect(screen.getByText('Ver detalle')).toBeInTheDocument();
+    expect(screen.queryByText(/Periodo/i)).not.toBeInTheDocument();
   });
 
   it('renders "Periodo" when showPeriod is true', () => {

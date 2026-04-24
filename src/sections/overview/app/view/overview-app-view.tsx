@@ -21,6 +21,7 @@ import { AppTopCustomers } from '../app-top-customers';
 export function OverviewAppView() {
   const { translate } = useTranslate();
   const { topProducts, topCustomers, averageOrderValue, totalSales, ordersOverTime, isLoading} = useDashboardData();
+
   return (
     <HomeContent maxWidth="xl">
       <Grid
@@ -40,7 +41,7 @@ export function OverviewAppView() {
           <AppKpiCard
         title={translate('dashboardModule.averageOrderValue.title')}
         total={Number(averageOrderValue.avg_order_value)}
-        series={averageOrderValue.graph_data.map((price) => Number(price))}
+        series={averageOrderValue.graph_data.map(Number)}
         showPeriod
         transparentCard
         monthlyData={averageOrderValue.graph_x_value}
@@ -50,7 +51,7 @@ export function OverviewAppView() {
           <AppKpiCard
         title={translate('dashboardModule.totalSales.title')}
         total={Number(totalSales.total_sale_amount)}
-        series={totalSales.graph_data.map((price) => Number(price))}
+        series={totalSales.graph_data.map(Number)}
         monthlyData={totalSales.graph_x_value}
           />
         </Grid>
@@ -58,7 +59,7 @@ export function OverviewAppView() {
           <AppKpiCard
         title={translate('dashboardModule.ordersOverTime.title')}
         total={Number(ordersOverTime.graph_data.reduce((sum, value) => sum + Number(value), 0))}
-        series={ordersOverTime.graph_data.map((value) => Number(value))}
+        series={ordersOverTime.graph_data.map(Number)}
         monthlyData={ordersOverTime.graph_x_value}
         typeTotal='text'
           />

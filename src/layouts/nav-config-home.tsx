@@ -19,6 +19,7 @@ const ICONS = {
   order: icon('ic-shopping-cart'),
   product: icon('ic-product'),
   home: icon('ic-dashboard'),
+  dashboard: icon('ic-analytics'),
   return: icon('ic-refresh'),
   feedback: icon('ic-feedback'),
 };
@@ -36,6 +37,11 @@ export const useNavData = (): NavSectionProps['data'] => {
             title: translate('sidebarMenu.home.title'),
             path: paths.home.root,
             icon: ICONS.home,
+          },
+          {
+            title: translate('sidebarMenu.dashboard.title'),
+            path: paths.dashboard.root,
+            icon: ICONS.dashboard,
           },
         ],
       },

@@ -49,6 +49,9 @@
     "home": {
       "title": "Inicio"
     },
+    "dashboard": {
+      "title": "Tablero"
+    },
     "account": {
       "title": "Cuenta"
     },
@@ -435,6 +438,41 @@
     }
   },
   "dashboardModule": {
+    "summary": {
+      "subtitle": "Estado general de tu operación",
+      "upcoming": "Próximamente",
+      "detail": "Haz clic para ver detalle",
+      "filters": {
+        "initialDate": "Fecha inicial",
+        "finalDate": "Fecha final",
+        "apply": "Aplicar",
+        "invalidRange": "La fecha final debe ser mayor o igual a la fecha inicial."
+      },
+      "metrics": {
+        "grossSales": {
+          "title": "Ventas brutas",
+          "subtitle": "Últimos 7 días"
+        },
+        "orders": {
+          "title": "Pedidos",
+          "subtitle": "Resumen general"
+        },
+        "products": {
+          "title": "Productos",
+          "subtitle": "Resumen general"
+        }
+      },
+      "cards": {
+        "sales": "Ventas",
+        "grossSales": "Ventas brutas",
+        "netSales": "Ventas netas",
+        "orders": "Pedidos",
+        "products": "Productos",
+        "messages": "Mensajes/Consultas",
+        "logistics": "Logística",
+        "reputation": "Reputación"
+      }
+    },
     "averageOrderValue": {
       "title": "Promedio valor órdenes",
       "period": {

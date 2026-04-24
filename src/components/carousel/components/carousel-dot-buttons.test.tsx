@@ -7,40 +7,33 @@ jest.mock('src/theme/create-classes', () => ({
 // DotItem uses theme.vars.palette.shared which requires full theme augmentation.
 // Mock the styled DotItem to avoid the dependency on custom palette extensions.
 jest.mock('./carousel-dot-buttons', () => {
-  const { mergeClasses } = jest.requireActual('minimal-shared/utils');
-  return {
-    CarouselDotButtons: (() => {
-      const carouselClasses = {
-      dots: { root: 'dots-root', item: 'dots-item', itemSelected: 'dots-item-selected' },
-    };
-    function CarouselDotButtons({
-    sx,
-    gap,
-    slotProps,
-    className,
-    onClickDot,
-    scrollSnaps,
-    selectedIndex,
-    variant = 'circular',
-    ...other
-  }: any) {
+  const mergeClasses = (...args: any[]) => args.flat().filter(Boolean).join(' ');
+  const carouselClasses = {
+    dots: { root: 'dots-root', item: 'dots-item', itemSelected: 'dots-item-selected' },
+  };
+
+  function MockCarouselDotButtons({ className, onClickDot, scrollSnaps, variant = 'circular', ...other }: any) {
+    const snaps = scrollSnaps || [];
+
     return (
       <ul className={mergeClasses([carouselClasses.dots.root, className])} {...other}>
-        {(scrollSnaps || []).map((_: any, index: number) => (
-          <li key={index}>
-            <button
-              aria-label={`dot-${index}`}
-              onClick={() => onClickDot(index)}
-            >
-              {variant === 'number' && index + 1}
-            </button>
-          </li>
-        ))}
+        {snaps.map((snap: number, index: number) => {
+          const key = `${index}-${snap}`;
+
+          return (
+            <li key={key}>
+              <button aria-label={`dot-${index}`} onClick={() => onClickDot(index)}>
+                {variant === 'number' && index + 1}
+              </button>
+            </li>
+          );
+        })}
       </ul>
     );
   }
-    return CarouselDotButtons;
-  })(),
+
+  return {
+    CarouselDotButtons: MockCarouselDotButtons,
   };
 });
 

@@ -6,6 +6,14 @@ jest.mock('minimal-shared/utils', () => ({
   varAlpha: () => 'rgba(0,0,0,0.1)',
 }));
 
+jest.mock('./rhf-phone-input', () => ({
+  RHFPhoneInput: Symbol('RHFPhoneInput'),
+}));
+
+jest.mock('./rhf-country-select', () => ({
+  RHFCountrySelect: Symbol('RHFCountrySelect'),
+}));
+
 import { Field } from './fields';
 import { RHFSlider } from './rhf-slider';
 import { RHFRating } from './rhf-rating';

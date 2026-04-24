@@ -34,4 +34,11 @@ describe('nav-config-dashboard', () => {
     expect(items.some((i: any) => i.path.includes('/return'))).toBe(true);
     expect(items.some((i: any) => i.path.includes('/feedback'))).toBe(true);
   });
+
+  it('includes dashboard menu item', () => {
+    const { result } = renderHook(() => useNavData());
+    const rootItems = result.current[0].items;
+
+    expect(rootItems.some((i: any) => i.path === '/dashboard')).toBe(true);
+  });
 });

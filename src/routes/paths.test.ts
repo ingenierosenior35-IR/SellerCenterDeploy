@@ -13,6 +13,10 @@ describe('paths', () => {
     expect(paths.home.root).toBe('/home');
   });
 
+  it('has dashboard root path', () => {
+    expect(paths.dashboard.root).toBe('/dashboard');
+  });
+
   it('has product root path', () => {
     expect(paths.product.root).toBe('/product');
   });
