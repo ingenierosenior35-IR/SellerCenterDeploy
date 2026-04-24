@@ -12,11 +12,6 @@ jest.mock('src/sections/international-sellers/components/Footer', () => ({
   default: () => <footer data-testid="footer-section" />,
 }));
 
-jest.mock('src/sections/international-sellers/components/CTAForm', () => ({
-  __esModule: true,
-  default: () => <div data-testid="cta-form-section" />,
-}));
-
 jest.mock('src/sections/international-sellers/components/Features', () => ({
   __esModule: true,
   default: () => <div data-testid="features-section" />,
@@ -43,16 +38,20 @@ jest.mock('src/sections/international-sellers/components/StartSelling', () => ({
 }));
 
 describe('LandingView', () => {
-  it('renders all eight landing sections', () => {
+  it('renders all seven landing sections', () => {
     render(<LandingView />);
     expect(screen.getByTestId('hero-section')).toBeInTheDocument();
     expect(screen.getByTestId('footer-section')).toBeInTheDocument();
-    expect(screen.getByTestId('cta-form-section')).toBeInTheDocument();
     expect(screen.getByTestId('features-section')).toBeInTheDocument();
     expect(screen.getByTestId('why-cards-section')).toBeInTheDocument();
     expect(screen.getByTestId('how-it-works-section')).toBeInTheDocument();
     expect(screen.getByTestId('middle-panel-section')).toBeInTheDocument();
     expect(screen.getByTestId('start-selling-section')).toBeInTheDocument();
+  });
+
+  it('does not render a standalone CTAForm section', () => {
+    render(<LandingView />);
+    expect(screen.queryByTestId('cta-form-section')).not.toBeInTheDocument();
   });
 
   it('has a root element in the document', () => {

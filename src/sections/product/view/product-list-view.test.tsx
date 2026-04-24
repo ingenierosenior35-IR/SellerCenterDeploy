@@ -18,6 +18,19 @@ jest.mock('src/routes/paths', () => ({
   },
 }));
 
+jest.mock('src/routes/hooks', () => ({
+  useRouter: () => ({
+    push: jest.fn(),
+    replace: jest.fn(),
+    back: jest.fn(),
+    forward: jest.fn(),
+    refresh: jest.fn(),
+    prefetch: jest.fn(),
+  }),
+  usePathname: () => '/product',
+  useSearchParams: () => new URLSearchParams(),
+}));
+
 jest.mock('src/routes/components', () => ({
   RouterLink: ({ href, children }: any) => <a href={href}>{children}</a>,
 }));
@@ -118,6 +131,6 @@ describe('ProductListView', () => {
 
   it('renders add product button', () => {
     renderWithTheme(<ProductListView />);
-    expect(screen.getByRole('link', { name: /addProduct/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /addProduct/i })).toBeInTheDocument();
   });
 });

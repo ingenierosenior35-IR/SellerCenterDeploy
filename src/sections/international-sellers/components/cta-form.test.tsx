@@ -4,7 +4,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 import { toast } from 'src/components/snackbar';
 
-import CTAForm from './CTAForm';
+import CTAForm from './ctaform';
 
 jest.mock('src/components/snackbar', () => ({
   toast: { success: jest.fn(), error: jest.fn() },
@@ -57,7 +57,6 @@ describe('CTAForm', () => {
 
   it('calls toast.error when consent not accepted', async () => {
     renderWithTheme(<CTAForm />);
-    // Fill required fields
     const inputs = screen.getAllByRole('textbox');
     fireEvent.change(inputs[0], { target: { value: 'John' } });
     fireEvent.change(inputs[1], { target: { value: 'john@test.com' } });
@@ -66,6 +65,52 @@ describe('CTAForm', () => {
     fireEvent.click(submitBtn);
     await waitFor(() => {
       expect(toast.error).toHaveBeenCalled();
+    });
+  });
+
+  it('calls toast.success and resets form on successful fetch', async () => {
+    (global.fetch as jest.Mock).mockResolvedValueOnce({ ok: true });
+
+    renderWithTheme(<CTAForm />);
+    const inputs = screen.getAllByRole('textbox');
+    fireEvent.change(inputs[0], { target: { value: 'John' } });
+    fireEvent.change(inputs[1], { target: { value: 'john@test.com' } });
+    fireEvent.change(inputs[2], { target: { value: '3001234567' } });
+    fireEvent.click(screen.getByRole('checkbox'));
+
+    fireEvent.click(screen.getByRole('button', { name: /send|submit|enviar|contact|solicitar/i }));
+    await waitFor(() => {
+      expect(toast.success).toHaveBeenCalled();
+    });
+  });
+
+  it('calls toast.error when fetch returns not ok', async () => {
+    (global.fetch as jest.Mock).mockResolvedValueOnce({ ok: false });
+
+    renderWithTheme(<CTAForm />);
+    const inputs = screen.getAllByRole('textbox');
+    fireEvent.change(inputs[0], { target: { value: 'John' } });
+    fireEvent.change(inputs[1], { target: { value: 'john@test.com' } });
+    fireEvent.click(screen.getByRole('checkbox'));
+
+    fireEvent.click(screen.getByRole('button', { name: /send|submit|enviar|contact|solicitar/i }));
+    await waitFor(() => {
+      expect(toast.error).toHaveBeenCalledWith('Error en envío');
+    });
+  });
+
+  it('calls fallback toast.error when fetch throws without a message', async () => {
+    (global.fetch as jest.Mock).mockRejectedValueOnce(null);
+
+    renderWithTheme(<CTAForm />);
+    const inputs = screen.getAllByRole('textbox');
+    fireEvent.change(inputs[0], { target: { value: 'John' } });
+    fireEvent.change(inputs[1], { target: { value: 'john@test.com' } });
+    fireEvent.click(screen.getByRole('checkbox'));
+
+    fireEvent.click(screen.getByRole('button', { name: /send|submit|enviar|contact|solicitar/i }));
+    await waitFor(() => {
+      expect(toast.error).toHaveBeenCalledWith('No se pudo enviar');
     });
   });
 });

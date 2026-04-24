@@ -47,11 +47,11 @@ export default function Footer() {
             sx={{ display: 'flex', justifyContent: 'center' }}
           >
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1, maxWidth: 320, textAlign: { xs: 'center', md: 'left' } }}>
-              <Typography sx={{ fontWeight: 700, color: 'grey.100' }}>Address</Typography>
+              <Typography sx={{ fontWeight: 700, color: 'grey.100' }}>Dirección</Typography>
               <Typography sx={{ color: 'grey.400', fontSize: 14, lineHeight: 1.6 }}>
-                Address: 27 Division St,
+                Address: 26 Division St,
                 <br />
-                NY 10002 USA
+                NY 10002 Colombia
               </Typography>
             </Box>
           </Grid>
@@ -65,11 +65,11 @@ export default function Footer() {
             sx={{ display: 'flex', justifyContent: 'center' }}
           >
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1, maxWidth: 320, textAlign: { xs: 'center', md: 'left' } }}>
-              <Typography sx={{ fontWeight: 700, color: 'grey.100' }}>Contact us</Typography>
+              <Typography sx={{ fontWeight: 700, color: 'grey.100' }}>Contactanos</Typography>
               <Typography sx={{ color: 'grey.400', fontSize: 14, lineHeight: 1.6 }}>
-                +1 80 7845 78963
+                +57 310 784 5 789
                 <br />
-                info@example.com
+                info@mitimit.com
               </Typography>
             </Box>
           </Grid>

@@ -2,13 +2,13 @@ import { render, screen } from '@testing-library/react';
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-import Footer from './Footer';
-import Benefits from './Benefits';
-import Features from './Features';
-import WhyCards from './WhyCards';
-import HowItWorks from './HowItWorks';
-import MiddlePanel from './MiddlePanel';
-import StartSelling from './StartSelling';
+import Footer from './footer';
+import Benefits from './benefits';
+import Features from './features';
+import WhyCards from './why-cards';
+import HowItWorks from './how-it-works';
+import MiddlePanel from './middle-panel';
+import StartSelling from './start-selling';
 
 jest.mock('src/components/iconify', () => ({
   Iconify: ({ icon }: any) => <span data-testid={`icon-${icon}`} />,
@@ -66,14 +66,29 @@ describe('HowItWorks', () => {
 });
 
 describe('Footer', () => {
-  it('renders address section', () => {
+  it('renders address section with Spanish label', () => {
     renderWithTheme(<Footer />);
-    expect(screen.getByText('Address')).toBeInTheDocument();
+    expect(screen.getByText('Dirección')).toBeInTheDocument();
   });
 
-  it('renders contact us section', () => {
+  it('renders contact section with Spanish label', () => {
     renderWithTheme(<Footer />);
-    expect(screen.getByText('Contact us')).toBeInTheDocument();
+    expect(screen.getByText('Contactanos')).toBeInTheDocument();
+  });
+
+  it('renders Colombian address', () => {
+    renderWithTheme(<Footer />);
+    expect(screen.getByText(/NY 10002 Colombia/i)).toBeInTheDocument();
+  });
+
+  it('renders Colombian phone number', () => {
+    renderWithTheme(<Footer />);
+    expect(screen.getByText(/\+57 310 784 5 789/i)).toBeInTheDocument();
+  });
+
+  it('renders correct email', () => {
+    renderWithTheme(<Footer />);
+    expect(screen.getByText(/info@mitimit\.com/i)).toBeInTheDocument();
   });
 
   it('renders terms link', () => {

@@ -14,13 +14,13 @@ const STEPS = [
   {
     titleLine1: 'We sell in',
     titleLine2: 'Colombia',
-    desc: 'MITI‑MITI® publishes your catalog and manages pricing, promotions and customer interactions.',
+    desc: 'MITI‑MITI® publishes your catalog and manages sales, pricing, and customer interactions in the Colombian market.',
     img: '/assets/images/international/how-2.png',
   },
   {
     titleLine1: 'We deliver to',
     titleLine2: 'the customer',
-    desc: 'We handle customs clearance, international transport and last‑mile delivery in Colombia.',
+    desc: 'We handle customs clearance in Colombia, international transportation, last‑mile delivery, and after‑sales support.',
     img: '/assets/images/international/how-3.png',
   },
 ];
