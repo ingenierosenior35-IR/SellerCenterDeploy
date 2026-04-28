@@ -2,15 +2,15 @@
 
 import type { ImagePreview } from '../components/product-image-upload';
 import type { SelectedMagentoAttr } from 'src/hooks/product/use-configurable-product-payload';
-import type {
-  ConfigurableChildInput,
-  MagentoConfigurableAttribute,
-} from 'src/interfaces';
+import type { MagentoConfigurableAttribute, ConfigurableChildInput as BaseConfigurableChildInput } from 'src/interfaces/product/create-product.interface';
+
+// Extiende el tipo para agregar id estable
+type ConfigurableChildInput = BaseConfigurableChildInput & { id: string };
 
 import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useRef, useState, useEffect, useCallback } from 'react';
 import { useForm, Controller, useFormContext } from 'react-hook-form';
+import { useRef, useMemo, useState, useEffect, useCallback } from 'react';
 
 import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
@@ -327,18 +327,30 @@ export function ProductCreateConfigurableView() {
   const { attributes: magentoAttributes, attributesLoading } = useAttributesList();
   const { buildPayload } = useConfigurableProductPayload();
 
+  // Auto-selección de atributo cuando solo hay uno
+  useEffect(() => {
+    if (selectedAttributes.length === 1) {
+      const code = selectedAttributes[0].attribute.code;
+      if (!imageAttr) setImageAttr(code);
+      if (!priceAttr) setPriceAttr(code);
+      if (!qtyAttr) setQtyAttr(code);
+    }
+  }, [selectedAttributes, imageAttr, priceAttr, qtyAttr]);
+
   // ===== ESQUEMA ZOD =====
-  const FormSchema = z.object({
-    name: z.string().min(1, translate('productCreate', 'validation.nameRequired')),
-    sku: z.string().min(1, translate('productCreate', 'validation.skuRequired')),
-    categoryId: z.string().min(1, translate('productCreate', 'validation.categoryRequired')),
-    price: z.coerce.number().positive(translate('productCreate', 'validation.pricePositive')),
-    weight: z.coerce.number().positive(translate('productCreate', 'validation.weightPositive')),
-    shortDescription: z
-      .string()
-      .min(1, translate('productCreate', 'validation.shortDescRequired')),
-    description: z.string().min(1, translate('productCreate', 'validation.descRequired')),
-  });
+  const FormSchema = useMemo(() =>
+    z.object({
+      name: z.string().min(1, translate('productCreate', 'validation.nameRequired')),
+      sku: z.string().min(1, translate('productCreate', 'validation.skuRequired')),
+      categoryId: z.string().min(1, translate('productCreate', 'validation.categoryRequired')),
+      price: z.coerce.number().positive(translate('productCreate', 'validation.pricePositive')),
+      weight: z.coerce.number().positive(translate('productCreate', 'validation.weightPositive')),
+      shortDescription: z
+        .string()
+        .min(1, translate('productCreate', 'validation.shortDescRequired')),
+      description: z.string().min(1, translate('productCreate', 'validation.descRequired')),
+    })
+  , [translate]);
 
   // ===== MUTATION =====
   const { mutateAsync: createConfigurable, isPending } = useCreateConfigurableProduct({
@@ -380,8 +392,8 @@ export function ProductCreateConfigurableView() {
         return child;
       })
     );
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [parentSku]);
+    
+  }, [children.length, parentSku]);
 
   // ===== SUBMIT TODO (padre + hijos) =====
   const onSubmit = handleSubmit(async (data) => {
@@ -474,6 +486,12 @@ export function ProductCreateConfigurableView() {
     [selectedAttributes]
   );
 
+  // Generador de id único estable
+  const generateChildId = (() => {
+    let counter = 0;
+    return () => `child-${Date.now()}-${counter++}`;
+  })();
+
   const handleGenerateCombinations = useCallback(() => {
     const sku = methods.getValues('sku');
     const baseName = methods.getValues('name');
@@ -512,6 +530,7 @@ export function ProductCreateConfigurableView() {
       }
 
       return {
+        id: generateChildId(),
         sku: sku ? `${sku}-${skuSuffix}` : skuSuffix,
         name: baseName ? `${baseName} ${suffix}` : suffix,
         price: childPrice,
@@ -521,12 +540,7 @@ export function ProductCreateConfigurableView() {
       };
     });
     setChildren(newChildren);
-  }, [
-    selectedAttributes, methods, getOptionLabel,
-    priceMode, bulkPrice, priceAttr, pricesByValue,
-    qtyMode, bulkQty, qtyAttr, qtiesByValue,
-    imageMode, bulkImages, imageAttr, imagesByValue,
-  ]);
+  }, [selectedAttributes, methods, getOptionLabel, priceMode, bulkPrice, priceAttr, pricesByValue, qtyMode, bulkQty, qtyAttr, qtiesByValue, imageMode, bulkImages, imageAttr, imagesByValue, generateChildId]);
 
   // ===== ACTUALIZAR HIJO =====
   const handleUpdateChild = useCallback(
@@ -554,7 +568,7 @@ export function ProductCreateConfigurableView() {
       updated[index] = {
         ...child,
         files: [...existingFiles, ...newImages.map((i) => i.file)],
-        images: [...existingImgs, ...new Array<string>(newImages.length).fill('')],
+        images: [...existingImgs, ...newImages.map((i) => i.preview)],
       };
       return updated;
     });
@@ -586,14 +600,17 @@ export function ProductCreateConfigurableView() {
     setChildren((prev) => [
       ...prev,
       {
+        id: generateChildId(),
         sku: sku ? `${sku}-${prev.length + 1}` : `var-${prev.length + 1}`,
         name: baseName || '',
         price: 0,
         stock: 0,
         attributes: {},
+        images: [],
+        files: [],
       },
     ]);
-  }, [methods]);
+  }, [methods, generateChildId]);
 
   /** Actualiza un atributo en una variación (modo manual) */
   const handleUpdateChildAttribute = useCallback(
@@ -985,10 +1002,6 @@ export function ProductCreateConfigurableView() {
                     )}
                     {(imageAttr || selectedAttributes.length === 1) && (() => {
                       const attrCode = imageAttr || selectedAttributes[0].attribute.code;
-                      if (!imageAttr && selectedAttributes.length === 1 && imageAttr !== attrCode) {
-                        // Auto-select if single attribute
-                        setTimeout(() => setImageAttr(attrCode), 0);
-                      }
                       const sa = selectedAttributes.find((s) => s.attribute.code === attrCode);
                       return sa?.selectedValues.map((valId) => {
                         const optLabel = sa.attribute.options.find((o) => o.value === valId)?.label ?? valId;
@@ -1081,9 +1094,6 @@ export function ProductCreateConfigurableView() {
                     )}
                     {(priceAttr || selectedAttributes.length === 1) && (() => {
                       const attrCode = priceAttr || selectedAttributes[0].attribute.code;
-                      if (!priceAttr && selectedAttributes.length === 1) {
-                        setTimeout(() => setPriceAttr(attrCode), 0);
-                      }
                       const sa = selectedAttributes.find((s) => s.attribute.code === attrCode);
                       return (
                         <Stack spacing={2}>
@@ -1168,9 +1178,6 @@ export function ProductCreateConfigurableView() {
                     )}
                     {(qtyAttr || selectedAttributes.length === 1) && (() => {
                       const attrCode = qtyAttr || selectedAttributes[0].attribute.code;
-                      if (!qtyAttr && selectedAttributes.length === 1) {
-                        setTimeout(() => setQtyAttr(attrCode), 0);
-                      }
                       const sa = selectedAttributes.find((s) => s.attribute.code === attrCode);
                       return (
                         <Stack spacing={2}>
@@ -1262,18 +1269,20 @@ export function ProductCreateConfigurableView() {
                     {children.map((child, idx) => {
                       const duplicate = isDuplicateRow(idx);
                       return (
-                        <tr key={idx} style={duplicate ? { backgroundColor: 'rgba(255,86,48,0.08)' } : undefined}>
+                        <tr key={child.id ?? idx} style={duplicate ? { backgroundColor: 'rgba(255,86,48,0.08)' } : undefined}>
                           {/* Imágenes inline */}
                           <td>
                             <Stack direction="row" alignItems="center" sx={{ flexWrap: 'wrap', gap: 0.5 }}>
                               {(child.files ?? []).map((file, imgIdx) => (
                                 <Box key={imgIdx} sx={{ position: 'relative', width: 40, height: 40 }}>
-                                  <Box
-                                    component="img"
-                                    src={URL.createObjectURL(file)}
-                                    alt=""
-                                    sx={{ width: 40, height: 40, objectFit: 'cover', borderRadius: 0.5, border: '1px solid', borderColor: 'divider' }}
-                                  />
+                                  {child.images?.[imgIdx] ? (
+                                    <Box
+                                      component="img"
+                                      src={child.images[imgIdx]}
+                                      alt=""
+                                      sx={{ width: 40, height: 40, objectFit: 'cover', borderRadius: 0.5, border: '1px solid', borderColor: 'divider' }}
+                                    />
+                                  ) : null}
                                   <IconButton
                                     size="small"
                                     onClick={() => handleRemoveChildImage(idx, imgIdx)}
