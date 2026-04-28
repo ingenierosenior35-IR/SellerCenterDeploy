@@ -2,37 +2,37 @@ import { render, screen } from '@testing-library/react';
 
 import { LandingView } from './landing-view';
 
-jest.mock('src/sections/international-sellers/components/Hero', () => ({
+jest.mock('src/sections/international-sellers/components/hero', () => ({
   __esModule: true,
   default: () => <div data-testid="hero-section" />,
 }));
 
-jest.mock('src/sections/international-sellers/components/Footer', () => ({
+jest.mock('src/sections/international-sellers/components/footer', () => ({
   __esModule: true,
   default: () => <footer data-testid="footer-section" />,
 }));
 
-jest.mock('src/sections/international-sellers/components/Features', () => ({
+jest.mock('src/sections/international-sellers/components/features', () => ({
   __esModule: true,
   default: () => <div data-testid="features-section" />,
 }));
 
-jest.mock('src/sections/international-sellers/components/WhyCards', () => ({
+jest.mock('src/sections/international-sellers/components/why-cards', () => ({
   __esModule: true,
   default: () => <div data-testid="why-cards-section" />,
 }));
 
-jest.mock('src/sections/international-sellers/components/HowItWorks', () => ({
+jest.mock('src/sections/international-sellers/components/how-it-works', () => ({
   __esModule: true,
   default: () => <div data-testid="how-it-works-section" />,
 }));
 
-jest.mock('src/sections/international-sellers/components/MiddlePanel', () => ({
+jest.mock('src/sections/international-sellers/components/middle-panel', () => ({
   __esModule: true,
   default: () => <div data-testid="middle-panel-section" />,
 }));
 
-jest.mock('src/sections/international-sellers/components/StartSelling', () => ({
+jest.mock('src/sections/international-sellers/components/start-selling', () => ({
   __esModule: true,
   default: () => <div data-testid="start-selling-section" />,
 }));

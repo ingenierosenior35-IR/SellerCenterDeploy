@@ -1,4 +1,4 @@
 export const environment = {
-    environment: process.env.NEXT_PUBLIC_ENV,
-    urlBackend: process.env.NEXT_PUBLIC_BACKEND_GRAPHQL_URL
+  environment: process.env.VITE_ENV,
+  urlBackend: process.env.VITE_BACKEND_GRAPHQL_URL,
 };

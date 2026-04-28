@@ -39,8 +39,8 @@ describe('CONFIG', () => {
     expect(typeof CONFIG.assetsDir).toBe('string');
   });
 
-  it('isStaticExport is a boolean', async () => {
+  it('auth tokenExpirationTime is a number', async () => {
     const { CONFIG } = await import('./global-config');
-    expect(typeof CONFIG.isStaticExport).toBe('boolean');
+    expect(typeof CONFIG.auth.tokenExpirationTime).toBe('number');
   });
 });

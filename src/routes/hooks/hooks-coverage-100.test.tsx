@@ -1,14 +1,9 @@
 import React from 'react';
-import { useRouter as useNextRouter } from 'next/navigation';
-import { render , screen, fireEvent, renderHook } from '@testing-library/react';
+import { render, screen, fireEvent, renderHook } from '@testing-library/react';
 
 const mockedStart = jest.fn();
 const mockedIsEqualPath = jest.fn();
-const mockedPush = jest.fn();
-const mockedReplace = jest.fn();
-const mockedUseParams = jest.fn();
-const mockedUsePathname = jest.fn();
-const mockedUseSearchParams = jest.fn();
+const mockedNavigate = jest.fn();
 
 jest.mock('nprogress', () => ({
   __esModule: true,
@@ -19,11 +14,11 @@ jest.mock('minimal-shared/utils', () => ({
   isEqualPath: (...args: unknown[]) => mockedIsEqualPath(...args),
 }));
 
-jest.mock('next/navigation', () => ({
-  useParams: () => mockedUseParams(),
-  usePathname: () => mockedUsePathname(),
-  useRouter: jest.fn(),
-  useSearchParams: () => mockedUseSearchParams(),
+jest.mock('react-router', () => ({
+  useNavigate: () => mockedNavigate,
+  useLocation: () => ({ pathname: '/current', search: '', hash: '', state: null, key: 'default' }),
+  useParams: () => ({ id: '1' }),
+  useSearchParams: () => [new URLSearchParams('q=hello'), jest.fn()],
 }));
 
 import { useRouter, useParams, usePathname, useSearchParams } from './index';
@@ -52,41 +47,38 @@ const HookHarness = () => {
 describe('routes hooks coverage harness', () => {
   beforeEach(() => {
     mockedStart.mockReset();
-    mockedPush.mockReset();
-    mockedReplace.mockReset();
-    mockedUseParams.mockReset();
-    mockedUsePathname.mockReset();
-    mockedUseSearchParams.mockReset();
+    mockedNavigate.mockReset();
     mockedIsEqualPath.mockReset();
     mockedIsEqualPath.mockReturnValue(false);
-    (useNextRouter as jest.Mock).mockReturnValue({
-      push: mockedPush,
-      replace: mockedReplace,
-    });
-    mockedUseParams.mockReturnValue({ id: '1' });
-    mockedUsePathname.mockReturnValue('/current');
-    mockedUseSearchParams.mockReturnValue(new URLSearchParams('q=hello'));
   });
 
-  it('covers index re-exports and starts nprogress only when path changes', () => {
+  it('renders params, pathname and searchParams from react-router', () => {
     render(<HookHarness />);
-
     expect(screen.getByTestId('params')).toHaveTextContent('"id":"1"');
     expect(screen.getByTestId('pathname')).toHaveTextContent('/current');
     expect(screen.getByTestId('search')).toHaveTextContent('hello');
+  });
 
+  it('push: starts NProgress and calls navigate when path changes', () => {
+    render(<HookHarness />);
     fireEvent.click(screen.getByRole('button', { name: 'push' }));
     expect(mockedStart).toHaveBeenCalledTimes(1);
-    expect(mockedPush).toHaveBeenCalledWith('/target', undefined);
+    expect(mockedNavigate).toHaveBeenCalledWith('/target', undefined);
+  });
 
+  it('push: does NOT start NProgress when path is equal', () => {
     mockedIsEqualPath.mockReturnValue(true);
+    render(<HookHarness />);
+    fireEvent.click(screen.getByRole('button', { name: 'push' }));
+    expect(mockedStart).not.toHaveBeenCalled();
+    expect(mockedNavigate).toHaveBeenCalledWith('/target', undefined);
+  });
+
+  it('replace: always starts NProgress and navigates with replace:true', () => {
+    render(<HookHarness />);
     fireEvent.click(screen.getByRole('button', { name: 'replace' }));
     expect(mockedStart).toHaveBeenCalledTimes(1);
-    expect(mockedReplace).toHaveBeenCalledWith('/target-replace', undefined);
-
-    mockedIsEqualPath.mockReturnValue(false);
-    fireEvent.click(screen.getByRole('button', { name: 'replace' }));
-    expect(mockedStart).toHaveBeenCalledTimes(2);
+    expect(mockedNavigate).toHaveBeenCalledWith('/target-replace', { replace: true });
   });
 
   it('keeps wrapped push/replace methods in the memoized router object', () => {
@@ -95,5 +87,9 @@ describe('routes hooks coverage harness', () => {
     rerender();
     expect(typeof first.push).toBe('function');
     expect(typeof first.replace).toBe('function');
+    expect(typeof first.back).toBe('function');
+    expect(typeof first.forward).toBe('function');
+    expect(typeof first.refresh).toBe('function');
+    expect(typeof first.prefetch).toBe('function');
   });
 });

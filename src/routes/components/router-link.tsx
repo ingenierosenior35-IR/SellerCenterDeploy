@@ -1,3 +1,3 @@
-import RouterLink from 'next/link';
+import { Link } from 'react-router';
 
-export { RouterLink };
+export { Link as RouterLink };
