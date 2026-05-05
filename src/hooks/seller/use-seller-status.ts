@@ -2,19 +2,18 @@
 
 import { useMemo } from 'react';
 
+import { useSellerProfile } from 'src/actions/auth/use-seller-profile';
 import { SELLER_STATUS, type SellerStatus } from 'src/interfaces/seller/seller-status';
-
-import { useAuthContext } from 'src/auth/hooks';
 
 // ----------------------------------------------------------------------
 
 /**
  * Hook que expone el estado de vinculación del seller actual.
  *
- * Lee `customer.sellerProfile.status` (ya mapeado por el adapter desde el
- * entero `seller_status` que devuelve el backend). Cuando el perfil aún no
- * está disponible o el código es desconocido, devuelve `PENDING` como
- * fallback para no romper módulos que deben seguir accesibles (Academy).
+ * Lee del hook `useSellerProfile` (query independiente del login). Si la
+ * query falla, está cargando, o el customer no tiene perfil de seller,
+ * devuelve `PENDING` como fallback — esto garantiza que módulos que deben
+ * ser accesibles en cualquier estado (como Academy) sigan funcionando.
  */
 export const useSellerStatus = (): {
   status: SellerStatus;
@@ -25,10 +24,9 @@ export const useSellerStatus = (): {
   isDisabled: boolean;
   isDenied: boolean;
 } => {
-  const { user } = useAuthContext();
+  const { data: profile } = useSellerProfile();
 
   return useMemo(() => {
-    const profile = user?.sellerProfile;
     const status: SellerStatus = profile?.status ?? SELLER_STATUS.PENDING;
     const statusLabel = profile?.statusLabel ?? '';
 
@@ -41,5 +39,5 @@ export const useSellerStatus = (): {
       isDisabled: status === SELLER_STATUS.DISABLED,
       isDenied: status === SELLER_STATUS.DENIED,
     };
-  }, [user?.sellerProfile]);
+  }, [profile]);
 };

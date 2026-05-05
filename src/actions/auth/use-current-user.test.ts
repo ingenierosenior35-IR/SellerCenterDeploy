@@ -27,12 +27,6 @@ const mockCustomerResponse = {
     email: 'john@example.com',
     firstname: 'John',
     lastname: 'Doe',
-    seller_profile: {
-      seller_id: 1,
-      seller_status: 1,
-      seller_status_label: 'Aprobado',
-      shop_url: 'WeShopHk',
-    },
   },
 };
 
@@ -76,13 +70,6 @@ describe('useCurrentUser', () => {
       email: 'john@example.com',
       firstname: 'John',
       lastname: 'Doe',
-      sellerProfile: {
-        sellerId: 1,
-        status: 'APPROVED',
-        statusCode: 1,
-        statusLabel: 'Aprobado',
-        shopUrl: 'WeShopHk',
-      },
     });
   });
 

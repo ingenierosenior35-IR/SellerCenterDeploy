@@ -1,15 +1,7 @@
-import type { SellerProfile } from 'src/interfaces/seller/seller-profile';
-
 export interface Customer {
   firstname: string;
   lastname: string;
   email: string;
-  /**
-   * Perfil del seller (estado de vinculación, shop URL, etc.). Opcional
-   * para usuarios que aún no son sellers o cuando el backend no devuelve
-   * el bloque `seller_profile`.
-   */
-  sellerProfile?: SellerProfile;
   identificationNumber: {
     value: string;
   };

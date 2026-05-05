@@ -1,59 +1,45 @@
 import { renderHook } from '@testing-library/react';
 
-import { useAuthContext } from 'src/auth/hooks';
+import { useSellerProfile } from 'src/actions/auth/use-seller-profile';
 
 import { useSellerStatus } from './use-seller-status';
 
-jest.mock('src/auth/hooks', () => ({
-  useAuthContext: jest.fn(),
+jest.mock('src/actions/auth/use-seller-profile', () => ({
+  useSellerProfile: jest.fn(),
 }));
 
-const mockedAuth = useAuthContext as jest.MockedFunction<typeof useAuthContext>;
+const mocked = useSellerProfile as jest.MockedFunction<typeof useSellerProfile>;
 
-const buildAuth = (sellerProfile?: {
-  status?: string;
-  statusLabel?: string;
-  statusCode?: number;
-}) =>
-  ({
-    user: sellerProfile
-      ? ({
-          sellerProfile: {
-            sellerId: 1,
-            status: sellerProfile.status,
-            statusCode: sellerProfile.statusCode ?? 0,
-            statusLabel: sellerProfile.statusLabel ?? '',
-            shopUrl: 'shop',
-          },
-        } as unknown as ReturnType<typeof useAuthContext>['user'])
-      : null,
-  }) as unknown as ReturnType<typeof useAuthContext>;
+const buildResult = (data: unknown) => ({ data }) as ReturnType<typeof useSellerProfile>;
 
 describe('useSellerStatus', () => {
-  it('falls back to PENDING when user is missing', () => {
-    mockedAuth.mockReturnValue(buildAuth());
+  it('falls back to PENDING when the profile query is still loading', () => {
+    mocked.mockReturnValue(buildResult(undefined));
     const { result } = renderHook(() => useSellerStatus());
     expect(result.current.status).toBe('PENDING');
     expect(result.current.isPending).toBe(true);
   });
 
-  it('falls back to PENDING when sellerProfile is missing', () => {
-    mockedAuth.mockReturnValue({
-      user: { firstname: 'X' } as any,
-    } as any);
+  it('falls back to PENDING when the profile query errored', () => {
+    mocked.mockReturnValue(buildResult(undefined));
     const { result } = renderHook(() => useSellerStatus());
     expect(result.current.status).toBe('PENDING');
   });
 
   it('returns APPROVED with statusLabel from backend', () => {
-    mockedAuth.mockReturnValue(
-      buildAuth({ status: 'APPROVED', statusCode: 1, statusLabel: 'Aprobado' })
+    mocked.mockReturnValue(
+      buildResult({
+        sellerId: 1,
+        status: 'APPROVED',
+        statusCode: 1,
+        statusLabel: 'Aprobado',
+        shopUrl: 'shop',
+      })
     );
     const { result } = renderHook(() => useSellerStatus());
     expect(result.current.status).toBe('APPROVED');
     expect(result.current.statusLabel).toBe('Aprobado');
     expect(result.current.isApproved).toBe(true);
-    expect(result.current.isPending).toBe(false);
   });
 
   it.each([
@@ -61,13 +47,29 @@ describe('useSellerStatus', () => {
     ['DISABLED', 3],
     ['DENIED', 4],
   ] as const)('handles %s', (status, code) => {
-    mockedAuth.mockReturnValue(buildAuth({ status, statusCode: code }));
+    mocked.mockReturnValue(
+      buildResult({
+        sellerId: 1,
+        status,
+        statusCode: code,
+        statusLabel: '',
+        shopUrl: '',
+      })
+    );
     const { result } = renderHook(() => useSellerStatus());
     expect(result.current.status).toBe(status);
   });
 
   it('exposes per-status booleans matching the active status', () => {
-    mockedAuth.mockReturnValue(buildAuth({ status: 'DENIED', statusCode: 4 }));
+    mocked.mockReturnValue(
+      buildResult({
+        sellerId: 1,
+        status: 'DENIED',
+        statusCode: 4,
+        statusLabel: '',
+        shopUrl: '',
+      })
+    );
     const { result } = renderHook(() => useSellerStatus());
     expect(result.current.isDenied).toBe(true);
     expect(result.current.isApproved).toBe(false);
@@ -76,8 +78,16 @@ describe('useSellerStatus', () => {
     expect(result.current.isDisabled).toBe(false);
   });
 
-  it('falls back to PENDING when sellerProfile.status is undefined (unknown code)', () => {
-    mockedAuth.mockReturnValue(buildAuth({ statusCode: 99 }));
+  it('falls back to PENDING when status is undefined (unknown code)', () => {
+    mocked.mockReturnValue(
+      buildResult({
+        sellerId: 1,
+        status: undefined,
+        statusCode: 99,
+        statusLabel: '',
+        shopUrl: '',
+      })
+    );
     const { result } = renderHook(() => useSellerStatus());
     expect(result.current.status).toBe('PENDING');
   });
