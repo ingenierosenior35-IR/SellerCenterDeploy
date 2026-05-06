@@ -90,6 +90,11 @@ const SignInView = lazy(() =>
   import('src/auth/view').then((m) => ({ default: m.SignInView }))
 );
 
+// Create sellers
+const CreateSellersView = lazy(() =>
+  import('src/sections/create-sellers/view').then((m) => ({ default: m.CreateSellersView }))
+);
+
 // Public
 const LandingView = lazy(() =>
   import('src/sections/international-sellers/view/landing-view').then((m) => ({
@@ -141,6 +146,54 @@ function ProtectedLayout() {
         </Suspense>
       </HomeLayout>
     </AuthGuard>
+  );
+}
+
+function CreateSellersLayout() {
+  return (
+    <GuestGuard>
+      <Box sx={{ minHeight: '100vh', display: 'flex', bgcolor: 'common.black' }}>
+        {/* Left · hero image */}
+        <Box
+          sx={{
+            display: { xs: 'none', md: 'block' },
+            flex: 1,
+            position: 'relative',
+            backgroundImage: 'url(/assets/illustrations/Banner-Create-Seller.jpg)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}
+        >
+          <Box
+            component="img"
+            src="/assets/images/logo/logo-miti.svg"
+            alt="Miti Miti"
+            sx={{
+              position: 'absolute',
+              left: { xs: 16, md: 32 },
+              bottom: { xs: 16, md: 32 },
+              width: 96,
+              height: 'auto',
+            }}
+          />
+        </Box>
+
+        {/* Right · form */}
+        <Box
+          sx={{
+            flex: 1,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            p: { xs: 3, md: 6 },
+          }}
+        >
+          <Suspense fallback={<SplashScreen />}>
+            <CreateSellersView />
+          </Suspense>
+        </Box>
+      </Box>
+    </GuestGuard>
   );
 }
 
@@ -226,6 +279,12 @@ export const routesSection = [
         element: <AuthSignInLayout />,
       },
     ],
+  },
+
+  // Create sellers (public · multi-step onboarding)
+  {
+    path: 'create-sellers',
+    element: <CreateSellersLayout />,
   },
 
   // Protected routes (AuthGuard + HomeLayout)
