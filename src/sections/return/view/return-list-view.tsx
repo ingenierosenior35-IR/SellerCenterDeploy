@@ -1,16 +1,12 @@
 'use client';
 
-import type { LabelColor } from 'src/components/label';
 import type { TableHeadCellProps } from 'src/components/table';
 import type { ItemsReturnListInterface, ReturnTableFiltersInterface } from 'src/interfaces';
 
-import { varAlpha } from 'minimal-shared/utils';
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import { useBoolean, useSetState } from 'minimal-shared/hooks';
 
-import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
-import Tabs from '@mui/material/Tabs';
 import Card from '@mui/material/Card';
 import Table from '@mui/material/Table';
 import Tooltip from '@mui/material/Tooltip';
@@ -23,7 +19,6 @@ import { HomeContent } from 'src/layouts/home';
 import { useTranslate } from 'src/locales/langs/i18n';
 import { useGetReturns } from 'src/actions/return/useGetReturns';
 
-import { Label } from 'src/components/label';
 import { Iconify } from 'src/components/iconify';
 import { Scrollbar } from 'src/components/scrollbar';
 import { CustomBreadcrumbs } from 'src/components/custom-breadcrumbs';
@@ -39,18 +34,11 @@ import {
 
 import { OrderTableRow } from '../order-table-row';
 import { OrderTableToolbar } from '../order-table-toolbar';
-import { useReturnStatus } from '../constants/return/status';
 
 // ----------------------------------------------------------------------
 
 export function ReturnListView() {
   const { translate } = useTranslate();
-  const returnStatus = useReturnStatus();
-
-  const STATUS_OPTIONS = [
-    { value: 'all', label: translate('returnStatus', 'all'), color: 'default' },
-    ...returnStatus,
-  ];
 
   const TABLE_HEAD: TableHeadCellProps[] = [
     { id: 'id', label: translate('id'), width: 150 },
@@ -60,15 +48,21 @@ export function ReturnListView() {
     { id: 'createdAt', label: translate('createdAt'), width: 150 },
     { id: 'action', label: '' },
   ];
-  const table = useTable({ defaultOrderBy: 'orderNumber' });
+
+  const table = useTable({ defaultOrderBy: 'orderNumber', defaultRowsPerPage: 10 });
 
   const confirmDialog = useBoolean();
 
-  const { returns, isLoading } = useGetReturns();
+  const { returns, isFetching } = useGetReturns({
+    currentPage: table.page + 1,
+    pageSize: table.rowsPerPage,
+  });
 
   const [tableData, setTableData] = useState<ItemsReturnListInterface[]>(
     returns?.returns?.items || []
   );
+
+  const totalCount = returns?.returns?.totalCount ?? 0;
 
   useEffect(() => {
     setTableData(returns?.returns?.items || []);
@@ -78,7 +72,7 @@ export function ReturnListView() {
     name: '',
     status: 'all',
   });
-  const { state: currentFilters, setState: updateFilters } = filters;
+  const { state: currentFilters } = filters;
 
   const dataFiltered = applyFilter({
     inputData: tableData,
@@ -86,17 +80,9 @@ export function ReturnListView() {
     filters: currentFilters,
   });
 
-  const canReset = !!currentFilters.name || currentFilters.status !== 'all';
+  const canReset = !!currentFilters.name;
 
   const notFound = (!dataFiltered.length && canReset) || !dataFiltered.length;
-
-  const handleFilterStatus = useCallback(
-    (event: React.SyntheticEvent, newValue: string) => {
-      table.onResetPage();
-      updateFilters({ status: newValue });
-    },
-    [updateFilters, table]
-  );
 
   return (
     <HomeContent>
@@ -111,40 +97,11 @@ export function ReturnListView() {
       />
 
       <Card>
-        <Tabs
-          value={currentFilters.status}
-          onChange={handleFilterStatus}
-          sx={[
-            (theme) => ({
-              px: { md: 2.5 },
-              boxShadow: `inset 0 -2px 0 0 ${varAlpha(theme.vars.palette.grey['500Channel'], 0.08)}`,
-            }),
-          ]}
-        >
-          {STATUS_OPTIONS.map((tab) => (
-            <Tab
-              key={tab.value}
-              iconPosition="end"
-              value={tab.value}
-              label={tab.label}
-              icon={
-                <Label
-                  variant={
-                    ((tab.value === 'all' || tab.value === currentFilters.status) && 'filled') ||
-                    'soft'
-                  }
-                  color={(tab.color as LabelColor) || 'default'}
-                >
-                  {(returnStatus.map((status) => status.value) as string[]).includes(tab.value)
-                    ? tableData.filter((returnItem) => returnItem.status === tab.value).length
-                    : tableData.length}
-                </Label>
-              }
-            />
-          ))}
-        </Tabs>
-
-        <OrderTableToolbar filters={filters} onResetPage={table.onResetPage} />
+        <OrderTableToolbar
+          filters={filters}
+          onResetPage={table.onResetPage}
+          totalCount={totalCount}
+        />
 
         <Box sx={{ position: 'relative' }}>
           <TableSelectedAction
@@ -178,26 +135,23 @@ export function ReturnListView() {
               />
 
               <TableBody>
-                {dataFiltered
-                  .slice(
-                    table.page * table.rowsPerPage,
-                    table.page * table.rowsPerPage + table.rowsPerPage
-                  )
-                  .map((row) => (
-                    <OrderTableRow
-                      key={row.uid}
-                      row={row}
-                      selected={table.selected.includes(row.uid.toString())}
-                      onSelectRow={() => table.onSelectRow(row.uid.toString())}
-                      detailsHref={paths.return.details(+row.uid)}
-                    />
-                  ))}
+                {isFetching ? (
+                  <TableSkeleton rowCount={table.rowsPerPage} cellCount={TABLE_HEAD.length} />
+                ) : (
+                  <>
+                    {dataFiltered.map((row) => (
+                      <OrderTableRow
+                        key={row.uid}
+                        row={row}
+                        selected={table.selected.includes(row.uid.toString())}
+                        onSelectRow={() => table.onSelectRow(row.uid.toString())}
+                        detailsHref={paths.return.details(+row.uid)}
+                      />
+                    ))}
 
-                {isLoading ? (
-                  <TableSkeleton rowCount={5} cellCount={TABLE_HEAD.length} />
-                ) : notFound ? (
-                  <TableNoData notFound={notFound} />
-                ) : null}
+                    {notFound && <TableNoData notFound={notFound} />}
+                  </>
+                )}
               </TableBody>
             </Table>
           </Scrollbar>
@@ -205,11 +159,9 @@ export function ReturnListView() {
 
         <TablePaginationCustom
           page={table.page}
-          // dense={table.dense}
-          count={dataFiltered.length}
+          count={totalCount}
           rowsPerPage={table.rowsPerPage}
           onPageChange={table.onChangePage}
-          // onChangeDense={table.onChangeDense}
           onRowsPerPageChange={table.onChangeRowsPerPage}
         />
       </Card>
@@ -226,7 +178,7 @@ type ApplyFilterProps = {
 };
 
 function applyFilter({ inputData, comparator, filters }: ApplyFilterProps) {
-  const { status, name } = filters;
+  const { name } = filters;
 
   const stabilizedThis = inputData.map((el, index) => [el, index] as const);
 
@@ -244,10 +196,6 @@ function applyFilter({ inputData, comparator, filters }: ApplyFilterProps) {
         field?.toLowerCase().includes(name.toLowerCase())
       )
     );
-  }
-
-  if (status !== 'all') {
-    inputData = inputData.filter((order) => order.status === status);
   }
 
   return inputData;

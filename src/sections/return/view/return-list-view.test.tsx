@@ -161,11 +161,6 @@ describe('ReturnListView', () => {
     expect(screen.getByTestId('breadcrumbs')).toBeInTheDocument();
   });
 
-  it('renders status filter tabs', () => {
-    renderWithTheme(<ReturnListView />);
-    expect(screen.getByRole('tab', { name: /returnStatus.all/i })).toBeInTheDocument();
-  });
-
   it('renders order table toolbar', () => {
     renderWithTheme(<ReturnListView />);
     expect(screen.getByTestId('order-table-toolbar')).toBeInTheDocument();
@@ -193,10 +188,5 @@ describe('ReturnListView', () => {
   it('renders scrollbar', () => {
     renderWithTheme(<ReturnListView />);
     expect(screen.getByTestId('scrollbar')).toBeInTheDocument();
-  });
-
-  it('renders label components for tab counts', () => {
-    renderWithTheme(<ReturnListView />);
-    expect(screen.getAllByTestId('label').length).toBeGreaterThan(0);
   });
 });

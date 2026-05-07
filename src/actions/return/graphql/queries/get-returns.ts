@@ -1,9 +1,9 @@
 import { gql } from 'graphql-request';
 
 export const GET_RETURNS_QUERY = gql`
-query getReturns {
+query getReturns($currentPage: Int!, $pageSize: Int!) {
     customer {
-        returns {
+        returns(currentPage: $currentPage, pageSize: $pageSize) {
             total_count
             items {
                 number

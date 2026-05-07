@@ -2,8 +2,10 @@
 
 import type { Theme, SxProps } from '@mui/material/styles';
 
+import { varAlpha } from 'minimal-shared/utils';
+
+import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
-import { alpha, styled } from '@mui/material/styles';
 
 import { AnimateLogoZoom } from '../animate';
 
@@ -33,7 +35,12 @@ export function SectionLoadingOverlay({ open, message, sx }: SectionLoadingOverl
         {message && (
           <Typography
             variant="subtitle1"
-            sx={{ color: 'text.secondary', textAlign: 'center', maxWidth: 320 }}
+            sx={{
+              color: 'text.primary',
+              textAlign: 'center',
+              maxWidth: 320,
+              fontWeight: 600,
+            }}
           >
             {message}
           </Typography>
@@ -52,7 +59,9 @@ const OverlayRoot = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.background.default, 0.8),
+  backgroundColor: varAlpha(theme.vars.palette.background.defaultChannel, 0.92),
+  backdropFilter: 'blur(6px)',
+  WebkitBackdropFilter: 'blur(6px)',
 }));
 
 /**
