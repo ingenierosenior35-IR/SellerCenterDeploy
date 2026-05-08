@@ -77,6 +77,62 @@
     },
     "clients": {
       "title": "Clients"
+    },
+    "academy": {
+      "title": "Academy"
+    }
+  },
+  "academyModule": {
+    "title": "Academy",
+    "list": {
+      "heading": "Available courses"
+    },
+    "levels": {
+      "beginner": "Beginner",
+      "intermediate": "Intermediate",
+      "advanced": "Advanced"
+    },
+    "card": {
+      "lessons": "lessons",
+      "minutes": "min",
+      "progress": "Progress"
+    },
+    "resume": {
+      "eyebrow": "Pick up where you left off",
+      "cta": "Resume lesson"
+    },
+    "course": {
+      "progressLabel": "Course progress",
+      "lessonsLabel": "Lessons"
+    },
+    "lesson": {
+      "completed": "Completed",
+      "notStarted": "Not started",
+      "markComplete": "Mark as complete",
+      "empty": "Select a lesson to begin"
+    },
+    "notFound": {
+      "title": "Course not found",
+      "description": "The course you are looking for does not exist or is not available yet.",
+      "backToList": "Back to Academy"
+    },
+    "courses": {
+      "gettingStarted": {
+        "title": "Getting started",
+        "description": "Take your first steps in Seller Center: initial setup and platform overview."
+      },
+      "catalogManagement": {
+        "title": "Catalog management",
+        "description": "Learn how to create, edit and manage your products efficiently."
+      },
+      "ordersFulfillment": {
+        "title": "Orders & fulfillment",
+        "description": "Master the order lifecycle and fulfillment workflows."
+      },
+      "advancedGrowth": {
+        "title": "Growth strategies",
+        "description": "Advanced content for approved sellers: campaigns, metrics and optimization."
+      }
     }
   },
   "settings": {

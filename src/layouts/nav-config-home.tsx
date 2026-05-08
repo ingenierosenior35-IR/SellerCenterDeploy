@@ -7,6 +7,7 @@ import { paths } from 'src/routes/paths';
 import { CONFIG } from 'src/global-config';
 import { useTranslate } from 'src/locales/langs/i18n';
 
+import { Iconify } from 'src/components/iconify';
 import { SvgColor } from 'src/components/svg-color';
 
 // ----------------------------------------------------------------------
@@ -22,6 +23,7 @@ const ICONS = {
   dashboard: icon('ic-analytics'),
   return: icon('ic-refresh'),
   feedback: icon('ic-feedback'),
+  academy: <Iconify icon="solar:notebook-bold-duotone" width={24} />,
 };
 
 // ----------------------------------------------------------------------
@@ -81,7 +83,14 @@ export const useNavData = (): NavSectionProps['data'] => {
             title: translate('sidebarMenu.feedback.title'),
             path: paths.feedback.root,
             icon: ICONS.feedback,
-          }
+          },
+          // Academy: visible para cualquier estado de vinculación del seller
+          // (Pendiente, Procesando, Aprobado, Desaprobado). HU325974.
+          {
+            title: translate('sidebarMenu.academy.title'),
+            path: paths.academy.root,
+            icon: ICONS.academy,
+          },
 
         ],
       },

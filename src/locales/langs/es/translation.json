@@ -77,6 +77,62 @@
     },
     "feedback": {
       "title": "Opiniones"
+    },
+    "academy": {
+      "title": "Academy"
+    }
+  },
+  "academyModule": {
+    "title": "Academy",
+    "list": {
+      "heading": "Cursos disponibles"
+    },
+    "levels": {
+      "beginner": "Principiante",
+      "intermediate": "Intermedio",
+      "advanced": "Avanzado"
+    },
+    "card": {
+      "lessons": "lecciones",
+      "minutes": "min",
+      "progress": "Progreso"
+    },
+    "resume": {
+      "eyebrow": "Continúa donde quedaste",
+      "cta": "Reanudar lección"
+    },
+    "course": {
+      "progressLabel": "Progreso del curso",
+      "lessonsLabel": "Lecciones"
+    },
+    "lesson": {
+      "completed": "Completada",
+      "notStarted": "No iniciada",
+      "markComplete": "Marcar como completada",
+      "empty": "Selecciona una lección para comenzar"
+    },
+    "notFound": {
+      "title": "Curso no encontrado",
+      "description": "El curso que buscas no existe o aún no está disponible.",
+      "backToList": "Volver a Academy"
+    },
+    "courses": {
+      "gettingStarted": {
+        "title": "Primeros pasos",
+        "description": "Da tus primeros pasos en el Seller Center: configuración inicial y panorama general."
+      },
+      "catalogManagement": {
+        "title": "Gestión de catálogo",
+        "description": "Aprende a crear, editar y gestionar tus productos de manera eficiente."
+      },
+      "ordersFulfillment": {
+        "title": "Órdenes y despachos",
+        "description": "Maneja el ciclo de vida de tus órdenes y los procesos de despacho."
+      },
+      "advancedGrowth": {
+        "title": "Estrategias de crecimiento",
+        "description": "Contenido avanzado para sellers aprobados: campañas, métricas y optimización."
+      }
     }
   },
   "tableLatestOrders": {

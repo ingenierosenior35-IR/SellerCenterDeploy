@@ -1,7 +1,5 @@
 'use client';
 
-import type { Customer } from 'src/interfaces/customer/customer.interface';
-
 import { useQuery } from '@tanstack/react-query';
 
 import { GraphQLService } from 'src/lib/graphql-client';
@@ -9,14 +7,11 @@ import { GraphQLService } from 'src/lib/graphql-client';
 import { getSession } from 'src/auth/context';
 
 import { GET_CURRENT_USER_QUERY } from './graphql/query/customer';
-import { currentUserAdapter } from './adapters/current-user.adapter';
+import { currentUserAdapter, type CurrentUserGQLResponse } from './adapters/current-user.adapter';
 
 export const AUTH_USER_KEY = ['current-user'] as const;
 
-
-export interface CurrentUserGQLResponse {
-  customer: Customer;
-}
+export type { CurrentUserGQLResponse };
 
 export function useCurrentUser() {
   const graphql = GraphQLService.getInstance();

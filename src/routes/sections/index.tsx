@@ -67,6 +67,14 @@ const FeedbackView = lazy(() =>
   import('src/sections/feedback/view/feedback-view').then((m) => ({ default: m.default }))
 );
 
+// Academy
+const AcademyListView = lazy(() =>
+  import('src/sections/academy/view').then((m) => ({ default: m.AcademyListView }))
+);
+const AcademyCourseView = lazy(() =>
+  import('src/sections/academy/view').then((m) => ({ default: m.AcademyCourseView }))
+);
+
 // Account
 const UserProfileView = lazy(() =>
   import('src/sections/account/view').then((m) => ({ default: m.UserProfileView }))
@@ -127,6 +135,18 @@ function OrderDetailsPage() {
   const { id } = useParams() as { id?: string };
   if (!id) return <Navigate to="/404" replace />;
   return <OrderDetailsClient orderId={id} />;
+}
+
+function AcademyCoursePage() {
+  const { courseId } = useParams() as { courseId?: string };
+  if (!courseId) return <Navigate to="/404" replace />;
+  return <AcademyCourseView courseId={courseId} />;
+}
+
+function AcademyLessonPage() {
+  const { courseId, lessonId } = useParams() as { courseId?: string; lessonId?: string };
+  if (!courseId || !lessonId) return <Navigate to="/404" replace />;
+  return <AcademyCourseView courseId={courseId} initialLessonId={lessonId} />;
 }
 
 // ---------------------------------------------------------------------- Layout wrappers
@@ -314,6 +334,11 @@ export const routesSection = [
 
       // Feedback
       { path: 'feedback', element: <FeedbackView /> },
+
+      // Academy — accesible en cualquier estado de vinculación del seller
+      { path: 'academy', element: <AcademyListView /> },
+      { path: 'academy/:courseId', element: <AcademyCoursePage /> },
+      { path: 'academy/:courseId/lesson/:lessonId', element: <AcademyLessonPage /> },
 
       // Account
       { path: 'account', element: <UserProfileView /> },
