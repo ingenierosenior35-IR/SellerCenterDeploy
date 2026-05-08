@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
@@ -62,6 +62,10 @@ jest.mock('src/components/iconify', () => ({
   Iconify: ({ icon }: any) => <span data-testid={`icon-${icon}`} />,
 }));
 
+jest.mock('src/components/label', () => ({
+  Label: ({ children }: any) => <span data-testid="label">{children}</span>,
+}));
+
 jest.mock('src/components/empty-content', () => ({
   EmptyContent: ({ title }: any) => <div data-testid="empty-content">{title ?? 'No data'}</div>,
 }));
@@ -75,10 +79,18 @@ jest.mock('src/components/snackbar', () => ({
 }));
 
 jest.mock('@mui/x-data-grid', () => ({
-  DataGrid: ({ rows, loading, slots }: any) => (
-    <div data-testid="data-grid">
+  DataGrid: ({ rows, loading, slots, paginationMode, rowCount }: any) => (
+    <div
+      data-testid="data-grid"
+      data-pagination-mode={paginationMode}
+      data-row-count={rowCount}
+      data-rows-length={rows?.length ?? 0}
+    >
       {loading && <div data-testid="grid-loading">Loading...</div>}
       {rows?.length === 0 && slots?.noRowsOverlay?.()}
+      {rows?.map((row: any) => (
+        <div key={row.id} data-testid="grid-row" data-row-id={row.id} />
+      ))}
     </div>
   ),
   gridClasses: { cell: 'MuiDataGrid-cell' },
@@ -94,13 +106,37 @@ jest.mock('src/actions/product/useGetProducts', () => ({
   useGetProducts: (...args: any[]) => mockUseGetProducts(...args),
 }));
 
+const makeProduct = (overrides: Partial<any> = {}) => ({
+  id: 1,
+  sku: 'SKU-001',
+  productName: 'Producto 1',
+  thumbnailUrl: '',
+  category: 'Cat',
+  finalPrice: 100,
+  discount: 0,
+  discountPercent: 0,
+  stock: 10,
+  inStock: true,
+  rating: 0,
+  isLowStock: false,
+  lowStockThreshold: 5,
+  lowStockThresholdType: 'DEFAULT',
+  ...overrides,
+});
+
 describe('ProductListView', () => {
   const theme = createTheme({ cssVariables: true });
   const renderWithTheme = (ui: React.ReactElement) =>
     render(<ThemeProvider theme={theme}>{ui}</ThemeProvider>);
 
   beforeEach(() => {
-    mockUseGetProducts.mockReturnValue({ products: [], isLoading: false, isError: false });
+    mockUseGetProducts.mockReturnValue({
+      products: [],
+      isLoading: false,
+      isError: false,
+      totalCount: 0,
+      isFetching: false,
+    });
   });
 
   it('renders home-content wrapper', () => {
@@ -132,5 +168,90 @@ describe('ProductListView', () => {
   it('renders add product button', () => {
     renderWithTheme(<ProductListView />);
     expect(screen.getByRole('button', { name: /addProduct/i })).toBeInTheDocument();
+  });
+
+  describe('stock filter tabs', () => {
+    it('renders both stock filter tabs', () => {
+      renderWithTheme(<ProductListView />);
+      expect(screen.getByRole('tab', { name: /productStockTabs\.all/ })).toBeInTheDocument();
+      expect(screen.getByRole('tab', { name: /productStockTabs\.lowStock/ })).toBeInTheDocument();
+    });
+
+    it('starts with the "all" tab selected and server pagination', () => {
+      mockUseGetProducts.mockReturnValue({
+        products: [makeProduct({ id: 1, isLowStock: true }), makeProduct({ id: 2 })],
+        isLoading: false,
+        isError: false,
+        totalCount: 2,
+        isFetching: false,
+      });
+      renderWithTheme(<ProductListView />);
+
+      const allTab = screen.getByRole('tab', { name: /productStockTabs\.all/ });
+      expect(allTab).toHaveAttribute('aria-selected', 'true');
+
+      const grid = screen.getByTestId('data-grid');
+      expect(grid).toHaveAttribute('data-pagination-mode', 'server');
+      expect(grid).toHaveAttribute('data-rows-length', '2');
+    });
+
+    it('filters rows to low stock only when "Stock crítico" tab is clicked', () => {
+      mockUseGetProducts.mockReturnValue({
+        products: [
+          makeProduct({ id: 1, isLowStock: true }),
+          makeProduct({ id: 2, isLowStock: false }),
+          makeProduct({ id: 3, isLowStock: true }),
+        ],
+        isLoading: false,
+        isError: false,
+        totalCount: 3,
+        isFetching: false,
+      });
+      renderWithTheme(<ProductListView />);
+
+      const lowStockTab = screen.getByRole('tab', { name: /productStockTabs\.lowStock/ });
+      fireEvent.click(lowStockTab);
+
+      expect(lowStockTab).toHaveAttribute('aria-selected', 'true');
+
+      const grid = screen.getByTestId('data-grid');
+      expect(grid).toHaveAttribute('data-pagination-mode', 'client');
+      expect(grid).toHaveAttribute('data-rows-length', '2');
+
+      const renderedIds = screen
+        .getAllByTestId('grid-row')
+        .map((node) => node.getAttribute('data-row-id'));
+      expect(renderedIds).toEqual(['1', '3']);
+    });
+
+    it('does not show a count badge on the "Stock crítico" tab', () => {
+      mockUseGetProducts.mockReturnValue({
+        products: [makeProduct({ id: 1, isLowStock: true })],
+        isLoading: false,
+        isError: false,
+        totalCount: 14,
+        isFetching: false,
+      });
+      renderWithTheme(<ProductListView />);
+
+      const lowStockTab = screen.getByRole('tab', { name: /productStockTabs\.lowStock/ });
+      expect(lowStockTab.querySelector('[data-testid="label"]')).toBeNull();
+    });
+
+    it('shows the totalCount on the "Todos" tab badge', () => {
+      mockUseGetProducts.mockReturnValue({
+        products: [makeProduct()],
+        isLoading: false,
+        isError: false,
+        totalCount: 14,
+        isFetching: false,
+      });
+      renderWithTheme(<ProductListView />);
+
+      const allTab = screen.getByRole('tab', { name: /productStockTabs\.all/ });
+      const badge = allTab.querySelector('[data-testid="label"]');
+      expect(badge).not.toBeNull();
+      expect(badge?.textContent).toBe('14');
+    });
   });
 });

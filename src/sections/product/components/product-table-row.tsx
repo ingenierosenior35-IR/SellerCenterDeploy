@@ -3,7 +3,9 @@ import type { ProductListInterface } from 'src/interfaces/product/seller-product
 
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
+import Stack from '@mui/material/Stack';
 import Avatar from '@mui/material/Avatar';
+import Tooltip from '@mui/material/Tooltip';
 import ListItemText from '@mui/material/ListItemText';
 import LinearProgress, { type LinearProgressProps } from '@mui/material/LinearProgress';
 
@@ -12,6 +14,9 @@ import { RouterLink } from 'src/routes/components';
 import { fCurrency } from 'src/utils/format-number';
 
 import { useTranslate } from 'src/locales/langs/i18n';
+
+import { Label } from 'src/components/label';
+import { Iconify } from 'src/components/iconify';
 
 // ----------------------------------------------------------------------
 
@@ -29,29 +34,64 @@ export function RenderCellSku({ params }: Readonly<ParamsProps>) {
 
 export function RenderCellStock({ params }: Readonly<ParamsProps>) {
   const { translate } = useTranslate();
+  const { isLowStock, lowStockThreshold, lowStockThresholdType, inStock, stock } = params.row;
+
   let color: LinearProgressProps['color'];
   let stockLabel: string;
 
-  if (!params.row.inStock) {
+  if (!inStock) {
     color = 'error';
     stockLabel = translate('outOfStock');
-  } else if (params.row.stock > 10) {
-    color = 'success';
-    stockLabel = translate('inStock');
-  } else {
+  } else if (isLowStock) {
     color = 'warning';
     stockLabel = translate('lowStock');
+  } else {
+    color = 'success';
+    stockLabel = translate('inStock');
   }
+
+  const thresholdTypeLabel =
+    lowStockThresholdType === 'CUSTOM'
+      ? translate('lowStockThresholdType.custom')
+      : translate('lowStockThresholdType.default');
+
+  const thresholdTooltip = `${translate('lowStockThresholdLabelPrefix')} ${lowStockThreshold} (${thresholdTypeLabel})`;
+  const thresholdLabelText = `${translate('lowStockThresholdLabelPrefix')} ${lowStockThreshold}`;
 
   return (
     <Box sx={{ width: 1, typography: 'caption', color: 'text.secondary' }}>
       <LinearProgress
         color={color}
         variant="determinate"
-        value={(params.row.stock / Math.max(params.row.stock, 100)) * 100}
+        value={(stock / Math.max(stock, 100)) * 100}
         sx={[{ mb: 1, width: 80, height: 6 }]}
       />
-      {params.row.stock} {stockLabel}
+      <Stack direction="row" alignItems="center" spacing={0.5} sx={{ flexWrap: 'wrap' }}>
+        <Box component="span" sx={{ fontWeight: isLowStock ? 'fontWeightBold' : 'inherit' }}>
+          {stock} {stockLabel}
+        </Box>
+        {isLowStock && (
+          <Tooltip title={thresholdTooltip} arrow>
+            <Box component="span" sx={{ display: 'inline-flex', alignItems: 'center' }}>
+              <Iconify
+                icon="solar:danger-triangle-bold"
+                width={16}
+                sx={{ color: 'warning.main' }}
+              />
+            </Box>
+          </Tooltip>
+        )}
+      </Stack>
+      {isLowStock && (
+        <Stack direction="row" spacing={0.5} sx={{ mt: 0.5, flexWrap: 'wrap' }}>
+          <Label color="warning" variant="soft">
+            {thresholdLabelText}
+          </Label>
+          <Label color={lowStockThresholdType === 'CUSTOM' ? 'info' : 'default'} variant="soft">
+            {thresholdTypeLabel}
+          </Label>
+        </Stack>
+      )}
     </Box>
   );
 }

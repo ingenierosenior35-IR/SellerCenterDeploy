@@ -77,6 +77,62 @@
     },
     "clients": {
       "title": "Clients"
+    },
+    "academy": {
+      "title": "Academy"
+    }
+  },
+  "academyModule": {
+    "title": "Academy",
+    "list": {
+      "heading": "Available courses"
+    },
+    "levels": {
+      "beginner": "Beginner",
+      "intermediate": "Intermediate",
+      "advanced": "Advanced"
+    },
+    "card": {
+      "lessons": "lessons",
+      "minutes": "min",
+      "progress": "Progress"
+    },
+    "resume": {
+      "eyebrow": "Pick up where you left off",
+      "cta": "Resume lesson"
+    },
+    "course": {
+      "progressLabel": "Course progress",
+      "lessonsLabel": "Lessons"
+    },
+    "lesson": {
+      "completed": "Completed",
+      "notStarted": "Not started",
+      "markComplete": "Mark as complete",
+      "empty": "Select a lesson to begin"
+    },
+    "notFound": {
+      "title": "Course not found",
+      "description": "The course you are looking for does not exist or is not available yet.",
+      "backToList": "Back to Academy"
+    },
+    "courses": {
+      "gettingStarted": {
+        "title": "Getting started",
+        "description": "Take your first steps in Seller Center: initial setup and platform overview."
+      },
+      "catalogManagement": {
+        "title": "Catalog management",
+        "description": "Learn how to create, edit and manage your products efficiently."
+      },
+      "ordersFulfillment": {
+        "title": "Orders & fulfillment",
+        "description": "Master the order lifecycle and fulfillment workflows."
+      },
+      "advancedGrowth": {
+        "title": "Growth strategies",
+        "description": "Advanced content for approved sellers: campaigns, metrics and optimization."
+      }
     }
   },
   "settings": {
@@ -195,6 +251,15 @@
   "outOfStock": "Out of Stock",
   "inStock": "In Stock",
   "lowStock": "Low Stock",
+  "lowStockThresholdLabelPrefix": "Threshold:",
+  "lowStockThresholdType": {
+    "default": "Default",
+    "custom": "Custom"
+  },
+  "productStockTabs": {
+    "all": "All",
+    "lowStock": "Critical stock"
+  },
   "print": "Print",
   "import": "Import",
   "export": "Export",
@@ -652,6 +717,98 @@
       "update": "Update",
       "suspendAccount": "Suspend Account",
       "deleteAccount": "Delete Account"
+    }
+  },
+  "createSellers": {
+    "common": {
+      "continue": "Continue",
+      "register": "Register",
+      "alreadyHaveAccount": "I already have an account",
+      "signIn": "Sign In",
+      "step": "Step",
+      "of": "of",
+      "back": "Back to previous step"
+    },
+    "toasts": {
+      "submitSuccess": "Data and documents received. You will proceed to validation.",
+      "submitError": "We couldn't create your account. Please try again in a few minutes."
+    },
+    "step1": {
+      "country": "Select a country",
+      "personType": "Person type",
+      "mainCategory": "Main category",
+      "countries": {
+        "US": "United States",
+        "CN": "China"
+      },
+      "personTypes": {
+        "natural_person": "Natural person",
+        "legal_person": "Legal entity"
+      },
+      "errors": {
+        "country": "Select a country",
+        "personType": "Select a person type",
+        "mainCategory": "Select a main category"
+      }
+    },
+    "step2": {
+      "firstName": "First name",
+      "lastName": "Last name",
+      "documentType": "Type",
+      "documentNumber": "Document number",
+      "phone": "Phone number",
+      "addressShop": "Address",
+      "shopUrl": "Shop URL",
+      "email": "Email",
+      "password": "Password",
+      "confirmPassword": "Confirm password",
+      "errors": {
+        "firstName": "Enter your first name",
+        "lastName": "Enter your last name",
+        "email": "Enter your email",
+        "emailInvalid": "Enter a valid email",
+        "password": "Enter a password with at least 6 characters",
+        "passwordMismatch": "Passwords don't match",
+        "documentType": "Select a document type",
+        "documentNumberRequired": "Enter the document number",
+        "documentNumberDigits": "Only digits are allowed",
+        "phoneInvalid": "Enter a valid number",
+        "phoneDigits": "Only digits are allowed",
+        "addressShop": "Enter your address",
+        "shopUrl": "Enter your shop URL"
+      }
+    },
+    "step3": {
+      "intro": "Upload the required documents. PDF only, max 5MB per file.",
+      "unsupportedCombo": "The selected country and person type combination is not supported yet. Go back to step 1 and choose another option.",
+      "atLeastOne": "Upload at least one of the following documents:",
+      "selectPdf": "Select PDF",
+      "removeFile": "Remove file",
+      "toasts": {
+        "notPdf": "is not a PDF. Only PDF files are accepted.",
+        "tooLarge": "exceeds the 5 MB limit."
+      },
+      "errors": {
+        "fileRequired": "File is required",
+        "fileSize": "File must not exceed 5 MB",
+        "filePdf": "Only PDF files are accepted",
+        "oneOfRequired": "You must upload at least one of these documents"
+      },
+      "docLabels": {
+        "national_id_document": "National ID document",
+        "bank_account_document": "Bank account certification",
+        "business_license_document": "Business license",
+        "uscc_document": "USCC (Unified Social Credit Code)",
+        "export_license_document": "Export license",
+        "personal_tax_identification_document": "Personal tax identification",
+        "commercial_agreement_document": "Commercial agreement",
+        "ein_document": "EIN (Employer Identification Number)",
+        "w9_form_document": "W-9 form",
+        "articles_of_incorporation_document": "Articles of Incorporation",
+        "ssn_document": "SSN (Social Security Number)",
+        "itin_document": "ITIN (Individual Taxpayer Identification Number)",
+        "sales_tax_permit_document": "Sales tax permit"
+      }
     }
   },
   "productLoad": {

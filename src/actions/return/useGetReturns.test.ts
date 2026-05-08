@@ -48,6 +48,8 @@ const mockReturnsResponse = {
   },
 };
 
+const defaultParams = { currentPage: 1, pageSize: 10 };
+
 const createWrapper = () => {
   const qc = new QueryClient({ defaultOptions: { queries: { retry: false } } });
   return ({ children }: { children: React.ReactNode }) =>
@@ -59,13 +61,13 @@ describe('useGetReturns', () => {
 
   it('returns isLoading true initially', () => {
     mockRequest.mockReturnValue(new Promise(() => {}));
-    const { result } = renderHook(() => useGetReturns(), { wrapper: createWrapper() });
+    const { result } = renderHook(() => useGetReturns(defaultParams), { wrapper: createWrapper() });
     expect(result.current.isLoading).toBe(true);
   });
 
   it('returns returns data after successful fetch', async () => {
     mockRequest.mockResolvedValue(mockReturnsResponse);
-    const { result } = renderHook(() => useGetReturns(), { wrapper: createWrapper() });
+    const { result } = renderHook(() => useGetReturns(defaultParams), { wrapper: createWrapper() });
     await waitFor(() => expect(result.current.isLoading).toBe(false));
     expect(result.current.returns.returns?.totalCount).toBe(1);
     expect(result.current.isError).toBe(false);
@@ -73,7 +75,7 @@ describe('useGetReturns', () => {
 
   it('returns isError true on failure', async () => {
     mockRequest.mockRejectedValue(new Error('Network error'));
-    const { result } = renderHook(() => useGetReturns(), { wrapper: createWrapper() });
+    const { result } = renderHook(() => useGetReturns(defaultParams), { wrapper: createWrapper() });
     await waitFor(() => expect(result.current.isError).toBe(true));
   });
 });

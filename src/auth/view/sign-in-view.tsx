@@ -18,6 +18,7 @@ import Typography from '@mui/material/Typography';
 import InputAdornment from '@mui/material/InputAdornment';
 import FormControlLabel from '@mui/material/FormControlLabel';
 
+import { paths } from 'src/routes/paths';
 import { useRouter } from 'src/routes/hooks';
 import { RouterLink } from 'src/routes/components';
 
@@ -167,7 +168,7 @@ export function SignInView() {
           {translate("loginPage.noAccount")}
           <Link
             component={RouterLink}
-            to=""
+            to={paths.createSellers}
             variant="subtitle2"
           >
             {translate("loginPage.getStarted")}

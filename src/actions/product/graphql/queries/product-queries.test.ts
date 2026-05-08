@@ -26,5 +26,11 @@ describe('product graphql queries', () => {
     it('contains sku field', () => {
       expect(SELLER_PRODUCTS_QUERY).toContain('sku');
     });
+
+    it('contains low stock fields', () => {
+      expect(SELLER_PRODUCTS_QUERY).toContain('is_low_stock');
+      expect(SELLER_PRODUCTS_QUERY).toContain('low_stock_threshold');
+      expect(SELLER_PRODUCTS_QUERY).toContain('low_stock_threshold_type');
+    });
   });
 });

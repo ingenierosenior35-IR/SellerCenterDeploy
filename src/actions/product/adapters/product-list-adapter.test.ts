@@ -24,6 +24,9 @@ const makeProduct = (overrides = {}) => ({
   stock_saleable: 50,
   stock_status: 'IN_STOCK',
   rating_summary: 80,
+  is_low_stock: false,
+  low_stock_threshold: 5,
+  low_stock_threshold_type: 'DEFAULT',
   ...overrides,
 });
 
@@ -56,6 +59,27 @@ describe('productListAdapter', () => {
     expect(p.stock).toBe(50);
     expect(p.inStock).toBe(true);
     expect(p.rating).toBe(80);
+    expect(p.isLowStock).toBe(false);
+    expect(p.lowStockThreshold).toBe(5);
+    expect(p.lowStockThresholdType).toBe('DEFAULT');
+  });
+
+  it('maps low stock fields when product is in low stock', () => {
+    const data = {
+      sellerProducts: {
+        items: [
+          makeProduct({
+            is_low_stock: true,
+            low_stock_threshold: 12,
+            low_stock_threshold_type: 'CUSTOM',
+          }),
+        ],
+      },
+    } as any;
+    const result = productListAdapter(data, 'es');
+    expect(result[0].isLowStock).toBe(true);
+    expect(result[0].lowStockThreshold).toBe(12);
+    expect(result[0].lowStockThresholdType).toBe('CUSTOM');
   });
 
   it('uses fallback image when thumbnail is missing', () => {

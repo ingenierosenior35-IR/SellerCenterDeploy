@@ -4,9 +4,12 @@ import type { GridColDef } from '@mui/x-data-grid';
 import type { LangCode } from 'src/locales/langs/i18n';
 import type { ProductListInterface } from 'src/interfaces';
 
+import { varAlpha } from 'minimal-shared/utils';
 import { useMemo, useState, useEffect, useCallback } from 'react';
 
+import Tab from '@mui/material/Tab';
 import Card from '@mui/material/Card';
+import Tabs from '@mui/material/Tabs';
 import Button from '@mui/material/Button';
 import { useTheme } from '@mui/material/styles';
 import { esES } from '@mui/x-data-grid/locales';
@@ -19,6 +22,7 @@ import { HomeContent } from 'src/layouts/home';
 import { useTranslate } from 'src/locales/langs/i18n';
 import { useGetProducts } from 'src/actions/product/useGetProducts';
 
+import { Label } from 'src/components/label';
 import { toast } from 'src/components/snackbar';
 import { Iconify } from 'src/components/iconify';
 import { ErrorContent } from 'src/components/error-content';
@@ -55,20 +59,23 @@ export function ProductListView() {
 
   const [paginationModel, setPaginationModel] = useState({ pageSize: 10, page: 0 });
 
-  const productsPerPage = useMemo(
-    () => ({
-      pageSize:
-        paginationModel.pageSize === -1 && totalCounts > 0 ? totalCounts : paginationModel.pageSize,
-      currentPage: paginationModel.pageSize === -1 ? 1 : paginationModel.page + 1,
-    }),
-    [paginationModel.pageSize, paginationModel.page, totalCounts]
-  );
+  const [stockFilter, setStockFilter] = useState<'all' | 'lowStock'>('all');
+
+  const productsPerPage = useMemo(() => {
+    const fetchAll =
+      (stockFilter === 'lowStock' || paginationModel.pageSize === -1) && totalCounts > 0;
+
+    return {
+      pageSize: fetchAll ? totalCounts : paginationModel.pageSize,
+      currentPage: fetchAll ? 1 : paginationModel.page + 1,
+    };
+  }, [paginationModel.pageSize, paginationModel.page, totalCounts, stockFilter]);
 
   const { products, isError, totalCount, isFetching } = useGetProducts(productsPerPage);
 
   const [tableData, setTableData] = useState<ProductListInterface[]>([]);
 
-   const [openTypeSelector, setOpenTypeSelector] = useState(false);
+  const [openTypeSelector, setOpenTypeSelector] = useState(false);
 
   useEffect(() => {
     setTableData(products);
@@ -76,6 +83,19 @@ export function ProductListView() {
       setTotalCounts(totalCount);
     }
   }, [products, totalCount, totalCounts]);
+
+  const filteredData = useMemo(
+    () => (stockFilter === 'lowStock' ? tableData.filter((row) => row.isLowStock) : tableData),
+    [tableData, stockFilter]
+  );
+
+  const handleStockFilterChange = useCallback(
+    (_event: React.SyntheticEvent, newValue: 'all' | 'lowStock') => {
+      setStockFilter(newValue);
+      setPaginationModel((prev) => ({ ...prev, page: 0 }));
+    },
+    []
+  );
 
   const handleDeleteRow = useCallback((id: number) => {
     setTableData((prev) => prev.filter((row) => row.id !== id));
@@ -132,37 +152,64 @@ export function ProductListView() {
             description={translate('productsLoadError')}
           />
         ) : (
-          <DataGrid
-            {...toolbarOptions.settings}
-            localeText={
-              legnuageStored === 'es'
-                ? esES.components.MuiDataGrid.defaultProps.localeText
-                : undefined
-            }
-            rows={tableData}
-            columns={columns}
-            loading={isFetching}
-            getRowHeight={() => 'auto'}
-            pageSizeOptions={[5, 10, 20, { value: -1, label: translate('mui.common.all') }]}
-            pagination
-            paginationMode="server"
-            rowCount={totalCount}
-            paginationModel={paginationModel}
-            onPaginationModelChange={setPaginationModel}
-            slots={{
-              noRowsOverlay: NoRowsOverlay,
-              noResultsOverlay: NoResultsOverlay,
-            }}
-            slotProps={{
-              noResultsOverlay: { title: translate('noResultsFound') },
-            }}
-            sx={{
-              [`& .${gridClasses.cell}`]: {
-                display: 'flex',
-                alignItems: 'center',
-              },
-            }}
-          />
+          <>
+            <Tabs
+              value={stockFilter}
+              onChange={handleStockFilterChange}
+              sx={[
+                (themeArg) => ({
+                  px: { md: 2.5 },
+                  boxShadow: `inset 0 -2px 0 0 ${varAlpha(themeArg.vars?.palette.grey[500] || '#9E9E9E', 0.08)}`,
+                }),
+              ]}
+            >
+              <Tab
+                value="all"
+                label={translate('productStockTabs.all')}
+                iconPosition="end"
+                icon={
+                  <Label variant={stockFilter === 'all' ? 'filled' : 'soft'} color="default">
+                    {totalCount}
+                  </Label>
+                }
+              />
+              <Tab
+                value="lowStock"
+                label={translate('productStockTabs.lowStock')}
+              />
+            </Tabs>
+            <DataGrid
+              {...toolbarOptions.settings}
+              localeText={
+                legnuageStored === 'es'
+                  ? esES.components.MuiDataGrid.defaultProps.localeText
+                  : undefined
+              }
+              rows={filteredData}
+              columns={columns}
+              loading={isFetching}
+              getRowHeight={() => 'auto'}
+              pageSizeOptions={[5, 10, 20, { value: -1, label: translate('mui.common.all') }]}
+              pagination
+              paginationMode={stockFilter === 'lowStock' ? 'client' : 'server'}
+              rowCount={stockFilter === 'lowStock' ? filteredData.length : totalCount}
+              paginationModel={paginationModel}
+              onPaginationModelChange={setPaginationModel}
+              slots={{
+                noRowsOverlay: NoRowsOverlay,
+                noResultsOverlay: NoResultsOverlay,
+              }}
+              slotProps={{
+                noResultsOverlay: { title: translate('noResultsFound') },
+              }}
+              sx={{
+                [`& .${gridClasses.cell}`]: {
+                  display: 'flex',
+                  alignItems: 'center',
+                },
+              }}
+            />
+          </>
         )}
       </Card>
 

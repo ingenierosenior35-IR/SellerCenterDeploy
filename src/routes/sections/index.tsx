@@ -67,6 +67,14 @@ const FeedbackView = lazy(() =>
   import('src/sections/feedback/view/feedback-view').then((m) => ({ default: m.default }))
 );
 
+// Academy
+const AcademyListView = lazy(() =>
+  import('src/sections/academy/view').then((m) => ({ default: m.AcademyListView }))
+);
+const AcademyCourseView = lazy(() =>
+  import('src/sections/academy/view').then((m) => ({ default: m.AcademyCourseView }))
+);
+
 // Account
 const UserProfileView = lazy(() =>
   import('src/sections/account/view').then((m) => ({ default: m.UserProfileView }))
@@ -88,6 +96,11 @@ const SellerCenterSettingsView = lazy(() =>
 // Auth
 const SignInView = lazy(() =>
   import('src/auth/view').then((m) => ({ default: m.SignInView }))
+);
+
+// Create sellers
+const CreateSellersView = lazy(() =>
+  import('src/sections/create-sellers/view').then((m) => ({ default: m.CreateSellersView }))
 );
 
 // Public
@@ -124,6 +137,18 @@ function OrderDetailsPage() {
   return <OrderDetailsClient orderId={id} />;
 }
 
+function AcademyCoursePage() {
+  const { courseId } = useParams() as { courseId?: string };
+  if (!courseId) return <Navigate to="/404" replace />;
+  return <AcademyCourseView courseId={courseId} />;
+}
+
+function AcademyLessonPage() {
+  const { courseId, lessonId } = useParams() as { courseId?: string; lessonId?: string };
+  if (!courseId || !lessonId) return <Navigate to="/404" replace />;
+  return <AcademyCourseView courseId={courseId} initialLessonId={lessonId} />;
+}
+
 // ---------------------------------------------------------------------- Layout wrappers
 
 function ProtectedLayout() {
@@ -141,6 +166,54 @@ function ProtectedLayout() {
         </Suspense>
       </HomeLayout>
     </AuthGuard>
+  );
+}
+
+function CreateSellersLayout() {
+  return (
+    <GuestGuard>
+      <Box sx={{ minHeight: '100vh', display: 'flex', bgcolor: 'common.black' }}>
+        {/* Left · hero image */}
+        <Box
+          sx={{
+            display: { xs: 'none', md: 'block' },
+            flex: 1,
+            position: 'relative',
+            backgroundImage: 'url(/assets/illustrations/Banner-Create-Seller.jpg)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}
+        >
+          <Box
+            component="img"
+            src="/assets/images/logo/logo-miti.svg"
+            alt="Miti Miti"
+            sx={{
+              position: 'absolute',
+              left: { xs: 16, md: 32 },
+              bottom: { xs: 16, md: 32 },
+              width: 96,
+              height: 'auto',
+            }}
+          />
+        </Box>
+
+        {/* Right · form */}
+        <Box
+          sx={{
+            flex: 1,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            p: { xs: 3, md: 6 },
+          }}
+        >
+          <Suspense fallback={<SplashScreen />}>
+            <CreateSellersView />
+          </Suspense>
+        </Box>
+      </Box>
+    </GuestGuard>
   );
 }
 
@@ -228,6 +301,12 @@ export const routesSection = [
     ],
   },
 
+  // Create sellers (public · multi-step onboarding)
+  {
+    path: 'create-sellers',
+    element: <CreateSellersLayout />,
+  },
+
   // Protected routes (AuthGuard + HomeLayout)
   {
     element: <ProtectedLayout />,
@@ -255,6 +334,11 @@ export const routesSection = [
 
       // Feedback
       { path: 'feedback', element: <FeedbackView /> },
+
+      // Academy — accesible en cualquier estado de vinculación del seller
+      { path: 'academy', element: <AcademyListView /> },
+      { path: 'academy/:courseId', element: <AcademyCoursePage /> },
+      { path: 'academy/:courseId/lesson/:lessonId', element: <AcademyLessonPage /> },
 
       // Account
       { path: 'account', element: <UserProfileView /> },

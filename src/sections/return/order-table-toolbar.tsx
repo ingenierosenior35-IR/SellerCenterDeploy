@@ -8,11 +8,13 @@ import Box from '@mui/material/Box';
 import MenuList from '@mui/material/MenuList';
 import MenuItem from '@mui/material/MenuItem';
 import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
 
 import { useTranslate } from 'src/locales/langs/i18n';
 
+import { Label } from 'src/components/label';
 import { Iconify } from 'src/components/iconify';
 import { CustomPopover } from 'src/components/custom-popover';
 
@@ -21,9 +23,10 @@ import { CustomPopover } from 'src/components/custom-popover';
 type Props = {
   onResetPage: () => void;
   filters: UseSetStateReturn<ReturnTableFiltersInterface>;
+  totalCount?: number;
 };
 
-export function OrderTableToolbar({ filters, onResetPage }: Props) {
+export function OrderTableToolbar({ filters, onResetPage, totalCount }: Props) {
   const { translate } = useTranslate();
   const menuActions = usePopover();
 
@@ -84,6 +87,24 @@ export function OrderTableToolbar({ filters, onResetPage }: Props) {
             alignItems: 'center',
           }}
         >
+          {typeof totalCount === 'number' && (
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 1,
+                flexShrink: 0,
+              }}
+            >
+              <Typography variant="subtitle1">
+                {translate('returnStatus', 'all') ?? 'Todos'}
+              </Typography>
+              <Label variant="filled" color="default">
+                {totalCount}
+              </Label>
+            </Box>
+          )}
+
           <TextField
             fullWidth
             value={currentFilters.name}

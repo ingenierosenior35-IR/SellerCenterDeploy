@@ -31,6 +31,9 @@ export function productListAdapter(
       discountPercent: product.price_range?.minimum_price?.discount?.percent_off ?? 0,
       stock: product.stock_saleable ?? 0,
       inStock: product.stock_status === "IN_STOCK",
-      rating: product.rating_summary ?? 0
+      rating: product.rating_summary ?? 0,
+      isLowStock: product.is_low_stock ?? false,
+      lowStockThreshold: product.low_stock_threshold ?? 0,
+      lowStockThresholdType: product.low_stock_threshold_type ?? 'DEFAULT',
   }));
 }

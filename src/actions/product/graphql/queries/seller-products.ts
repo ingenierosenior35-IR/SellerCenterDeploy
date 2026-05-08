@@ -31,6 +31,9 @@ export const SELLER_PRODUCTS_QUERY = gql`
         stock_saleable
         rating_summary
         stock_status
+        is_low_stock
+        low_stock_threshold
+        low_stock_threshold_type
         id
         thumbnail {
           label

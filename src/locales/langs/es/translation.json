@@ -77,6 +77,62 @@
     },
     "feedback": {
       "title": "Opiniones"
+    },
+    "academy": {
+      "title": "Academy"
+    }
+  },
+  "academyModule": {
+    "title": "Academy",
+    "list": {
+      "heading": "Cursos disponibles"
+    },
+    "levels": {
+      "beginner": "Principiante",
+      "intermediate": "Intermedio",
+      "advanced": "Avanzado"
+    },
+    "card": {
+      "lessons": "lecciones",
+      "minutes": "min",
+      "progress": "Progreso"
+    },
+    "resume": {
+      "eyebrow": "Continúa donde quedaste",
+      "cta": "Reanudar lección"
+    },
+    "course": {
+      "progressLabel": "Progreso del curso",
+      "lessonsLabel": "Lecciones"
+    },
+    "lesson": {
+      "completed": "Completada",
+      "notStarted": "No iniciada",
+      "markComplete": "Marcar como completada",
+      "empty": "Selecciona una lección para comenzar"
+    },
+    "notFound": {
+      "title": "Curso no encontrado",
+      "description": "El curso que buscas no existe o aún no está disponible.",
+      "backToList": "Volver a Academy"
+    },
+    "courses": {
+      "gettingStarted": {
+        "title": "Primeros pasos",
+        "description": "Da tus primeros pasos en el Seller Center: configuración inicial y panorama general."
+      },
+      "catalogManagement": {
+        "title": "Gestión de catálogo",
+        "description": "Aprende a crear, editar y gestionar tus productos de manera eficiente."
+      },
+      "ordersFulfillment": {
+        "title": "Órdenes y despachos",
+        "description": "Maneja el ciclo de vida de tus órdenes y los procesos de despacho."
+      },
+      "advancedGrowth": {
+        "title": "Estrategias de crecimiento",
+        "description": "Contenido avanzado para sellers aprobados: campañas, métricas y optimización."
+      }
     }
   },
   "tableLatestOrders": {
@@ -195,6 +251,15 @@
   "outOfStock": "Agotado",
   "inStock": "Disponible",
   "lowStock": "Bajo inventario",
+  "lowStockThresholdLabelPrefix": "Umbral:",
+  "lowStockThresholdType": {
+    "default": "Por defecto",
+    "custom": "Personalizado"
+  },
+  "productStockTabs": {
+    "all": "Todos",
+    "lowStock": "Stock crítico"
+  },
   "print": "Imprimir",
   "import": "Importar",
   "export": "Exportar",
@@ -653,6 +718,98 @@
       "update": "Actualizar",
       "suspendAccount": "Suspender Cuenta",
       "deleteAccount": "Eliminar Cuenta"
+    }
+  },
+  "createSellers": {
+    "common": {
+      "continue": "Continuar",
+      "register": "Registrar",
+      "alreadyHaveAccount": "Ya tengo una cuenta",
+      "signIn": "Iniciar Sesión",
+      "step": "Paso",
+      "of": "de",
+      "back": "Volver al paso anterior"
+    },
+    "toasts": {
+      "submitSuccess": "Datos y documentos recibidos. Entrarás a validación.",
+      "submitError": "No pudimos crear tu cuenta. Intenta de nuevo en unos minutos."
+    },
+    "step1": {
+      "country": "Selecciona un país",
+      "personType": "Tipo de persona",
+      "mainCategory": "Categoría principal",
+      "countries": {
+        "US": "Estados Unidos",
+        "CN": "China"
+      },
+      "personTypes": {
+        "natural_person": "Persona natural",
+        "legal_person": "Persona jurídica"
+      },
+      "errors": {
+        "country": "Selecciona un país",
+        "personType": "Selecciona un tipo de persona",
+        "mainCategory": "Selecciona una categoría principal"
+      }
+    },
+    "step2": {
+      "firstName": "Nombre",
+      "lastName": "Apellido",
+      "documentType": "Tipo",
+      "documentNumber": "Número de documento",
+      "phone": "Número de teléfono",
+      "addressShop": "Dirección",
+      "shopUrl": "URL de la tienda",
+      "email": "Correo electrónico",
+      "password": "Contraseña",
+      "confirmPassword": "Confirmar contraseña",
+      "errors": {
+        "firstName": "Ingresa tu nombre",
+        "lastName": "Ingresa tu apellido",
+        "email": "Ingresa tu correo electrónico",
+        "emailInvalid": "Ingresa un correo electrónico válido",
+        "password": "Ingresa una contraseña de al menos 6 caracteres",
+        "passwordMismatch": "Las contraseñas no coinciden",
+        "documentType": "Selecciona el tipo de documento",
+        "documentNumberRequired": "Ingresa el número de documento",
+        "documentNumberDigits": "Solo se permiten números",
+        "phoneInvalid": "Ingresa un número válido",
+        "phoneDigits": "Solo se permiten números",
+        "addressShop": "Ingresa tu dirección",
+        "shopUrl": "Ingresa la URL de tu tienda"
+      }
+    },
+    "step3": {
+      "intro": "Sube los documentos requeridos. Solo PDF, máximo 5MB por archivo.",
+      "unsupportedCombo": "La combinación de país y tipo de persona seleccionada aún no está soportada. Volvé al paso 1 para elegir otra opción.",
+      "atLeastOne": "Sube al menos uno de los siguientes documentos:",
+      "selectPdf": "Seleccionar PDF",
+      "removeFile": "Quitar archivo",
+      "toasts": {
+        "notPdf": "no es un PDF. Solo se aceptan archivos PDF.",
+        "tooLarge": "supera el límite de 5 MB."
+      },
+      "errors": {
+        "fileRequired": "Archivo requerido",
+        "fileSize": "El archivo no debe superar 5 MB",
+        "filePdf": "Solo se aceptan archivos PDF",
+        "oneOfRequired": "Debes subir al menos uno de estos documentos"
+      },
+      "docLabels": {
+        "national_id_document": "Documento de identidad nacional",
+        "bank_account_document": "Certificación bancaria",
+        "business_license_document": "Licencia comercial",
+        "uscc_document": "USCC (Unified Social Credit Code)",
+        "export_license_document": "Licencia de exportación",
+        "personal_tax_identification_document": "Identificación fiscal personal",
+        "commercial_agreement_document": "Acuerdo comercial",
+        "ein_document": "EIN (Employer Identification Number)",
+        "w9_form_document": "Formulario W-9",
+        "articles_of_incorporation_document": "Articles of Incorporation",
+        "ssn_document": "SSN (Social Security Number)",
+        "itin_document": "ITIN (Individual Taxpayer Identification Number)",
+        "sales_tax_permit_document": "Permiso de impuesto sobre ventas"
+      }
     }
   },
   "productLoad": {

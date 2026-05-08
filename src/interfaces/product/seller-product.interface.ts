@@ -9,6 +9,8 @@ export interface SellerProductsResponseInterface {
   };
 }
 
+export type LowStockThresholdType = 'DEFAULT' | 'CUSTOM';
+
 export interface ItemsProducsInterface {
   id: number;
   name: string;
@@ -20,6 +22,9 @@ export interface ItemsProducsInterface {
   rating_summary: number;
   thumbnail: ThumbnailProductInterface;
   custom_attributes_info: CustomAttributesInfo;
+  is_low_stock: boolean;
+  low_stock_threshold: number;
+  low_stock_threshold_type: LowStockThresholdType;
 }
 
 export interface PriceRangeInterface {
@@ -65,4 +70,7 @@ export interface ProductListInterface {
   stock: number;
   inStock: boolean;
   rating: number;
+  isLowStock: boolean;
+  lowStockThreshold: number;
+  lowStockThresholdType: LowStockThresholdType;
 }
