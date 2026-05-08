@@ -2,6 +2,14 @@ import type { ImportMode } from 'src/interfaces/load/bulk-loading.interface';
 
 import { parseCsv, type ParsedCsv } from './parse-csv';
 
+type TranslateFn = (namespaceOrKey: string, keyOrDefault?: string, defaultValue?: string) => string;
+
+const getMessage = (
+  translate: TranslateFn | undefined,
+  key: string,
+  fallback: string
+): string => (translate ? translate('productLoad', `errors.${key}`, fallback) : fallback);
+
 // ----------------------------------------------------------------------
 // Validación local del archivo CSV antes de enviarlo al backend.
 //
@@ -72,6 +80,7 @@ export interface CsvValidationOptions {
   mode: ImportMode;
   /** Si se pasa, se reusa el parseo en vez de re-leer el archivo. */
   parsed?: ParsedCsv;
+  translate?: TranslateFn;
 }
 
 export interface CsvValidationResult {
@@ -86,7 +95,10 @@ export interface CsvValidationResult {
 const readFileAsText = (file: File): Promise<string> =>
   new Promise((resolve, reject) => {
     const reader = new FileReader();
-    reader.onload = () => resolve(String(reader.result ?? ''));
+    reader.onload = () => {
+      const result = reader.result;
+      resolve(typeof result === 'string' ? result : '');
+    };
     reader.onerror = () => reject(reader.error ?? new Error('No se pudo leer el archivo'));
     reader.readAsText(file, 'utf-8');
   });
@@ -102,15 +114,23 @@ export async function validateCsvFile(
   file: File,
   options?: Partial<CsvValidationOptions>
 ): Promise<string[]> {
-  if (!file) return ['Debe seleccionar un archivo CSV.'];
+  if (!file) {
+    return [getMessage(options?.translate, 'fileRequired', 'Debe seleccionar un archivo CSV.')];
+  }
 
   const errors: string[] = [];
 
   if (!ALLOWED_TYPES.has(file.type) && !isCsvByName(file.name)) {
-    errors.push('El archivo debe tener formato CSV.');
+    errors.push(getMessage(options?.translate, 'invalidType', 'El archivo debe tener formato CSV.'));
   }
   if (file.size > CSV_MAX_BYTES) {
-    errors.push('El archivo CSV es demasiado grande. El tamaño máximo permitido es de 1 MB.');
+    errors.push(
+      getMessage(
+        options?.translate,
+        'tooBig',
+        'El archivo CSV es demasiado grande. El tamaño máximo permitido es de 1 MB.'
+      )
+    );
   }
 
   // Back-compat: si no nos pasaron `mode`, no validamos contenido.
@@ -119,20 +139,33 @@ export async function validateCsvFile(
   // Si hubo errores de tamaño/tipo, no tiene sentido seguir.
   if (errors.length > 0) return errors;
 
-  const parsed = options.parsed ?? parseCsv(await readFileAsText(file));
+  let parsed: ParsedCsv;
+  try {
+    parsed = options.parsed ?? parseCsv(await readFileAsText(file));
+  } catch {
+    return [getMessage(options?.translate, 'readError', 'No se pudo leer el archivo.')];
+  }
 
   if (parsed.headers.length === 0) {
-    return ['El archivo CSV está vacío.'];
+    return [getMessage(options?.translate, 'empty', 'El archivo CSV está vacío.')];
   }
 
   const required = getRequiredHeaders(options.mode);
   const missing = required.filter((h) => !parsed.headers.includes(h));
   if (missing.length > 0) {
-    errors.push(`Faltan columnas obligatorias: ${missing.join(', ')}.`);
+    errors.push(
+      getMessage(
+        options?.translate,
+        'missingRequiredColumns',
+        `Faltan columnas obligatorias: ${missing.join(', ')}.`
+      )
+    );
   }
 
   if (parsed.rows.length === 0) {
-    errors.push('El archivo CSV no contiene filas de datos.');
+    errors.push(
+      getMessage(options?.translate, 'noRows', 'El archivo CSV no contiene filas de datos.')
+    );
   }
 
   return errors;
@@ -148,7 +181,8 @@ export async function validateCsvFile(
  */
 export const validateCsvContent = (
   parsed: ParsedCsv,
-  _mode: ImportMode
+  _mode: ImportMode,
+  options?: { translate?: TranslateFn }
 ): CsvValidationResult => {
   const rowErrorMap = new Map<number, string[]>();
 
@@ -164,7 +198,13 @@ export const validateCsvContent = (
     const sku = rowObj.sku;
     if (sku === undefined || sku === null || String(sku).trim() === '') {
       const existing = rowErrorMap.get(idx) ?? [];
-      rowErrorMap.set(idx, [...existing, 'Falta valor en columna obligatoria: sku']);
+      rowErrorMap.set(
+        idx,
+        [
+          ...existing,
+          getMessage(options?.translate, 'missingSku', 'Falta valor en columna obligatoria: sku'),
+        ]
+      );
     }
   });
 

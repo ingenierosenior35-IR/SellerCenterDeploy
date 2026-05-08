@@ -7,6 +7,8 @@ import type {
 
 import { useMutation } from '@tanstack/react-query';
 
+import { useTranslate } from 'src/locales';
+
 import { getSession } from 'src/auth/context';
 
 // ----------------------------------------------------------------------
@@ -18,8 +20,8 @@ import { getSession } from 'src/auth/context';
 const REST_PATH = '/api/magento/rest/V1/import/products';
 
 const buildEndpoint = (profileId: number): string => {
-  if (typeof window !== 'undefined') {
-    const url = new URL(`${window.location.origin}${REST_PATH}`);
+  if (globalThis.window) {
+    const url = new URL(`${globalThis.window.location.origin}${REST_PATH}`);
     url.searchParams.append('profile_id', String(profileId));
     return url.toString();
   }
@@ -27,6 +29,8 @@ const buildEndpoint = (profileId: number): string => {
 };
 
 export function useQueueMassUploadImport() {
+  const { translate } = useTranslate();
+
   return useMutation({
     mutationFn: async (
       request: QueueMassUploadImportRequestInterface
@@ -57,8 +61,7 @@ export function useQueueMassUploadImport() {
       }
 
       if (!res.ok) {
-        const message =
-          payload?.message || `Error ${res.status} al encolar la importación.`;
+        const message = payload?.message || translate('productLoad.queue.failedTitle');
         throw new Error(message);
       }
 

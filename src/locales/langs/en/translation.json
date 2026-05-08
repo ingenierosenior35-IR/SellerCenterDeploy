@@ -845,7 +845,13 @@
       "invalidType": "The uploaded CSV file is not a valid type.",
       "invalidZip": "The images file must be ZIP, JPG, JPEG or PNG.",
       "tooBig": "The CSV file exceeds 1 MB.",
-      "tooBigImages": "The images file exceeds 5 MB."
+      "tooBigImages": "The images file exceeds 5 MB.",
+      "fileRequired": "You must select a CSV file.",
+      "readError": "Could not read the CSV file.",
+      "empty": "The CSV file is empty.",
+      "missingRequiredColumns": "Required columns are missing.",
+      "noRows": "The CSV file does not contain data rows.",
+      "missingSku": "Missing value in required column: sku"
     },
     "preview": {
       "info": "Review the detected rows before confirming.",
@@ -866,7 +872,9 @@
       "status": "Status",
       "profileId": "Profile ID",
       "importMode": "Import mode",
-      "notifyNote": "Your import is queued and will run in the background. We'll notify you when it finishes."
+      "notifyNote": "Your import is queued and will run in the background. We'll notify you when it finishes.",
+      "validationFailed": "Could not validate the file.",
+      "uploadError": "Error uploading."
     },
     "steps": {
       "upload": "Upload file",

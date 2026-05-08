@@ -846,7 +846,13 @@
       "invalidType": "El archivo CSV cargado no tiene un tipo válido.",
       "invalidZip": "El archivo de imágenes debe ser ZIP, JPG, JPEG o PNG.",
       "tooBig": "El archivo CSV supera 1 MB.",
-      "tooBigImages": "El archivo de imágenes supera 5 MB."
+      "tooBigImages": "El archivo de imágenes supera 5 MB.",
+      "fileRequired": "Debes seleccionar un archivo CSV.",
+      "readError": "No se pudo leer el archivo CSV.",
+      "empty": "El archivo CSV está vacío.",
+      "missingRequiredColumns": "Faltan columnas obligatorias.",
+      "noRows": "El archivo CSV no contiene filas de datos.",
+      "missingSku": "Falta valor en columna obligatoria: sku"
     },
     "preview": {
       "info": "Revisa las filas detectadas antes de confirmar el envío.",
@@ -867,7 +873,9 @@
       "status": "Estado",
       "profileId": "ID del perfil",
       "importMode": "Modo de importación",
-      "notifyNote": "Tu importación está en cola y se procesará en segundo plano. Te notificaremos cuando termine."
+      "notifyNote": "Tu importación está en cola y se procesará en segundo plano. Te notificaremos cuando termine.",
+      "validationFailed": "No se pudo validar el archivo.",
+      "uploadError": "Error en la carga."
     },
     "steps": {
       "upload": "Cargar archivo",

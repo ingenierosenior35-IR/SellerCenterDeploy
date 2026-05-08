@@ -9,6 +9,7 @@ import { fileToBase64 } from 'src/utils/codificateFile';
 import { parseCsv, type ParsedCsv } from 'src/utils/parse-csv';
 import { CSV_MAX_BYTES, validateCsvFile, validateCsvContent } from 'src/utils/validate-csv';
 
+import { useTranslate } from 'src/locales';
 import { useValidateMassUpload } from 'src/actions/product/useValidateMassUpload';
 import { useQueueMassUploadImport } from 'src/actions/product/useQueueMassUploadImport';
 
@@ -16,15 +17,15 @@ import { toast } from 'src/components/snackbar';
 
 // ----------------------------------------------------------------------
 
-const CSV_ACCEPTED = [
+const CSV_ACCEPTED = new Set([
   'text/csv',
   'application/vnd.ms-excel',
   'text/xml',
   'application/csv',
   'text/plain',
-];
-const IMG_ACCEPTED = ['image/jpeg', 'image/png'];
-const ZIP_ACCEPTED = ['application/zip', 'application/x-zip-compressed', 'multipart/x-zip'];
+]);
+const IMG_ACCEPTED = new Set(['image/jpeg', 'image/png']);
+const ZIP_ACCEPTED = new Set(['application/zip', 'application/x-zip-compressed', 'multipart/x-zip']);
 const MAX_IMG_BYTES = 5 * 1024 * 1024;
 
 interface ResultBanner {
@@ -84,12 +85,13 @@ export const useProductUploadDialog = ({ onClose }: { onClose: () => void }) => 
 
   const { mutateAsync: validateMassUpload } = useValidateMassUpload();
   const { mutateAsync: queueMassUploadImport } = useQueueMassUploadImport();
+  const { translate } = useTranslate();
 
   // -------------------- Validity flags --------------------
 
   const csvInvalid = useMemo(() => {
     if (!csvFile) return null;
-    const badType = !CSV_ACCEPTED.includes(csvFile.type) && !isCsvByName(csvFile.name);
+    const badType = !CSV_ACCEPTED.has(csvFile.type) && !isCsvByName(csvFile.name);
     const tooBig = csvFile.size > CSV_MAX_BYTES;
     return { badType, tooBig };
   }, [csvFile]);
@@ -98,7 +100,7 @@ export const useProductUploadDialog = ({ onClose }: { onClose: () => void }) => 
     const badType: string[] = [];
     const tooBig: string[] = [];
     images.forEach((f) => {
-      if (!IMG_ACCEPTED.includes(f.type)) badType.push(f.name);
+      if (!IMG_ACCEPTED.has(f.type)) badType.push(f.name);
       if (f.size > MAX_IMG_BYTES) tooBig.push(f.name);
     });
     return { badType, tooBig };
@@ -107,7 +109,7 @@ export const useProductUploadDialog = ({ onClose }: { onClose: () => void }) => 
   const zipInvalid = useMemo(() => {
     if (!imagesZip) return null;
     const badType =
-      !ZIP_ACCEPTED.includes(imagesZip.type) && !isZipByName(imagesZip.name);
+      !ZIP_ACCEPTED.has(imagesZip.type) && !isZipByName(imagesZip.name);
     const tooBig = imagesZip.size > MAX_IMG_BYTES;
     return { badType, tooBig };
   }, [imagesZip]);
@@ -119,7 +121,7 @@ export const useProductUploadDialog = ({ onClose }: { onClose: () => void }) => 
 
   const handleCsvFiles = useCallback(
     async (fileList: FileList | null) => {
-      const f = (fileList && fileList[0]) || null;
+      const f = fileList?.[0] || null;
       if (!f) return;
       setCsvFile(f);
       setResult(null);
@@ -127,13 +129,13 @@ export const useProductUploadDialog = ({ onClose }: { onClose: () => void }) => 
       setRowErrorMap(new Map());
       setQueueResult(null);
 
-      const errors = await validateCsvFile(f);
+      const errors = await validateCsvFile(f, { translate });
       setCsvErrors(errors);
     },
-    []
+    [translate]
   );
 
-  const isZipFile = (f: File) => ZIP_ACCEPTED.includes(f.type) || isZipByName(f.name ?? '');
+  const isZipFile = (f: File) => ZIP_ACCEPTED.has(f.type) || isZipByName(f.name ?? '');
 
   const handleImageFiles = useCallback(
     (fileList: FileList | null) => {
@@ -148,7 +150,7 @@ export const useProductUploadDialog = ({ onClose }: { onClose: () => void }) => 
         return;
       }
 
-      const onlyImgs = arr.filter((f) => IMG_ACCEPTED.includes(f.type));
+      const onlyImgs = arr.filter((f) => IMG_ACCEPTED.has(f.type));
       if (!onlyImgs.length) return;
 
       const map = new Map(images.map((x) => [x.name + x.size, x]));
@@ -191,7 +193,7 @@ export const useProductUploadDialog = ({ onClose }: { onClose: () => void }) => 
     const text = await csvFile.text();
     const parsed = parseCsv(text);
 
-    const fileErrors = await validateCsvFile(csvFile, { mode: importMode, parsed });
+    const fileErrors = await validateCsvFile(csvFile, { mode: importMode, parsed, translate });
     setCsvErrors(fileErrors);
 
     if (fileErrors.length > 0) {
@@ -200,11 +202,11 @@ export const useProductUploadDialog = ({ onClose }: { onClose: () => void }) => 
       return;
     }
 
-    const validation = validateCsvContent(parsed, importMode);
+    const validation = validateCsvContent(parsed, importMode, { translate });
     setParsedCsv(parsed);
     setRowErrorMap(validation.rowErrorMap);
     setStep(1);
-  }, [csvFile, importMode]);
+  }, [csvFile, importMode, translate]);
 
   const goBackToUpload = useCallback(() => setStep(0), []);
 
@@ -223,20 +225,23 @@ export const useProductUploadDialog = ({ onClose }: { onClose: () => void }) => 
 
     try {
       const csvBase64 = stripDataUrlPrefix(await fileToBase64(csvFile));
+      let fileType = 'csv';
+      if (csvFile.type.includes('xml')) {
+        fileType = 'xml';
+      } else if (csvFile.type.includes('excel')) {
+        fileType = 'xls';
+      }
+
       const validation = await validateMassUpload({
         attributeSetId: 10,
         fileContentBase64: csvBase64,
         fileName: csvFile.name.replace(/\.[^.]+$/, ''),
-        fileType: csvFile.type.includes('xml')
-          ? 'xml'
-          : csvFile.type.includes('excel')
-            ? 'xls'
-            : 'csv',
+        fileType,
       });
 
       if (!validation.validateMassUpload.success || !validation.validateMassUpload.profile_id) {
         const message =
-          validation.validateMassUpload.message || 'No se pudo validar el archivo.';
+          validation.validateMassUpload.message || translate('productLoad', 'queue.validationFailed');
         toast.error(message);
         setResult({ ok: false, message });
         setStep(0);
@@ -253,14 +258,14 @@ export const useProductUploadDialog = ({ onClose }: { onClose: () => void }) => 
       setQueueResult(queue);
       setStep(3);
     } catch (err: any) {
-      const message = err?.message || 'Error en la carga.';
+      const message = err?.message || translate('productLoad', 'queue.uploadError');
       toast.error(message);
       setResult({ ok: false, message });
       setStep(0);
     } finally {
       setUploading(false);
     }
-  }, [csvFile, imagesZip, importMode, validateMassUpload, queueMassUploadImport]);
+  }, [csvFile, imagesZip, importMode, validateMassUpload, queueMassUploadImport, translate]);
 
   // -------------------- Reset / cancel --------------------
 
